@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace FloppyVPN
@@ -174,7 +173,7 @@ PersistentKeepalive = 25
 			return psk;
 		}
 
-		public static void GenerateServerConfigIfNotYet()
+		public static void CreateServerConfigIfNotYet()
 		{
 			if (!string.IsNullOrEmpty(Config.Get("server_public_key")) && !string.IsNullOrEmpty(Config.Get("server_private_key")) && File.Exists(ServerConfigFilePath))
 				return;
@@ -235,6 +234,16 @@ H4 = 2112541503
 		private static void RefreshInterface()
 		{
 			ExecuteShellCommand($"syncconf {ServerInterfaceName} <(awg-quick strip {ServerInterfaceName})");
+		}
+
+		public static void UpInterface()
+		{
+			ExecuteShellCommand("awg-quick down awg0");
+		}
+
+		public static void DownInterface()
+		{
+			ExecuteShellCommand("awg-quick up awg0");
 		}
 
 		private static string ExecuteShellCommand(string command)

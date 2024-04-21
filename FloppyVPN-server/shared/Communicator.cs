@@ -69,7 +69,7 @@ namespace FloppyVPN
 	/// </summary>
 	public static class EncodedCommunicationExtensions
 	{
-		public static string DecodeRequest(this HttpContext context)
+		public static string DecodeBody(this HttpContext context)
 		{
 			string? requestBody = null;
 
@@ -81,7 +81,7 @@ namespace FloppyVPN
 			return requestBody;
 		}
 
-		public static string EncodeAsResponse(this string response)
+		public static string EncodeBody(this string response)
 		{
 			return Cryption.En(response, Config.cache["master_key"].ToString());
 		}

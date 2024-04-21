@@ -29,40 +29,48 @@ public static class Listener
 
 
 
-		//responses if the server is alive
+		//responds if the server is alive
 		app.MapGet("/CheckAvailability", (HttpContext context) =>
 		{
-			return "    OK    ".EncodeAsResponse();
+			return "    OK    ";
 		});
 
 
-		//deletes the specified config
+		//deletes the specified config by ID
 		app.MapDelete("/DeleteConfig", (HttpContext context) =>
-		{
-			string config_to_delete = ;
-			Vpn.DeleteConfig(config_to_delete);
-			return "Done".EncodeAsResponse();
-		});
-
-
-		//replaces existing config
-		app.MapPost("/CreateConfig", (HttpContext context) =>
 		{
 			try
 			{
-				ulong config_id = context.Request.Body.read
-				return Vpn.CreateClientConfig();
+				ulong config_id = ulong.Parse(context.DecodeBody());
+				Vpn.DeleteConfig(config_id);
+				return "Done".EncodeBody();
 			}
 			catch (Exception ex)
 			{
 				context.Response.StatusCode = 500;
-				return ("Could not create config: " + ex.Message).EncodeAsResponse();
+				return $"Could not delete config: {ex.Message}".EncodeBody();
+			}
+		});
+
+
+		//creates a config with specified ID
+		app.MapPost("/CreateConfig", (HttpContext context) =>
+		{
+			try
+			{
+				ulong config_id = ulong.Parse(context.DecodeBody());
+				return Vpn.CreateClientConfig(config_id);
+			}
+			catch (Exception ex)
+			{
+				context.Response.StatusCode = 500;
+				return ("Could not create config: " + ex.Message).EncodeBody();
 			}
 		});
 
 
 		//
-		app.MapGet("/", () =>
+		app.MapGet("/", (HttpContext context) =>
 		{
 			return "vpn";
 		});

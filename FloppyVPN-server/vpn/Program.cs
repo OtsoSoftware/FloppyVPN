@@ -15,7 +15,11 @@ namespace FloppyVPN
 
 			Config.EnsureFileIntegrity();
 
-			Vpn.GenerateServerConfigIfNotYet();
+			Vpn.CreateServerConfigIfNotYet();
+
+			Vpn.DownInterface();
+			Thread.Sleep(500);
+			Vpn.UpInterface();
 
 			new Thread(() => Config.CacheRefresher()).Start();
 			new Thread(() => Listener.Start()).Start();

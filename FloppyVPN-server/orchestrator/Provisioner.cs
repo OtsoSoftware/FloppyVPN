@@ -17,7 +17,8 @@
 
 				foreach (DataRow vpnServer in vpnServers.Rows)
 				{
-					string vpnServerReply = Communicator.GetHttp($"{vpnServer["address"]}", "", out _, out bool isSuccessful);
+					string vpnServerReply = Communicator.GetHttp($"http://{vpnServer["socket"]}/CheckAvailability", 
+						"", out _, out bool isSuccessful);
 					
 					if (isSuccessful && vpnServerReply.Contains(" OK "))
 					{
@@ -57,7 +58,6 @@
 		/// <param name="account"></param>
 		/// <param name="device_type"></param>
 		/// <param name="country_code"></param>
-		/// <exception cref="Exception"></exception>
 		public static string GetConfig(ulong account_id, string country_code, int device_type)
 		{
 			DataTable suchConfigsFound = DB.GetDataTable("SELECT * FROM `vpn_configs` " +
@@ -86,7 +86,7 @@
 			}
 
 			// Find the suitable server (which has available clients amount that we need):
-			string? vpnServerID = DB.GetValue($"SELECT vs.id, vs.address, vs.country_code, vs.max_configs " +
+			string? vpnServerID = DB.GetValue($"SELECT vs.id, vs.socket, vs.country_code, vs.max_configs " +
 				$"FROM vpn_servers vs " +
 				$"LEFT JOIN (SELECT server, COUNT(DISTINCT account) AS num_configs " +
 				$"FROM vpn_configs " +
@@ -100,26 +100,40 @@
 
 			//create vpn config on vpn server itself:
 			DataRow vpnServerInfo = DB.GetDataTable($"SELECT * FROM `vpn_servers` WHERE `id` = {vpnServerID};").Rows[0];
-			string newConfig = Communicator.GetHttp($"https://{vpnServerInfo["address"]}/CreateConfig",
-				"", out _, out bool isSuccessful);
+
+			//first create record to get an ID:
+			ulong newConfigID = DB.InsertAndGetID($"INSERT INTO `vpn_configs` " +
+				$"(`server`, `config`, `account`, `device_type`) " +
+				$"VALUES(@server_id, '', @account_id, @device_type);",
+				new Dictionary<string, object>()
+				{
+					{ "@server_id", (ulong)vpnServerInfo["id"] },
+					{ "@account_id", account_id },
+					{ "@device_type", device_type }
+				});
+
+			string newConfig = Communicator.PostHttp($"http://{vpnServerInfo["socket"]}/CreateConfig",
+				body: newConfigID.ToString().EncodeBody(),
+				"", "", out _, out bool isSuccessful);
 
 			if (isSuccessful)
 			{
 				//write the new vpn config into the database:
-				DB.Execute($"INSERT INTO vpn_configs (`server`, `config`, `account`, `device_type`) " +
-					$"VALUES(@server_id, @config, @account_id, @device_type);",
+				DB.Execute($"UPDATE `vpn_configs` SET `config` = @config WHERE `id` = @id;",
 					new Dictionary<string, object>()
 					{
-						{ "@server_id", (ulong)vpnServerInfo["id"] },
-						{ "@config", newConfig },
-						{ "@account_id", account_id },
-						{ "@device_type", 1 }
+						{ "@id", newConfigID },
+						{ "@config", newConfig }
 					});
 
 				return newConfig;
 			}
 			else
+			{
+				DB.Execute($"DELETE FROM `vpn_configs` WHERE `id` = {newConfigID};");
+
 				throw new Exception(newConfig);
+			}
 		}
 
 		/// <summary>
@@ -149,7 +163,7 @@
 		private static void DeleteConfig(ulong configID)
 		{
 			DataRow configInfo = DB.GetDataTable($"SELECT * FROM `vpn_configs` WHERE `id` = {configID};").Rows[0];
-			string vpnServerAddress = DB.GetValue($"SELECT `address` FROM `vpn_servers` WHERE `id` = {configInfo["server"]};").ToString();
+			string vpnServerSocket = DB.GetValue($"SELECT `socket` FROM `vpn_servers` WHERE `id` = {configInfo["server"]};").ToString();
 			
 			//delete config on the vpn server
 			for (byte b = 0; b < 3; b++) //multiple retries
@@ -157,7 +171,9 @@
 				bool isSuccessful = false;
 				try
 				{
-					Communicator.GetHttp($"https://{vpnServerAddress}/DeleteConfig/{configID}", "", out _, out isSuccessful);
+					Communicator.PostHttp($"http://{vpnServerSocket}/DeleteConfig", 
+						body: "configID".EncodeBody(), 
+						"", "", out _, out isSuccessful);
 				}
 				catch
 				{

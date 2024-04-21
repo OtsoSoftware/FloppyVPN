@@ -32,7 +32,6 @@ apt install -y dkms
 
 
 
-
 ##### Installing amneziawg
 
 # Put "amneziawg-X.tar" in the /root
@@ -42,7 +41,6 @@ mv amneziawg-X /usr/src
 dkms install amneziawg/X
 modprobe amneziawg
 lsmod | grep amneziawg
-
 
 
 
@@ -59,34 +57,42 @@ awg-quick -v
 
 
 
-
 ##### Setting AmneziaWG
 
 #0 Delete default awg0
 ip li add dev awg0 type amneziawg
 
-
-
-
-# Use script or software to create awg0.conf (server) config (interface)
-...
-
-
-
-# Launch awg0
+# Setup forwarding
 sysctl -w net.ipv4.conf.all.forwarding=1
-//sysctl -w net.ipv6.conf.all.forwarding=1
+sysctl -w net.ipv6.conf.all.forwarding=1
 sysctl -p
 
+# From now, either go and blast software which will handle things itself from now on,
+# or continue reading to do things manually by script or manually
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Use script to create server and client configs
+*use script*
+
+# Launch awg0
 awg-quick down awg0
 awg-quick up awg0
 awg
 
 
-
 # How to refresh awg0 without clients sessions interruptions:
 awg syncconf awg0 <(awg-quick strip awg0)
-
 
 
 _______________________________________________________
