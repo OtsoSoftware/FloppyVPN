@@ -1,0 +1,16 @@
+
+# VS & compiler folders:
+**/.vs/
+**/bin/
+**/obj/
+
+# Windows shortcuts
+*.lnk
+
+# I don't want you to see this
+**/drivers/
+Paymenting.cs
+PaymentsCallbackController.cs
+CONFIG.XML
+alzheimer.txt
+alzheimer.txt

@@ -1,0 +1,52 @@
+﻿@namespace FloppyVPN
+@using static FloppyVPN._Functions
+@model Models.NewAccountModel
+
+@{
+	string lang = GetCurrentLanguage(this);
+	ViewData["Title"] = Loc.Get("title_registered", lang);
+}
+
+
+
+<h3 id="header-account-registered">
+	@Loc.Get("header-account-registered", lang)
+</h3>
+
+<br><br>
+
+<span class="htext">
+	<span style="font-family: Tahoma; font-size: 20px; font-weight: bold; letter-spacing: 2px; display: block; align-content: center; text-align: center;">
+		@Model.NewAccountData["login"]
+	</span>
+
+	<br>
+	<span class="htext" id="registered-explanation-1">
+		@Loc.Get("registered-explanation-1", lang)
+	</span>
+	
+	<br><br>
+	
+	<img src="/imgs/write.png">
+	<span class="highlight" id="registered-explanation-2">
+		@Loc.Get("registered-explanation-2", lang)
+	</span>
+	
+	<br><br>
+
+	<span class="htext" id="registered-explanation-3">
+		@Loc.Get("registered-explanation-3", lang)
+	</span>
+
+
+	<span class="htext" id="registered-button-caption">
+		@Loc.Get("registered-button-caption", lang)
+	</span>
+
+	<a href="/login"><button id="gotoaccount-button"><b>
+		@Loc.Get("gotoaccount-button", lang)
+	</b></button></a>
+
+	<br><br>
+</span>
+

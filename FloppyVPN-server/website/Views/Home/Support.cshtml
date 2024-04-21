@@ -1,0 +1,29 @@
+﻿@namespace FloppyVPN
+@using static _Functions
+
+@{
+	string lang = GetCurrentLanguage(this);
+	ViewData["Title"] = Loc.Get("title_support", lang);
+}
+
+<h3 id="support-page-heading">@Loc.Get("support-page-heading", lang)</h3>
+<br>
+<span class="htext" id="support-proposal">@Html.Raw(Loc.Get("support-proposal", lang))</span>
+<br>
+<br>
+<table style="">
+	<tr>
+		<td><strong>Service</strong></td>
+		<td><strong>Contact</strong></td>
+	</tr>
+	<tr>
+		<td>Telegram</td>
+		<td><a href="https://otsosoftware.t.me" target="_blank">@@OtsoSoftware</a></td>
+	</tr>
+	<tr>
+		<td>Email</td>
+		<td><a href="mailto:software@otso.city" target="_blank">software@otso.city</a></td>
+	</tr>
+</table>
+<br>
+<br>

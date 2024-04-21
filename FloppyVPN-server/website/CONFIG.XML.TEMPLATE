@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+	<master_key>qwerty12</master_key>
+	<strict_mode>False</strict_mode>
+	<orchestrator_url>http://localhost:1440</orchestrator_url>
+	<allow_operations>True</allow_operations> <!-- Whether allow users to log in, register, top up etc. To be set to False in case of orchestrator server update or failure -->
+</Config>

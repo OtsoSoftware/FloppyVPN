@@ -1,0 +1,34 @@
+﻿@namespace FloppyVPN
+@using static FloppyVPN._Functions
+
+@{
+	string lang = GetCurrentLanguage(this);
+	ViewData["Title"] = Loc.Get("title_register", lang);
+}
+
+<h3 id="header-account-register">@Loc.Get("header-account-register", lang)</h3>
+
+<br><br>
+
+<span class="htext">
+		
+	
+	<form method="post" action="@Url.Action("PerformRegistration", "Account")">
+		<span class="htext" id="register-caption">
+			@Loc.Get("register-caption", lang)
+		</span>
+		<button type="submit" id="register-button">
+			<b>@Loc.Get("register-button", lang)!</b>
+		</button>
+	</form>
+
+	<br><br>
+
+</span>
+
+<span class="htext" id="already-registered-proposal">
+	@Loc.Get("already-registered-proposal", lang)
+</span>
+<a href="/login"><button id="login-button">
+	@Loc.Get("login-button", lang)
+</button></a>

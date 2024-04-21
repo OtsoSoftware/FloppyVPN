@@ -1,0 +1,96 @@
+﻿@namespace FloppyVPN
+@using static FloppyVPN._Functions
+
+@{
+	string currentPath = (Context.Request.Path != null) ? (Context.Request.Path) : "";
+	currentPath = currentPath.ToLower();
+
+	string lang = GetCurrentLanguage(this);
+
+}
+
+<!DOCTYPE html>
+<html lang="@lang">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title> @(string.IsNullOrEmpty((ViewData["Title"] ?? "").ToString()) ? "FloppyVPN" : $"{ViewData["Title"]} | FloppyVPN") </title>
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+	<header>
+
+		<div id="elementSecondaryLeft">
+			@if (currentPath != "/account/registered") //should not be shown on "Registered" page
+			{
+				@if (currentPath != "/account/my")
+				{
+					<a href="/register"><button id="register-button">@Loc.Get("register-button", lang)</button></a>
+				}
+				@if (currentPath == "/account/my")
+				{
+					<form asp-controller="Account" asp-action="PerformLogout" method="post">
+						<button id="logout-button" type="submit">@Loc.Get("logout-button", lang)</button>
+					</form>
+				}
+				@if (currentPath != "/account/my")
+				{
+					<a href="/login"><button id="login-button">@Loc.Get("login-button", lang)</button></a>
+				}
+			}
+		</div>
+
+		<div id="elementPrimary">
+			<a href="/" class="plain-link color-on-hover"><span style="font-family: Tahoma,sans; font-size: 23px; font-weight: bold" id="website-title">@Loc.Get("website-title", lang)</span></a>
+		</div>
+
+		<div id="elementSecondaryRight">
+			@if (currentPath != "/account/registered") //should not be shown on "Registered" page
+			{
+				<form asp-controller="Home" asp-action="ChangeLanguage" method="post">
+					<input name="currentPath" id="currentPath" value="@currentPath" hidden />
+					<label for="language" id="language-label">Language: </label>
+					<select id="language" name="language" onchange="this.form.submit()">
+						<option value="en" selected="@(lang == "en")">English</option>
+						<option value="ru" selected="@(lang == "ru")">Русский</option>
+						<option value="uk" selected="@(lang == "uk")">Українська</option>
+						<option value="ja" selected="@(lang == "ja")">日本語</option>
+					</select>
+				</form>
+			}
+		</div>
+		
+	</header>
+
+	<hr />
+
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+
+
+	<br />
+	<hr />
+
+	<footer class="footer text-muted">
+
+		<div id="elementLefter">
+			<span class="htext">© FloppyVPN is a registered trademark of <a href="https://otso.software" target="_blank">OtsoSoftware</a>, 2024.</span>
+		</div>
+
+		<div id="elementRighter" class="htext">
+			<a href="/support" id="support-button">Get support</a>
+			<span>    </span>
+			<a class="button" href="https://github.com/OtsoSoftware/FloppyVPN" target="_blank">GitHub</a>
+		</div>
+
+	</footer>
+
+	
+
+	@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

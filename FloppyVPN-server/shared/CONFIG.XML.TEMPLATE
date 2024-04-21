@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+	<ipv4_address>127.0.0.1</ipv4_address>
+	<ipv6_address>::1</ipv6_address>
+	<ipv6_support>False</ipv6_support>
+	<listen_port>51235</listen_port>
+</Config>
