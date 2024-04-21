@@ -10,7 +10,6 @@ If you want to compile it yourself or learn more about the project - continue re
 - Website: C#; HTML, CSS, JS (ASP.NET Core 6 MVC)
 - Database: MySQL
 - Windows App & Installer: C# (WinForms)
-- Android App: 
 
 ## Project logic
 
