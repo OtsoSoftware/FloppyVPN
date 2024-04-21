@@ -1,5 +1,5 @@
 # FloppyVPN
-### The full-strack and cross-platform VPN company software. Very private and 100% open source.
+### The full-strack and cross-platform VPN company software. Privacy-first and 100% open source.
 
 ## Download
  Please use the official website to register, download and use FloppyVPN - http://floppy.jp.net. If you want to compile it yourself or learn more about the project - continue reading.
@@ -22,7 +22,6 @@ Servers (orchestrator one, website one and VPN ones) use an authorization key ca
 Storing and provisioning of configs (unique connection strings) on severs are on behalf of the orchestrator server; The reason of such logic lies in instability of VPN servers - they may be deleted unexpectedly.
 
 Expanding a new VPN server on a new Linux box is easy and is being automated as possible though a kernel module installation is required.
-
 
 ## Deploying
 ### How to fully deploy the app.
