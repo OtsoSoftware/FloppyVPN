@@ -2,7 +2,8 @@
 ### The full-strack and cross-platform VPN company software. Privacy-first and 100% open source.
 
 ## Download
- Please use the official website to register, download and use FloppyVPN - http://floppy.jp.net. If you want to compile it yourself or learn more about the project - continue reading.
+Please use the official website to register, download and use FloppyVPN - http://floppy.jp.net. 
+If you want to compile it yourself or learn more about the project - continue reading.
 
 ## Stack
 - Servers: C# (ASP.NET Core 6)
