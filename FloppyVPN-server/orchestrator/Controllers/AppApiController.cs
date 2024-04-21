@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace FloppyVPN.Controllers
 {
+	/// <summary>
+	/// Uses json to communicate with client apps
+	/// </summary>
 	[ApiController]
 	[Route("Api/App")]
 	public class AppApiController : ControllerBase
@@ -12,32 +16,55 @@ namespace FloppyVPN.Controllers
 		[ServiceFilter(typeof(ClientIsBannedValidationFilter))]
 		public string GetAccountData(string login)
 		{
-			Account acc = new(login);
+			Account account = new(login);
+
+			if (!account.exists)
+			{
+				Karma karma = new(ServerTools.GetHashedIPAddress(HttpContext.Request));
+				karma.LogRequest(Karma.LogRequestResources.login, false);
+
+				HttpContext.Response.StatusCode = 403;
+				return "Specified account does not exist";
+			}
 
 			Response.Headers.Add("Content-Type", "application/json");
 			return $@"
 				{{
-					""exists"": {(acc.exists ? "true" : "false")},
-					""date_registered"": {acc.date_registered},
-					""paid_till"": {acc.paid_till},
-					""days_left"": {acc.days_left}
+					""exists"": {(account.exists ? "true" : "false")},
+					""login"": ""{account.login}"",
+					""date_registered"": ""{account.date_registered}"",
+					""paid_till"": ""{account.paid_till}"",
+					""days_left"": {account.days_left}
 				}}
 			";
 		}
 
-		/// <returns>List of availables country codes user has VPN configs in that belong to a user</returns>
+		/// <returns>
+		/// List of availables country codes user has VPN configs in that belong to a user
+		/// </returns>
 		[HttpGet("GetCountriesList/{login}")]
 		[ServiceFilter(typeof(ClientIsBannedValidationFilter))]
 		public string GetCountriesList(string login)
 		{
-			string[] countryCodesOfAccountConfigs = 
-				DB.FirstColumnAsArray("SELECT DISTINCT vs.country_code FROM vpn_servers vs " +
-				"WHERE vs.id IN (SELECT vc.server FROM vpn_configs vc WHERE vc.account = @login) " +
-				"ORDER BY vs.country_code ASC;",
-				new Dictionary<string, object>()
-				{
-					{ "@login", login }
-				});
+			Account account = new(login);
+
+			if (!account.exists)
+			{
+				Karma karma = new(ServerTools.GetHashedIPAddress(HttpContext.Request));
+				karma.LogRequest(Karma.LogRequestResources.login, false);
+
+				HttpContext.Response.StatusCode = 403;
+				return "You do not have access to these routes.";
+			}
+
+			string[] countryCodesOfAccountConfigs =
+				DB.FirstColumnAsArray($@"
+SELECT DISTINCT vs.country_code 
+FROM vpn_servers vs 
+LEFT JOIN vpn_configs vc ON vs.id = vc.server 
+GROUP BY vs.country_code 
+HAVING COUNT(vc.id) < vs.max_configs;
+			");
 
 			string jsonResponse = JsonConvert.SerializeObject(countryCodesOfAccountConfigs);
 
@@ -48,26 +75,38 @@ namespace FloppyVPN.Controllers
 		/// <returns>Specific VPN config to connect to</returns>
 		[HttpGet("GetConfig/{login}/{vpn_country_code}/{device_type}")]
 		[ServiceFilter(typeof(ClientIsBannedValidationFilter))]
-		public string GetConfig(string login, string vpn_country_code, byte device_type)
+		public string GetConfig(string login, string country_code, int device_type)
 		{
-			string? suitableConfig = (DB.GetValue(@"SELECT `config` FROM `vpn_configs`
-				WHERE server IN(SELECT `id` FROM `vpn_servers` WHERE `country_code` = @vpn_country_code)
-				AND `device_type` = @device_type AND `account` = @login;",
-				new Dictionary<string, object>()
-				{
-					{ "@login", login },
-					{ "@vpn_country_code", vpn_country_code },
-					{ "@device_type", device_type },
-				}) ?? "").ToString();
-
-			if (!string.IsNullOrEmpty(suitableConfig))
+			Account account = new(login);
+			if (!account.exists)
 			{
-				return suitableConfig;
+				Karma karma = new(ServerTools.GetHashedIPAddress(HttpContext.Request));
+				karma.LogRequest(Karma.LogRequestResources.login, false);
+
+				HttpContext.Response.StatusCode = 403;
+				return "Such account does not exist";
+			}
+
+
+			ulong config_id = Provisioner.GetConfig((ulong)account.accountData["id"], country_code, device_type);
+			DataRow config = DB.GetDataTable($"SELECT * FROM `vpn_configs` WHERE `id` = {config_id};").Rows[0];
+			DataRow server = DB.GetDataTable($"SELECT * FROM `vpn_servers` WHERE `id` = {config["server"]};").Rows[0];
+
+			if (config_id != 0)
+			{
+				return $@"
+					{{
+						""country_code"": ""{server["country_code"]}"",
+						""ipv4"": ""{server["ipv4_address"]}"",
+						""ipv6"": ""{server["ipv6_address"]}"",
+						""config"": ""{config["config"]}"",
+					}}
+				";
 			}
 			else
 			{
 				Response.StatusCode = 404;
-				return "";
+				return "Could not find a suitable config.";
 			}
 		}
 	}

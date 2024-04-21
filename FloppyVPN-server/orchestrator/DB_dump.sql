@@ -21,7 +21,7 @@ SET @@SESSION.SQL_LOG_BIN= 0;
 -- GTID state at the beginning of the backup 
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '50affa9b-dad1-11ee-8d98-525400123456:1-4380';
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '50affa9b-dad1-11ee-8d98-525400123456:1-4572';
 
 --
 -- Table structure for table `accounts`
@@ -191,7 +191,7 @@ DROP TABLE IF EXISTS `vpn_configs`;
 CREATE TABLE `vpn_configs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `server` bigint unsigned NOT NULL COMMENT 'Server of this config',
-  `config` varchar(256) COLLATE utf8mb4_general_ci NOT NULL,
+  `config` varchar(700) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `account` bigint unsigned NOT NULL COMMENT 'Account this config belongs to',
   `device_type` int NOT NULL COMMENT 'For which device this config is',
   PRIMARY KEY (`id`),
@@ -213,12 +213,15 @@ DROP TABLE IF EXISTS `vpn_servers`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vpn_servers` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `address` varchar(96) COLLATE utf8mb4_general_ci NOT NULL,
+  `socket` varchar(96) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'IP/DNS+IP socket by which it is possible to communicate with the server',
   `country_code` char(2) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Where''s this server located?',
   `max_configs` tinyint unsigned NOT NULL,
+  `ipv4_address` varchar(16) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ipv6_address` varchar(64) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `when_added` date NOT NULL COMMENT 'When this vpn server was added to the system',
   `last_alive` datetime NOT NULL COMMENT 'Last successful alive check',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `vpn_servers_UN` (`address`)
+  UNIQUE KEY `vpn_servers_UN` (`socket`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -236,4 +239,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-19 14:52:25
+-- Dump completed on 2024-04-22  2:03:56

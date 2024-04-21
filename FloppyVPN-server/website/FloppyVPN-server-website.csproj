@@ -29,7 +29,7 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
-    <None Include="Views\Home\Admin.cshtml" />
+    <None Include="Views\Admin\Index.cshtml" />
     <None Include="wwwroot\css\site.css" />
     <None Include="wwwroot\imgs\account-addtime.png" />
     <None Include="wwwroot\imgs\account-view.png" />

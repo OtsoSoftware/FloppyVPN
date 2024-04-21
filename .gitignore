@@ -3,6 +3,7 @@
 **/.vs/
 **/bin/
 **/obj/
+**/.deps/
 
 # Windows shortcuts
 *.lnk

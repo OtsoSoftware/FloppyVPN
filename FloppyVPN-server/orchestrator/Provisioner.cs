@@ -55,10 +55,8 @@
 		/// <summary>
 		/// Creates a config in a wished country
 		/// </summary>
-		/// <param name="account"></param>
-		/// <param name="device_type"></param>
-		/// <param name="country_code"></param>
-		public static string GetConfig(ulong account_id, string country_code, int device_type)
+		/// <returns>ID of an obtained/created config.</returns>
+		public static ulong GetConfig(ulong account_id, string country_code, int device_type)
 		{
 			DataTable suchConfigsFound = DB.GetDataTable("SELECT * FROM `vpn_configs` " +
 				"WHERE `account` = @account_id AND `device_type` = @device_type AND `country_code` = @country_code;",
@@ -73,29 +71,27 @@
 
 			if (returnFoundConfig) //in 1/2 cases return found config without creating a new one
 			{
-				return suchConfigsFound.Rows[0]["config"].ToString();
+				return (ulong)suchConfigsFound.Rows[0]["id"];
 			}
 			else
 			{
-				//clean previous configs:
-				new Thread(() =>
-				{
-					Thread.Sleep(5000); //not to be fast enough to delete the freshly created config :)
-					DeleteConfigs(account_id, country_code, device_type);
-				}).Start();
+				//clean previous configs of this device type:
+				DeleteConfigs(account_id, country_code, device_type);
+				Thread.Sleep(100);
 			}
 
 			// Find the suitable server (which has available clients amount that we need):
-			string? vpnServerID = DB.GetValue($"SELECT vs.id, vs.socket, vs.country_code, vs.max_configs " +
+			string? vpnServerID = (DB.GetValue($"SELECT vs.id, vs.socket, vs.country_code, vs.max_configs " +
 				$"FROM vpn_servers vs " +
 				$"LEFT JOIN (SELECT server, COUNT(DISTINCT account) AS num_configs " +
 				$"FROM vpn_configs " +
 				$"GROUP BY server) vc ON vs.id = vc.server " +
 				$"WHERE vs.country_code = '{country_code}' " +
-				$"AND (vc.num_configs IS NULL OR vc.num_configs < vs.max_configs);").ToString();
+				$"AND (vc.num_configs IS NULL OR vc.num_configs < vs.max_configs);") ?? "").ToString();
 			if (string.IsNullOrEmpty(vpnServerID))
 			{
-				throw new Exception($"Lacking vpn servers in country code '{country_code}'");
+				DB.Log("CreateConfig()", $"Lacking vpn servers in country code {country_code}.");
+				return 0;
 			}
 
 			//create vpn config on vpn server itself:
@@ -126,13 +122,14 @@
 						{ "@config", newConfig }
 					});
 
-				return newConfig;
+				return newConfigID;
 			}
 			else
 			{
 				DB.Execute($"DELETE FROM `vpn_configs` WHERE `id` = {newConfigID};");
 
-				throw new Exception(newConfig);
+				DB.Log("CreateConfig()", $"Couldn't create config. Server: {vpnServerID}. Response: {newConfig}.");
+				return 0;
 			}
 		}
 
