@@ -2,8 +2,6 @@ namespace FloppyVPN
 {
     internal static class Program
     {
-		internal static string masterKey = ""; //vpn servers do NOT store master key in config file because it would add some risk.
-
 		static void Main()
         {
 			//single instance:
@@ -16,17 +14,6 @@ namespace FloppyVPN
 			GC.KeepAlive(mutex);
 
 			Config.EnsureFileIntegrity();
-
-			//ask for master key (yep, on every launch :)
-			Console.Write("Enter the master key: ");
-			while (true)
-			{
-				var key = System.Console.ReadKey(true);
-				if (key.Key == ConsoleKey.Enter)
-					break;
-				masterKey += key.KeyChar;
-			}
-			masterKey = masterKey.Replace("\n", "").Replace(" ", "");
 
 			Vpn.GenerateServerConfigIfNotYet();
 

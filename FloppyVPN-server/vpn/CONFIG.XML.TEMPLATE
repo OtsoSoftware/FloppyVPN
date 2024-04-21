@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Config>
+	<master_key>qwerty12</master_key>
 	<ipv4_address>127.0.0.1</ipv4_address>
 	<ipv6_address>::1</ipv6_address>
 	<ipv6_support>False</ipv6_support>
 	<listen_port>51235</listen_port>
+	<dnsv4>1.1.1.1, 1.0.0.1</dnsv4>
+	<dnsv6>2606:4700:4700::1111, 2606:4700:4700::1001</dnsv6>
 </Config>

@@ -12,6 +12,7 @@
 			{
 				DeleteUnpaidAccounts();
 				DeleteOldRequests();
+				Provisioner.FlushConfigsOfDeletedAccounts();
 
 				Thread.Sleep(15 * 1000 * 60);
 			}

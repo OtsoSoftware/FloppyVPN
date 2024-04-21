@@ -8,7 +8,7 @@ namespace FloppyVPN
 	{
 		private static readonly string ConfigFolderPath = "/etc/amnezia/amneziawg/";
 		private static readonly string ServerConfigFileName = "awg0.conf";
-		private static readonly string ServerInterfaceFilePath = Path.Combine(ConfigFolderPath, ServerConfigFileName);
+		private static readonly string ServerConfigFilePath = Path.Combine(ConfigFolderPath, ServerConfigFileName);
 		private static readonly string ServerInterfaceName = "awg0";
 		private static readonly string WGCommand = "awg";
 
@@ -17,15 +17,13 @@ namespace FloppyVPN
 			// Generate client keys
 			string clientPrivateKey = GenerateKey();
 			string clientPublicKey = GenerateKey();
-
 			string clientPSK = GeneratePSK();
 
-			string clientFileName = $"client{config_id}";
 			string clientName = $"client{config_id}";
 			byte addressNumber = GetFreeAddressNumber();
 
 			// Update server config
-			File.AppendAllText(ServerInterfaceFilePath, $@"
+			File.AppendAllText(ServerConfigFilePath, $@"
 
 #{clientName}
 [Peer]
@@ -41,8 +39,8 @@ AllowedIPs = 10.7.0.{addressNumber}/32, fd0d:86fa:c3bc::{addressNumber}/128
 [Interface]
 Address = 10.7.0.{addressNumber}/32
 Address = fd0d:86fa:c3bc::{addressNumber}/128
-DNS = 1.1.1.1, 1.0.0.1
-DNS = 2606:4700:4700::1111, 2606:4700:4700::1001
+DNS = {Config.cache["dnsv4"]}
+DNS = {Config.cache["dnsv6"]}
 PrivateKey = {clientPrivateKey}
 Jc = 5
 Jmin = 20
@@ -78,8 +76,7 @@ PersistentKeepalive = 25
 		public static byte GetFreeAddressNumber()
 		{
 			// Read the server config file
-			string serverConfigFilePath = Path.Combine(ConfigFolderPath, ServerConfigFileName);
-			string[] configLines = File.ReadAllLines(serverConfigFilePath);
+			string[] configLines = File.ReadAllLines(ServerConfigFilePath);
 
 			// Extract address numbers from existing client configs
 			var addressNumbers = new HashSet<byte>();
@@ -179,7 +176,7 @@ PersistentKeepalive = 25
 
 		public static void GenerateServerConfigIfNotYet()
 		{
-			if (!string.IsNullOrEmpty(Config.Get("server_public_key")) && !string.IsNullOrEmpty(Config.Get("server_private_key")) && File.Exists(ServerInterfaceFilePath))
+			if (!string.IsNullOrEmpty(Config.Get("server_public_key")) && !string.IsNullOrEmpty(Config.Get("server_private_key")) && File.Exists(ServerConfigFilePath))
 				return;
 
 			var process = Process.Start(new ProcessStartInfo
@@ -211,7 +208,7 @@ PersistentKeepalive = 25
 			Console.WriteLine($"Generated and set the server private and public keys: \n{serverPrivateKey}\n{serverPublicKey}");
 
 			//creating server config:
-				File.WriteAllText(ServerInterfaceFilePath, $@"
+				File.WriteAllText(ServerConfigFilePath, $@"
 # ENDPOINT {Config.Get("ipv4_address")}
 # ENDPOINT {Config.Get("ipv6_address")}
 [Interface]

@@ -35,20 +35,6 @@
 		}
 
 		/// <summary>
-		/// Introduces a new VPN server to the system
-		/// </summary>
-		public static void AddServer(string address, byte max_configs)
-		{
-			DB.Execute("",
-				new Dictionary<string, object>()
-				{
-					{ "@address", address },
-					{ "@max_configs", max_configs },
-					{ "@last_alive", DateTime.Now }
-				});
-		}
-
-		/// <summary>
 		/// Deletes vpn configs that belong to accounts that don't exist anymore
 		/// </summary>
 		public static void FlushConfigsOfDeletedAccounts()
@@ -171,7 +157,7 @@
 				bool isSuccessful = false;
 				try
 				{
-					Communicator.GetHttp($"https://{vpnServerAddress}/DeleteConfig/{configInfo["config"]}", "", out _, out isSuccessful);
+					Communicator.GetHttp($"https://{vpnServerAddress}/DeleteConfig/{configID}", "", out _, out isSuccessful);
 				}
 				catch
 				{
@@ -189,7 +175,7 @@
 		/// <summary>
 		/// Deletes a vpn server and its configs from the system.
 		/// </summary>
-		private static void FlushVpnServer(ulong vpn_server_id)
+		static void FlushVpnServer(ulong vpn_server_id)
 		{
 			DB.Execute($"DELETE FROM `vpn_configs` WHERE `server` = {vpn_server_id};");
 			DB.Execute($"DELETE FROM `vpn_servers` WHERE `id` = {vpn_server_id};");

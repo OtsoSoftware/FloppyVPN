@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace FloppyVPN
 {
@@ -63,4 +64,26 @@ namespace FloppyVPN
 		}
 	}
 
+	/// <summary>
+	/// Simple yet handy extentions to encode responses and decode requests
+	/// </summary>
+	public static class EncodedCommunicationExtensions
+	{
+		public static string DecodeRequest(this HttpContext context)
+		{
+			string? requestBody = null;
+
+			using (StreamReader sr = new(context.Request.Body))
+			{
+				requestBody = sr.ReadToEnd();
+			}
+
+			return requestBody;
+		}
+
+		public static string EncodeAsResponse(this string response)
+		{
+			return Cryption.En(response, Config.cache["master_key"].ToString());
+		}
+	}
 }

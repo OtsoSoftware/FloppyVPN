@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using System.Data;
 using System.Text;
+using System;
 
 namespace FloppyVPN;
 
@@ -26,7 +27,6 @@ public static class Listener
 		app.Urls.Clear();
 		app.Urls.Add("http://*:1513");
 
-		app.UseMiddleware<DecodeRequestFilter>();
 
 
 		//responses if the server is alive
@@ -46,11 +46,12 @@ public static class Listener
 
 
 		//replaces existing config
-		app.MapGet("/CreateConfig", (HttpContext context) =>
+		app.MapPost("/CreateConfig", (HttpContext context) =>
 		{
 			try
 			{
-				return Vpn.CreateConfig();
+				ulong config_id = context.Request.Body.read
+				return Vpn.CreateClientConfig();
 			}
 			catch (Exception ex)
 			{
@@ -67,40 +68,6 @@ public static class Listener
 		});
 
 
-
-
 		app.Run();
-	}
-}
-
-
-public class DecodeRequestFilter : IActionFilter
-{
-	public async void OnActionExecuting(ActionExecutingContext context)
-	{
-		if (!ServerTools.IsValidMasterKey(context.HttpContext.Request))
-		{
-			string requestBody;
-			using (StreamReader sr = new(context.HttpContext.Request.Body))
-			{
-				requestBody = await sr.ReadToEndAsync();
-			}
-
-			string transformedBody = Cryption.De(requestBody, Program.masterKey);
-
-			context.HttpContext.Request.Body = new MemoryStream(Encoding.UTF8.GetBytes(transformedBody));
-		}
-	}
-
-	public void OnActionExecuted(ActionExecutedContext context)
-	{
-	}
-}
-
-public static class EncodeResponseExtention
-{
-	public static string EncodeAsResponse(this string response)
-	{
-		return Cryption.En(response, Program.masterKey);
 	}
 }
