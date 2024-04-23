@@ -4,7 +4,7 @@ namespace FloppyVPN
 {
 	internal static class DB
 	{
-		private static readonly string connectionString = $"Server={Config.cache["db_host"]};Port={Config.cache["db_port"]};Database={Config.cache["db_name"]};User={Config.cache["db_user"]}Password={Config.cache["db_password"]};AllowPublicKeyRetrieval=true;";
+		private static readonly string connectionString = $"Server={Config.cache["db_host"]};Port={Config.cache["db_port"]};Database={Config.cache["db_name"]};User={Config.cache["db_user"]};Password={Config.cache["db_password"]};AllowPublicKeyRetrieval=true;";
 
 
 		public static void Backupper()

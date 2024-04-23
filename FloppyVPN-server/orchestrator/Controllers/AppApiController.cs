@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
 
 namespace FloppyVPN.Controllers
@@ -14,7 +15,7 @@ namespace FloppyVPN.Controllers
 		/// <returns>Data about the account</returns>
 		[HttpGet("GetAccountData/{login}")]
 		[ServiceFilter(typeof(ClientIsBannedValidationFilter))]
-		public string GetAccountData(string login)
+		public IActionResult GetAccountData(string login)
 		{
 			Account account = new(login);
 
@@ -24,19 +25,21 @@ namespace FloppyVPN.Controllers
 				karma.LogRequest(Karma.LogRequestResources.login, false);
 
 				HttpContext.Response.StatusCode = 403;
-				return "Specified account does not exist";
+				return Content("Specified account does not exist");
 			}
 
 			Response.Headers.Add("Content-Type", "application/json");
-			return $@"
-				{{
-					""exists"": {(account.exists ? "true" : "false")},
-					""login"": ""{account.login}"",
-					""date_registered"": ""{account.date_registered}"",
-					""paid_till"": ""{account.paid_till}"",
-					""days_left"": {account.days_left}
-				}}
-			";
+
+			JObject accountInfo = new()
+			{
+				["exists"] = account.exists,
+				["login"] = account.login,
+				["date_registered"] = account.date_registered,
+				["paid_till"] = account.paid_till,
+				["days_left"] = account.days_left
+			};
+
+			return Content(accountInfo.ToString(), "application/json");
 		}
 
 		/// <returns>
@@ -44,7 +47,7 @@ namespace FloppyVPN.Controllers
 		/// </returns>
 		[HttpGet("GetCountriesList/{login}")]
 		[ServiceFilter(typeof(ClientIsBannedValidationFilter))]
-		public string GetCountriesList(string login)
+		public IActionResult GetCountriesList(string login)
 		{
 			Account account = new(login);
 
@@ -54,28 +57,31 @@ namespace FloppyVPN.Controllers
 				karma.LogRequest(Karma.LogRequestResources.login, false);
 
 				HttpContext.Response.StatusCode = 403;
-				return "You do not have access to these routes.";
+				return Content("You do not have access to these routes.");
 			}
 
 			string[] countryCodesOfAccountConfigs =
 				DB.FirstColumnAsArray($@"
-SELECT DISTINCT vs.country_code 
-FROM vpn_servers vs 
-LEFT JOIN vpn_configs vc ON vs.id = vc.server 
-GROUP BY vs.country_code 
-HAVING COUNT(vc.id) < vs.max_configs;
+SELECT DISTINCT vs.country_code
+FROM vpn_servers vs
+LEFT JOIN (
+	SELECT server, COUNT(*) AS config_count
+	FROM vpn_configs
+	GROUP BY server
+) AS vc ON vs.id = vc.server
+WHERE (vc.config_count IS NULL OR vc.config_count < vs.max_configs);
 			");
 
 			string jsonResponse = JsonConvert.SerializeObject(countryCodesOfAccountConfigs);
 
-			Response.Headers.Add("Content-Type", "application/json");
-			return jsonResponse;
+			Response.Headers.Add("content-type", "application/json");
+			return Content(jsonResponse, "application/json");
 		}
 
 		/// <returns>Specific VPN config to connect to</returns>
 		[HttpGet("GetConfig/{login}/{vpn_country_code}/{device_type}")]
 		[ServiceFilter(typeof(ClientIsBannedValidationFilter))]
-		public string GetConfig(string login, string country_code, int device_type)
+		public IActionResult GetConfig(string login, string country_code, int device_type)
 		{
 			Account account = new(login);
 			if (!account.exists)
@@ -84,7 +90,7 @@ HAVING COUNT(vc.id) < vs.max_configs;
 				karma.LogRequest(Karma.LogRequestResources.login, false);
 
 				HttpContext.Response.StatusCode = 403;
-				return "Such account does not exist";
+				return Content("Such account does not exist");
 			}
 
 
@@ -94,19 +100,22 @@ HAVING COUNT(vc.id) < vs.max_configs;
 
 			if (config_id != 0)
 			{
-				return $@"
-					{{
-						""country_code"": ""{server["country_code"]}"",
-						""ipv4"": ""{server["ipv4_address"]}"",
-						""ipv6"": ""{server["ipv6_address"]}"",
-						""config"": ""{config["config"]}"",
-					}}
-				";
+
+				JObject configInfo = new()
+				{
+					["country_code"] = server["country_code"].ToString(),
+					["ipv4"] = server["ipv4_address"].ToString(),
+					["ipv6"] = (server["ipv6_address"] ?? "").ToString(),
+					["config"] = config["config"].ToString()
+				};
+
+				Response.Headers.Add("content-type", "application/json");
+				return Content(configInfo.ToString(), "application/json");
 			}
 			else
 			{
 				Response.StatusCode = 404;
-				return "Could not find a suitable config.";
+				return Content("Could not find a suitable config.");
 			}
 		}
 	}

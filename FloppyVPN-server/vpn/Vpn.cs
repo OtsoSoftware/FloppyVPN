@@ -21,6 +21,12 @@ namespace FloppyVPN
 			string clientName = $"client{config_id}";
 			byte addressNumber = GetFreeAddressNumber();
 
+			bool ipv6supported = false;
+			if (Config.cache["ipv6_support"].ToString() == bool.TrueString)
+			{
+				ipv6supported = true;
+			}
+
 			// Update server config
 			File.AppendAllText(ServerConfigFilePath, $@"
 
@@ -28,18 +34,19 @@ namespace FloppyVPN
 [Peer]
 PublicKey = {clientPublicKey}
 PresharedKey = {clientPSK}
-AllowedIPs = 10.7.0.{addressNumber}/32, fd0d:86fa:c3bc::{addressNumber}/128
+AllowedIPs = 10.7.0.{addressNumber}/32{(ipv6supported ? $", fd0d:86fa:c3bc::{addressNumber}/128" : "")}
 ");
 
 			// Refresh interface gently
 			RefreshInterface();
 
+			// Generate user config
 			string newClientConfig = $@"
 [Interface]
 Address = 10.7.0.{addressNumber}/32
-Address = fd0d:86fa:c3bc::{addressNumber}/128
+{(ipv6supported ? $"Address = fd0d:86fa:c3bc::{addressNumber}/128" : "")}
 DNS = {Config.cache["dnsv4"]}
-DNS = {Config.cache["dnsv6"]}
+{(ipv6supported ? $"DNS = {Config.cache["dnsv6"]}" : "")}
 PrivateKey = {clientPrivateKey}
 Jc = 5
 Jmin = 20
@@ -53,10 +60,10 @@ H4 = 2112541503
 
 [Peer]
 Endpoint = {Config.cache["ipv4_address"]}:51235
-Endpoint = {Config.cache["ipv6_address"]}:51235
+{(ipv6supported ? $"Endpoint = {Config.cache["ipv6_address"]}:51235" : "")}
 PublicKey = {Config.cache["server_public_key"]}
 PresharedKey = {clientPSK}
-AllowedIPs = 0.0.0.0/0, ::/0
+AllowedIPs = 0.0.0.0/0{(ipv6supported ? ", ::/0" : "")}
 PersistentKeepalive = 25
 ";
 
