@@ -242,7 +242,7 @@ namespace FloppyVPN
 			LogIn();
 		}
 
-		private void buttLoginLogout_Click(object sender, EventArgs e)
+		private void buttLogout_Click(object sender, EventArgs e)
 		{
 			DialogResult dialogResult = new MsgBox(Loc.logoutPrompt, "FloppyVPN", MessageBoxIcon.Question, MessageBoxButtons.YesNo).ShowDialog();
 			if (dialogResult == DialogResult.Yes)
@@ -261,9 +261,9 @@ namespace FloppyVPN
 
 		private void buttRefreshData_Click(object sender = null, EventArgs e = null)
 		{
-			labelAccountStatus.Text = $"Login: {Account.maskedlogin}\nPaid till: {Account.paidtill}\nDays left: {Account.daysleft}";
+			Account.LogIn(Account.login);
+			labelAccountStatus.Text = $"Login: {Account.masked_login}\nPaid till: {Account.paid_till}\nDays left: {Account.days_left}";
 
-			labelCurrentIp.Text = "";
 			stripIPpublic.Text = Loc.publicIP + "";
 			stripIPprivate.Text = Loc.privateIP + "";
 		}
@@ -271,6 +271,11 @@ namespace FloppyVPN
 		private void buttAddTime_Click(object sender, EventArgs e)
 		{
 			Shared.LaunchWebsite(PathsAndLinks.masterServerURL + "/login/" + Account.login);
+		}
+
+		void buttSplitTunneling_Click(object sender, EventArgs e)
+		{
+			new MsgBox("Split tunneling is not yet implemented, sorry.");
 		}
 	}
 }

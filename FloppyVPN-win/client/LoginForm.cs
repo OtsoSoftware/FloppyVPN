@@ -3,14 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FloppyVPN
@@ -46,7 +41,7 @@ namespace FloppyVPN
 			Shared.LaunchWebsite($"{PathsAndLinks.masterServerURL}/register");
 		}
 
-		private void buttLoginLogout_Click(object sender, EventArgs e)
+		private void buttLogin_Click(object sender, EventArgs e)
 		{
 			bool successFullyLoggedIn = Account.LogIn(txtLogin.Text);
 			if (successFullyLoggedIn)

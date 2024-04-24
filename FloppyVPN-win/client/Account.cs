@@ -7,40 +7,40 @@ using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace FloppyVPN
 {
 	internal static class Account
 	{
-		public static string master_server_url = "https://localhost/api/";
-
 		public static bool loggedIn = false;
 		public static string login = "";
-		public static string maskedlogin = "";
-		public static string paidtill = "";
-		public static string daysleft = "";
+		public static string masked_login = "";
+		public static string paid_till = "";
+		public static int days_left = -1;
 
 
-		public static bool LogIn(string _login = "") //if no login provided, try using saved one
+		public static bool LogIn(string _login = null) //if no login provided, try using saved one
 		{
-			return true;
-			if (_login == "")
+			if (string.IsNullOrEmpty(_login))
 				_login = IniFile.GetValue("login");
-
-			if (_login == "")
+			if (string.IsNullOrEmpty(_login))
 				return false;
 
-			string[] response = Shared.DownloadString($"{PathsAndLinks.masterServerURL}/userapi/login/{_login}").Split('♂');
-
-			if (response[0] != "Success")
+			string _response = Shared.DownloadString($"{PathsAndLinks.masterServerURL}/Api/App/GetAccountData/{_login}");
+			JObject response = JObject.Parse(_response);
+			
+			if (!(bool)response["exists"])
 				return false;
-
-			maskedlogin = response[1];
-			paidtill = response[2];
-			daysleft = response[3];
 
 			loggedIn = true;
-			login = _login;
+			login = (string)response["login"];
+			masked_login = GetMaskedLogin(login);
+			paid_till = ((DateTime)response["paid_till"]).ToShortDateString();
+			days_left = (int)response["days_left"];
+
 
 			IniFile.SetValue("login", login);
 
@@ -51,10 +51,20 @@ namespace FloppyVPN
 		{
 			loggedIn = false;
 			login = "";
-			maskedlogin = "";
-			paidtill = "";
-			daysleft = "";
+			masked_login = "";
+			paid_till = "";
+			days_left = -1;
+
 			IniFile.SetValue("login", "");
+		}
+
+		private static string GetMaskedLogin(string originalLogin)
+		{
+			string[] parts = originalLogin.Split('-');
+			string part1 = parts[0];
+			string part2 = string.Concat(Enumerable.Repeat("*", parts[1].Length));
+
+			return string.Join("-", part1, part2);
 		}
 
 	}

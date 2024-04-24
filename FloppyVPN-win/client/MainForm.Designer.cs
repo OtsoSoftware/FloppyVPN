@@ -64,7 +64,6 @@
 			this.labelAccountStatus = new System.Windows.Forms.Label();
 			this.statusBar = new System.Windows.Forms.StatusStrip();
 			this.labelCurrentIpCaption = new System.Windows.Forms.ToolStripStatusLabel();
-			this.labelCurrentIp = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.buttRevealIp = new System.Windows.Forms.ToolStripDropDownButton();
 			this.stripIPprivate = new System.Windows.Forms.ToolStripMenuItem();
@@ -273,8 +272,9 @@
 			// buttSplitTunneling
 			// 
 			this.buttSplitTunneling.Name = "buttSplitTunneling";
-			this.buttSplitTunneling.Size = new System.Drawing.Size(192, 26);
+			this.buttSplitTunneling.Size = new System.Drawing.Size(224, 26);
 			this.buttSplitTunneling.Text = "Split tunneling...";
+			this.buttSplitTunneling.Click += new System.EventHandler(this.buttSplitTunneling_Click);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -393,23 +393,23 @@
 			// buttLogout
 			// 
 			this.buttLogout.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.buttLogout.Location = new System.Drawing.Point(242, 85);
+			this.buttLogout.Location = new System.Drawing.Point(228, 85);
 			this.buttLogout.Margin = new System.Windows.Forms.Padding(2);
 			this.buttLogout.Name = "buttLogout";
-			this.buttLogout.Size = new System.Drawing.Size(109, 26);
+			this.buttLogout.Size = new System.Drawing.Size(123, 26);
 			this.buttLogout.TabIndex = 3;
 			this.buttLogout.Text = "&Log out";
 			this.buttLogout.UseCompatibleTextRendering = true;
 			this.buttLogout.UseVisualStyleBackColor = false;
-			this.buttLogout.Click += new System.EventHandler(this.buttLoginLogout_Click);
+			this.buttLogout.Click += new System.EventHandler(this.buttLogout_Click);
 			// 
 			// buttRefreshData
 			// 
 			this.buttRefreshData.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.buttRefreshData.Location = new System.Drawing.Point(242, 51);
+			this.buttRefreshData.Location = new System.Drawing.Point(228, 51);
 			this.buttRefreshData.Margin = new System.Windows.Forms.Padding(2);
 			this.buttRefreshData.Name = "buttRefreshData";
-			this.buttRefreshData.Size = new System.Drawing.Size(109, 26);
+			this.buttRefreshData.Size = new System.Drawing.Size(123, 26);
 			this.buttRefreshData.TabIndex = 2;
 			this.buttRefreshData.Text = "Refresh";
 			this.buttRefreshData.UseVisualStyleBackColor = true;
@@ -418,10 +418,10 @@
 			// buttAddTime
 			// 
 			this.buttAddTime.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.buttAddTime.Location = new System.Drawing.Point(242, 18);
+			this.buttAddTime.Location = new System.Drawing.Point(228, 18);
 			this.buttAddTime.Margin = new System.Windows.Forms.Padding(2);
 			this.buttAddTime.Name = "buttAddTime";
-			this.buttAddTime.Size = new System.Drawing.Size(109, 26);
+			this.buttAddTime.Size = new System.Drawing.Size(123, 26);
 			this.buttAddTime.TabIndex = 1;
 			this.buttAddTime.Text = "Add time...";
 			this.buttAddTime.UseVisualStyleBackColor = true;
@@ -435,7 +435,7 @@
 			this.labelAccountStatus.Name = "labelAccountStatus";
 			this.labelAccountStatus.Size = new System.Drawing.Size(208, 75);
 			this.labelAccountStatus.TabIndex = 0;
-			this.labelAccountStatus.Text = "Login: d5fez******\r\nPaid until: 2024.03.26\r\nDays left: 85";
+			this.labelAccountStatus.Text = "Login: d5fe-****\r\nPaid until: 2024.03.26\r\nDays left: 22";
 			this.labelAccountStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.labelAccountStatus.UseCompatibleTextRendering = true;
 			// 
@@ -446,7 +446,6 @@
 			this.statusBar.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.labelCurrentIpCaption,
-            this.labelCurrentIp,
             this.toolStripStatusLabel2,
             this.buttRevealIp});
 			this.statusBar.Location = new System.Drawing.Point(0, 414);
@@ -460,12 +459,6 @@
 			this.labelCurrentIpCaption.Name = "labelCurrentIpCaption";
 			this.labelCurrentIpCaption.Size = new System.Drawing.Size(78, 18);
 			this.labelCurrentIpCaption.Text = "Current IP:";
-			// 
-			// labelCurrentIp
-			// 
-			this.labelCurrentIp.Name = "labelCurrentIp";
-			this.labelCurrentIp.Size = new System.Drawing.Size(156, 18);
-			this.labelCurrentIp.Text = "ffff:ffff:ffff:ffff / 127.0.0.1";
 			// 
 			// toolStripStatusLabel2
 			// 
@@ -642,7 +635,6 @@
 		private System.Windows.Forms.Button buttRefreshData;
 		private System.Windows.Forms.Button buttAddTime;
 		private System.Windows.Forms.Label labelAccountStatus;
-		private System.Windows.Forms.ToolStripStatusLabel labelCurrentIp;
 		private System.Windows.Forms.ToolStripMenuItem buttLanguage;
 		private System.Windows.Forms.ToolStripMenuItem buttEN;
 		private System.Windows.Forms.ToolStripMenuItem buttRU;

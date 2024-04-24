@@ -9,7 +9,7 @@ namespace FloppyVPN.Controllers
 	public class WebsiteApiController : ControllerBase
 	{
 		[HttpGet("AccountExists/{login}")]
-		[ServiceFilter(typeof(UserIsBannedValidationFilter))]
+		[ServiceFilter(typeof(BannedUsersFilter))]
 		public string AccountExists(string login)
 		{
 			Account acc = new(login);
@@ -32,14 +32,14 @@ namespace FloppyVPN.Controllers
 		}
 
 		[HttpGet("RegisterAccount")]
-		[ServiceFilter(typeof(UserIsSoftBannedValidationFilter))]
+		[ServiceFilter(typeof(SoftbannedUsersFilter))]
 		public string RegisterAccount()
 		{
 			return Rialize.Se<DataRow>(Account.Register().accountData);
 		}
 
 		[HttpGet("LogintoAccount/{login}")]
-		[ServiceFilter(typeof(UserIsBannedValidationFilter))]
+		[ServiceFilter(typeof(BannedUsersFilter))]
 		public string LogintoAccount(string login)
 		{
 			Account acc = new(login);
@@ -101,7 +101,7 @@ namespace FloppyVPN.Controllers
 		}
 
 		[HttpGet("CreateNewPayment/{alias}/{currency_code}/{months_amount}")]
-		[ServiceFilter(typeof(UserIsBannedValidationFilter))]
+		[ServiceFilter(typeof(BannedUsersFilter))]
 		public string CreateNewPayment(string alias, string currency_code, int months_amount)
 		{
 			//check if an acount of such alias exists:
@@ -123,7 +123,7 @@ namespace FloppyVPN.Controllers
 		}
 
 		[HttpGet("GetPaymentInfo/{payment_id}")]
-		[ServiceFilter(typeof(UserIsBannedValidationFilter))]
+		[ServiceFilter(typeof(BannedUsersFilter))]
 		public string GetPaymentInfo(string payment_id)
 		{
 			DataTable _paymentInfo = DB.GetDataTable($"SELECT * FROM `payments` WHERE `id` = @payment_id;", 

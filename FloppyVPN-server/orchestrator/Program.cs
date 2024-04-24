@@ -58,9 +58,9 @@ namespace FloppyVPN
 			});
 
 			builder.Services.AddScoped<MasterKeyValidationFilter>();
-			builder.Services.AddScoped<UserIsSoftBannedValidationFilter>();
-			builder.Services.AddScoped<UserIsBannedValidationFilter>();
-			builder.Services.AddScoped<ClientIsBannedValidationFilter>();
+			builder.Services.AddScoped<SoftbannedUsersFilter>();
+			builder.Services.AddScoped<BannedUsersFilter>();
+			builder.Services.AddScoped<BannedClientsFilter>();
 
 
 			// Disable crazy logging

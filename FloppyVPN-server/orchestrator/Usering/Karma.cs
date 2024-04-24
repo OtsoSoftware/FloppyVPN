@@ -23,10 +23,9 @@
 
 		/// <summary>
 		/// Last hours during which misusage will be checked.
-		/// Recommended to set between 12 and 1.
-		/// Must be negative
+		/// Recommended to set between 12 and 1. (Must be negative)
 		/// </summary>
-		readonly double LastHoursToCheckMisusageIn = -4;
+		readonly double LastHoursToCheckMisusageIn = -2;
 
 		/// <summary>
 		/// How many failed requests per check period are allowed until user gets a ban

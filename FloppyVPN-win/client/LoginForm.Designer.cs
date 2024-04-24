@@ -156,7 +156,7 @@
 			this.buttLogin.Text = "&Log in";
 			this.buttLogin.UseCompatibleTextRendering = true;
 			this.buttLogin.UseVisualStyleBackColor = false;
-			this.buttLogin.Click += new System.EventHandler(this.buttLoginLogout_Click);
+			this.buttLogin.Click += new System.EventHandler(this.buttLogin_Click);
 			// 
 			// LoginForm
 			// 

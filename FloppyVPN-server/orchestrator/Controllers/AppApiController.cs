@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Text.RegularExpressions;
 
 namespace FloppyVPN.Controllers
 {
@@ -14,7 +13,7 @@ namespace FloppyVPN.Controllers
 	{
 		/// <returns>Data about the account</returns>
 		[HttpGet("GetAccountData/{login}")]
-		[ServiceFilter(typeof(ClientIsBannedValidationFilter))]
+		[ServiceFilter(typeof(BannedClientsFilter))]
 		public IActionResult GetAccountData(string login)
 		{
 			Account account = new(login);
@@ -46,7 +45,7 @@ namespace FloppyVPN.Controllers
 		/// List of availables country codes user has VPN configs in that belong to a user
 		/// </returns>
 		[HttpGet("GetCountriesList/{login}")]
-		[ServiceFilter(typeof(ClientIsBannedValidationFilter))]
+		[ServiceFilter(typeof(BannedClientsFilter))]
 		public IActionResult GetCountriesList(string login)
 		{
 			Account account = new(login);
@@ -60,8 +59,7 @@ namespace FloppyVPN.Controllers
 				return Content("You do not have access to these routes.");
 			}
 
-			string[] countryCodesOfAccountConfigs =
-				DB.FirstColumnAsArray($@"
+			string[] countryCodesAvailable = DB.FirstColumnAsArray($@"
 SELECT DISTINCT vs.country_code
 FROM vpn_servers vs
 LEFT JOIN (
@@ -72,15 +70,15 @@ LEFT JOIN (
 WHERE (vc.config_count IS NULL OR vc.config_count < vs.max_configs);
 			");
 
-			string jsonResponse = JsonConvert.SerializeObject(countryCodesOfAccountConfigs);
+			string jsonResponse = JsonConvert.SerializeObject(countryCodesAvailable);
 
-			Response.Headers.Add("content-type", "application/json");
+			Response.Headers.Add("Content-Type", "application/json");
 			return Content(jsonResponse, "application/json");
 		}
 
 		/// <returns>Specific VPN config to connect to</returns>
 		[HttpGet("GetConfig/{login}/{vpn_country_code}/{device_type}")]
-		[ServiceFilter(typeof(ClientIsBannedValidationFilter))]
+		[ServiceFilter(typeof(BannedClientsFilter))]
 		public IActionResult GetConfig(string login, string country_code, int device_type)
 		{
 			Account account = new(login);
@@ -109,7 +107,7 @@ WHERE (vc.config_count IS NULL OR vc.config_count < vs.max_configs);
 					["config"] = config["config"].ToString()
 				};
 
-				Response.Headers.Add("content-type", "application/json");
+				Response.Headers.Add("Content-Type", "application/json");
 				return Content(configInfo.ToString(), "application/json");
 			}
 			else

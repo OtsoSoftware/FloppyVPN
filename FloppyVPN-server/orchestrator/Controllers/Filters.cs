@@ -6,6 +6,11 @@ namespace FloppyVPN.Controllers;
 
 public class Filters
 {
+	/// <summary>
+	/// To be used to obtain user's hashed IP address when communicating indirectly (ex. via website server)
+	/// </summary>
+	/// <param name="request"></param>
+	/// <returns></returns>
 	public static string GetHashedIpFromHeaders(HttpRequest request)
 	{
 		try
@@ -19,7 +24,7 @@ public class Filters
 	}
 }
 
-public class UserIsBannedValidationFilter : IActionFilter
+public class BannedUsersFilter : IActionFilter
 {
 	public void OnActionExecuting(ActionExecutingContext context)
 	{
@@ -44,7 +49,7 @@ public class UserIsBannedValidationFilter : IActionFilter
 	}
 }
 
-public class UserIsSoftBannedValidationFilter : IActionFilter
+public class SoftbannedUsersFilter : IActionFilter
 {
 	public void OnActionExecuting(ActionExecutingContext context)
 	{
@@ -70,7 +75,7 @@ public class UserIsSoftBannedValidationFilter : IActionFilter
 /// <summary>
 /// Use when communicating directly from client to server. User's hashed ip will be obtained directly
 /// </summary>
-public class ClientIsBannedValidationFilter : IActionFilter
+public class BannedClientsFilter : IActionFilter
 {
 	Karma userKarma;
 
