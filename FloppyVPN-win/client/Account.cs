@@ -29,7 +29,9 @@ namespace FloppyVPN
 			if (string.IsNullOrEmpty(_login))
 				return false;
 
-			string _response = Shared.DownloadString($"{PathsAndLinks.masterServerURL}/Api/App/GetAccountData/{_login}");
+			string _response = Communicator.GetString($"{PathsAndLinks.orchestratorURL}/Api/App/GetAccountData/{_login}",
+				out _, out _);
+
 			JObject response = JObject.Parse(_response);
 			
 			if (!(bool)response["exists"])
@@ -66,6 +68,5 @@ namespace FloppyVPN
 
 			return string.Join("-", part1, part2);
 		}
-
 	}
 }

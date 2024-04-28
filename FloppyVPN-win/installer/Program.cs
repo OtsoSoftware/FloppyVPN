@@ -24,8 +24,8 @@ namespace FloppyVPN
 		public static string startmenushortcutfolder = Path.Combine(appdata, "Microsoft", "Windows", "Start Menu");
 		public static string startmenushortcutfile = Path.Combine(startmenushortcutfolder, "FloppyVPN.lnk");
 
-		public static string linkToDistro = $"{PathsAndLinks.masterServerURL}/repo/";
-		public static string linkToDriver = $"{PathsAndLinks.masterServerURL}/repo/";
+		public static string linkToDistro = $"{PathsAndLinks.orchestratorURL}/repo/";
+		public static string linkToDriver = $"{PathsAndLinks.orchestratorURL}/repo/";
 
 
 
@@ -54,7 +54,7 @@ namespace FloppyVPN
 				language = "ru";
 
 			//use custom exception handler:
-			Application.ThreadException += new ThreadExceptionEventHandler(Shared.Exception);
+			Application.ThreadException += new ThreadExceptionEventHandler(Utils.Exception);
 
 			//fix DPI:
 			if (Environment.OSVersion.Version.Major >= 6)

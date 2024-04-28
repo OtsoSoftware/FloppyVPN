@@ -5,13 +5,11 @@
 _______________________________
 
 ##### patching linux kernel
-#### tip: ubuntu server 22.04 is recommended
 
 #0
 apt update
 apt dist-upgrade
 reboot
-//apt install --install-recommends linux-generic-hwe-22.04
 apt install linux-headers-$(uname -r)
 
 #1
@@ -64,25 +62,25 @@ ip li add dev awg0 type amneziawg
 
 # Setup forwarding
 sysctl -w net.ipv4.conf.all.forwarding=1
+
+### if ipv6 supported:
 sysctl -w net.ipv6.conf.all.forwarding=1
+
 sysctl -p
 
-# From now, either go and blast software which will handle things itself from now on,
-# or continue reading to do things manually by script or manually
+
+
+
+
+
+# From now, either go and blast floppyvpn vpn server software which will handle things itself from now on, or continue reading to learn how stuff is done
 
 
 
 
 
 
-
-
-
-
-
-
-
-# Use script to create server and client configs
+# Use script to create sample server and client configs
 *use script*
 
 # Launch awg0
@@ -91,11 +89,7 @@ awg-quick up awg0
 awg
 
 
+
 # How to refresh awg0 without clients sessions interruptions:
 awg syncconf awg0 <(awg-quick strip awg0)
 
-
-_______________________________________________________
-##### Problems?
-##### Delete all AmneziaWG files (AWG remains in the kernel):
-sudo apt purge amneziawg amneziawg-tools amneziawg-dkms

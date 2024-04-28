@@ -12,9 +12,10 @@ namespace FloppyVPN
 	public static class Vpn
 	{
 		public static bool connected = false;
-		public static string pathToConf = Path.Combine(PathsAndLinks.appDir, "FloppyVPN.conf");
-		public static string tunnelName = "FloppyVPN";
-		public static string pathToDriver = Path.Combine(Path.GetPathRoot(Environment.SystemDirectory), "Program Files\\WireSock VPN Client\\bin\\wiresock-client.exe");
+		private static readonly string pathToConf = Path.Combine(PathsAndLinks.appDataDir, "FloppyVPN.conf");
+		private static readonly string tunnelName = "FloppyVPN";
+		private static readonly string processName = "floppydriver";
+		public static readonly string pathToDriver = Path.Combine(PathsAndLinks.appDir, "driver", $"{processName}.exe");
 
 
 		public static void Connect()
@@ -28,9 +29,7 @@ namespace FloppyVPN
 
 				ProcessStartInfo psi = new ProcessStartInfo();
 				psi.FileName = pathToDriver;
-				psi.Arguments = $"run -config \"{pathToConf}\" -log-level none";
-				//if () //use virtual adapter if user prefers to
-				//	psi.Arguments += " -lac";
+				psi.Arguments = $"/installtunnelservice \"{pathToConf}\"";
 				psi.RedirectStandardOutput = true;
 				psi.RedirectStandardError = true;
 				psi.UseShellExecute = false;
@@ -42,10 +41,11 @@ namespace FloppyVPN
 				}
 
 				Task.Delay(new Random().Next(300, 700)).GetAwaiter().GetResult();
+				connected = true;
 			}
 			catch (Exception ex)
 			{
-				throw new Exception($"Error running driver: {ex.Message}");
+				throw new Exception($"Error connecting via driver: {ex.Message}");
 			}
 		}
 
@@ -53,20 +53,35 @@ namespace FloppyVPN
 		{
 			try
 			{
-				foreach (var process in Process.GetProcessesByName(Path.GetFileNameWithoutExtension(pathToDriver)))
+				ProcessStartInfo psi = new ProcessStartInfo();
+				psi.FileName = pathToDriver;
+				psi.Arguments = $"/uninstalltunnelservice \"{tunnelName}\"";
+				psi.RedirectStandardOutput = true;
+				psi.RedirectStandardError = true;
+				psi.UseShellExecute = false;
+				psi.CreateNoWindow = true;
+
+				using (Process process = new Process { StartInfo = psi })
 				{
-					process.Kill();
+					process.Start();
 				}
 			}
-			catch (Exception ex)
+			catch
 			{
-				throw new Exception($"Error stopping driver: {ex.Message}");
 			}
-		}
+			finally
+			{
+				try
+				{
+					foreach (Process process in Process.GetProcessesByName(processName))
+						process.Kill();
+				}
+				catch
+				{
+				}
 
-		public static void StartKillSwitch()
-		{
-
+				connected = false;
+			}
 		}
 	}
 }

@@ -18,12 +18,6 @@ namespace FloppyVPN
 		[STAThread]
 		static void Main(string[] args)
 		{
-			//get chosen language or detect it:
-			Loc.lang = IniFile.GetValue("lang");
-			if (Loc.lang.Length != 2)
-				Loc.lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToLower();
-			Loc.Alize();
-
 			//only single instance:
 			Mutex mutex = new Mutex(true, "q2gcl75BlLXN9K60SVT3dcJJ3P8eSQQi", out bool result);
 			if (!result)
@@ -36,42 +30,44 @@ namespace FloppyVPN
 			//DPI fix:
 			if (Environment.OSVersion.Version.Major >= 6)
 				SetProcessDPIAware();
-
-			//disable SSL warnings:
-			ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+			Application.SetCompatibleTextRenderingDefault(false);
 
 			//use custom exception handler:
-			Application.ThreadException += new ThreadExceptionEventHandler(Shared.Exception);
+			Application.ThreadException += new ThreadExceptionEventHandler(Utils.Exception);
 
+			//create appdata folder
 			try
 			{
-				Directory.CreateDirectory(Path.GetDirectoryName(PathsAndLinks.iniFilePath));
+				Directory.CreateDirectory(PathsAndLinks.appDataDir);
 			}
 			catch
 			{
 			}
+
+			//get chosen language or detect it:
+			Loc.lang = IniFile.GetValue("lang");
+			if (Loc.lang.Length != 2)
+				Loc.lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToLower();
+			Loc.Alize();
 
 			//check for driver existance:
-			//if (!File.Exists(Vpn.pathToDriver))
-			//{
-			//	new MsgBox(Loc.cantFindDriver, "FloppyVPN", MessageBoxIcon.Error).ShowDialog();
-			//	Environment.Exit(0);
-			//}
+			if (!File.Exists(Vpn.pathToDriver))
+			{
+				new MsgBox(Loc.cantFindDriver, "FloppyVPN", MessageBoxIcon.Error).ShowDialog();
+				Environment.Exit(0);
+			}
 
+			//flag for auto-connect on launch if set to do so:
 			bool connectAfterLaunch = false;
-			try
-			{
-				if (args[0].Contains("--connect after launch"))
-					connectAfterLaunch = true;
-			}
-			catch
-			{
-			}
+			if (args.Length > 0 && (args[0].Contains("--connect-after-launch") || args[0].Contains("-cal")))
+				connectAfterLaunch = true;
 
+			//kill possible driver running from previous sessions:
 			Vpn.Disconnect();
 
-			Application.SetCompatibleTextRenderingDefault(false);
+			//finally, start the gui:
 			Application.Run(new MainForm(connectAfterLaunch));
+
 		}
 	}
 }

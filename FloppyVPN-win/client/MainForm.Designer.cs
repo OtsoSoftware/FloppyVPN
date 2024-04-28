@@ -272,7 +272,7 @@
 			// buttSplitTunneling
 			// 
 			this.buttSplitTunneling.Name = "buttSplitTunneling";
-			this.buttSplitTunneling.Size = new System.Drawing.Size(224, 26);
+			this.buttSplitTunneling.Size = new System.Drawing.Size(192, 26);
 			this.buttSplitTunneling.Text = "Split tunneling...";
 			this.buttSplitTunneling.Click += new System.EventHandler(this.buttSplitTunneling_Click);
 			// 
@@ -457,8 +457,8 @@
 			// labelCurrentIpCaption
 			// 
 			this.labelCurrentIpCaption.Name = "labelCurrentIpCaption";
-			this.labelCurrentIpCaption.Size = new System.Drawing.Size(78, 18);
-			this.labelCurrentIpCaption.Text = "Current IP:";
+			this.labelCurrentIpCaption.Size = new System.Drawing.Size(47, 18);
+			this.labelCurrentIpCaption.Text = "v1.0.0";
 			// 
 			// toolStripStatusLabel2
 			// 
@@ -579,7 +579,7 @@
 			this.MaximizeBox = false;
 			this.Name = "MainForm";
 			this.Text = "FloppyVPN";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_Closing);
 			this.Controls.SetChildIndex(this.borderPanel, 0);
 			this.windowPanel.ResumeLayout(false);
 			this.windowPanel.PerformLayout();

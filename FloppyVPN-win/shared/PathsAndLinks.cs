@@ -5,12 +5,12 @@ namespace FloppyVPN
 {
 	public static class PathsAndLinks
 	{
-		public static readonly string appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-		public static readonly string appDir = Path.Combine(appDataDir, "FloppyVPN");
-		public static readonly string startupShortcutPath = Path.Combine(PathsAndLinks.appDataDir, "Microsoft\\Windows\\Start Menu\\Programs\\Startup", "FloppyVPN.lnk");
-		public static readonly string iniFilePath = Path.Combine(PathsAndLinks.appDir, "config.ini");
+		public static readonly string appDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FloppyVPN");
+		public static readonly string appDir = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
+		public static readonly string startupShortcutPath = Path.Combine(appDataDir, "Microsoft\\Windows\\Start Menu\\Programs\\Startup", "FloppyVPN.lnk");
+		public static readonly string iniFilePath = Path.Combine(appDataDir, "config.ini");
 
-		public static readonly string masterServerURL = "http://localhost:1440";
+		public static readonly string orchestratorURL = "http://localhost:1440";
 		public static readonly string websiteURL = "http://localhost:1441";
 	}
 }

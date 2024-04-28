@@ -22,7 +22,7 @@ namespace FloppyVPN
 			if (cachedlogin != "")
 			{
 				txtLogin.Text = cachedlogin;
-				buttLogin.PerformClick();
+				buttLogin_Click();
 			}
 		}
 
@@ -38,12 +38,13 @@ namespace FloppyVPN
 
 		private void buttRegister_Click(object sender, EventArgs e)
 		{
-			Shared.LaunchWebsite($"{PathsAndLinks.masterServerURL}/register");
+			Utils.LaunchWebsite($"{PathsAndLinks.websiteURL}/register");
 		}
 
-		private void buttLogin_Click(object sender, EventArgs e)
+		private void buttLogin_Click(object sender = null, EventArgs e = null)
 		{
 			bool successFullyLoggedIn = Account.LogIn(txtLogin.Text);
+
 			if (successFullyLoggedIn)
 			{
 				this.DialogResult = DialogResult.Yes;
@@ -55,6 +56,5 @@ namespace FloppyVPN
 				new MsgBox(Loc.unableToLogInText, Loc.unableToLoginCaption, MessageBoxIcon.Error).ShowDialog();
 			}
 		}
-
 	}
 }

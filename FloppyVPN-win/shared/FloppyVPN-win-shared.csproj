@@ -52,6 +52,7 @@
     <Compile Include="ClassicForm.Designer.cs">
       <DependentUpon>ClassicForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Communicator.cs" />
     <Compile Include="MsgBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,7 +67,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="DisplayScaling.cs" />
-    <Compile Include="Shared.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="ShortcutMaker.cs" />
   </ItemGroup>
   <ItemGroup>

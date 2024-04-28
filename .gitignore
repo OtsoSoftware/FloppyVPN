@@ -4,6 +4,7 @@
 **/bin/
 **/obj/
 **/.deps/
+**/.distfiles/
 
 # Windows shortcuts
 *.lnk

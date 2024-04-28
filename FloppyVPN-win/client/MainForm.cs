@@ -20,25 +20,20 @@ namespace FloppyVPN
 	{
 		public MainForm(bool connectAfterLaunch)
 		{
-			Application.ThreadException += new ThreadExceptionEventHandler(Shared.Exception);
-
-			//try logging in silently from saved data. if not  -prompt user for login
-			Account.LogIn();
-			Task.Delay(100).GetAwaiter().GetResult();
-			if (!Account.loggedIn)
-				LogIn();
+			Application.ThreadException += new ThreadExceptionEventHandler(Utils.Exception);
 
 			InitializeComponent();
 			ApplyLocalizedTexts();
 
 			if (connectAfterLaunch)
 			{
-				Trayify(true);
+				
+				ToTray(true);
 				Connect();
 			}
 		}
 
-		void Trayify(bool hideIsTrue_showIsFalse)
+		void ToTray(bool hideIsTrue_showIsFalse)
 		{
 			if (hideIsTrue_showIsFalse)
 			{
@@ -54,13 +49,18 @@ namespace FloppyVPN
 			}
 		}
 
-		private void ApplyLocalizedTexts()
+		void ApplyLocalizedTexts()
 		{
-
 			if (Vpn.connected)
+			{
+				buttConnectDisconnect.Text = Loc.disconnect;
 				labelConnectionStatus.Text = Loc.statusConnected;
+			}
 			else
+			{
+				buttConnectDisconnect.Text = Loc.connect;
 				labelConnectionStatus.Text = Loc.statusNotConnected;
+			}
 
 			buttRefreshData_Click();
 
@@ -80,7 +80,7 @@ namespace FloppyVPN
 			buttStartup.Text = Loc.startupButton;
 			buttLanguage.Text = Loc.languageButton;
 			buttRefreshData.Text = Loc.refreshbutton;
-			labelCurrentIpCaption.Text = Loc.currentIP;
+			//labelCurrentIpCaption.Text = Loc.currentIP;
 			buttAddToStartup.Text = Loc.addToStartup;
 			buttRemoveFromStartup.Text = Loc.removeFromStartup;
 			buttUpdate.Text = Loc.updateButton;
@@ -88,12 +88,12 @@ namespace FloppyVPN
 			buttRevealIp.Text = Loc.revealIP;
 		}
 
-		private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+		void MainForm_Closing(object sender, FormClosingEventArgs e)
 		{
 			DialogResult dialogResult = DialogResult.Yes;
 
 			if (Vpn.connected)
-				dialogResult = new MsgBox("Really close VPN?", "a captiooon? wtf?", MessageBoxIcon.Question, MessageBoxButtons.YesNo).ShowDialog();
+				dialogResult = new MsgBox("Are you sure to close FLoppyVPN even though it is connected right now???", "Caution!", MessageBoxIcon.Question, MessageBoxButtons.YesNo).ShowDialog();
 
 			if (dialogResult == DialogResult.Yes)
 			{
@@ -105,7 +105,7 @@ namespace FloppyVPN
 			}
 		}
 
-		private void boxClose_Click(object sender, EventArgs e)
+		void boxClose_Click(object sender, EventArgs e)
 		{
 			Close();
 		}
@@ -124,12 +124,12 @@ namespace FloppyVPN
 			Environment.Exit(0);
 		}
 
-		private void buttShow_Click(object sender, EventArgs e)
+		void buttShow_Click(object sender, EventArgs e)
 		{
 
 		}
 
-		private void trayIcon_MouseClick(object sender, MouseEventArgs e)
+		void trayIcon_MouseClick(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Right)
 			{
@@ -144,7 +144,7 @@ namespace FloppyVPN
 			}
 		}
 
-		private void buttConnectDisconnect_Click(object sender, EventArgs e)
+		void buttConnectDisconnect_Click(object sender, EventArgs e)
 		{
 			if (Vpn.connected)
 				Disconnect();
@@ -154,12 +154,11 @@ namespace FloppyVPN
 			buttRefreshData_Click();
 		}
 
-		private void Connect()
+		void Connect()
 		{
 			try
 			{
 				Vpn.Connect();
-				Vpn.connected = true;
 				buttConnectDisconnect.Text = Loc.disconnect;
 				buttConnectDisconnect.Image = Resources.connected;
 				labelConnectionStatus.Text = Loc.statusConnected;
@@ -174,7 +173,7 @@ namespace FloppyVPN
 			}
 		}
 
-		private void Disconnect()
+		void Disconnect()
 		{
 			Vpn.Disconnect();
 			Vpn.connected = false;
@@ -204,7 +203,7 @@ namespace FloppyVPN
 			ApplyLocalizedTexts();
 		}
 
-		private void LogIn()
+		void LogIn()
 		{
 			try
 			{
@@ -218,23 +217,16 @@ namespace FloppyVPN
 			DialogResult logined = new LoginForm().ShowDialog();
 			if (logined == DialogResult.Yes)
 			{
-				// buttRefreshData_Click();
+				buttRefreshData_Click();
 			}
 			else
 			{
-				DisconnectAndQuit();
-			}
-
-			try
-			{
-
-			}
-			catch
-			{
+				new Thread(() => new LoginForm().Show()).Start();
+				Close();
 			}
 		}
 
-		private void LogOut()
+		void LogOut()
 		{
 			Disconnect();
 			Account.LogOut();
@@ -242,35 +234,42 @@ namespace FloppyVPN
 			LogIn();
 		}
 
-		private void buttLogout_Click(object sender, EventArgs e)
+		void buttLogout_Click(object sender, EventArgs e)
 		{
 			DialogResult dialogResult = new MsgBox(Loc.logoutPrompt, "FloppyVPN", MessageBoxIcon.Question, MessageBoxButtons.YesNo).ShowDialog();
 			if (dialogResult == DialogResult.Yes)
 				LogOut();
 		}
 
-		private void buttUpdate_Click(object sender, EventArgs e)
+		void buttUpdate_Click(object sender, EventArgs e)
 		{
 
 		}
 
-		private void buttWebsite_Click(object sender, EventArgs e)
+		void buttWebsite_Click(object sender, EventArgs e)
 		{
-
+			Utils.LaunchWebsite(PathsAndLinks.websiteURL);
 		}
 
-		private void buttRefreshData_Click(object sender = null, EventArgs e = null)
+		void buttRefreshData_Click(object sender = null, EventArgs e = null)
 		{
 			Account.LogIn(Account.login);
 			labelAccountStatus.Text = $"Login: {Account.masked_login}\nPaid till: {Account.paid_till}\nDays left: {Account.days_left}";
 
-			stripIPpublic.Text = Loc.publicIP + "";
-			stripIPprivate.Text = Loc.privateIP + "";
+			stripIPpublic.Text = Loc.publicIP + ConnectionConfig.IPv4Address ?? "-";
+			stripIPprivate.Text = Loc.privateIP + ConnectionConfig.IPv6Address ?? "-";
 		}
 
-		private void buttAddTime_Click(object sender, EventArgs e)
+		void buttAddTime_Click(object sender, EventArgs e)
 		{
-			Shared.LaunchWebsite(PathsAndLinks.masterServerURL + "/login/" + Account.login);
+			string newAlias = Communicator.GetString($"{PathsAndLinks.orchestratorURL}/Api/App/GetPaymentAlias/{Account.login}",
+				out bool isSuccessful,
+				out _);
+
+			if (isSuccessful)
+				Utils.LaunchWebsite($"{PathsAndLinks.websiteURL}/Account/TopUp/{newAlias}");
+			else
+				new MsgBox(newAlias, "Error getting an alias").ShowDialog();
 		}
 
 		void buttSplitTunneling_Click(object sender, EventArgs e)

@@ -13,7 +13,7 @@ namespace FloppyVPN
 		static void Main()
 		{
 			//use custom exception handler:
-			Application.ThreadException += new ThreadExceptionEventHandler(Shared.Exception);
+			Application.ThreadException += new ThreadExceptionEventHandler(Utils.Exception);
 
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new UninstallForm());

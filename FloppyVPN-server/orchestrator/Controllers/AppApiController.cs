@@ -98,7 +98,6 @@ WHERE (vc.config_count IS NULL OR vc.config_count < vs.max_configs);
 
 			if (config_id != 0)
 			{
-
 				JObject configInfo = new()
 				{
 					["country_code"] = server["country_code"].ToString(),
@@ -114,6 +113,22 @@ WHERE (vc.config_count IS NULL OR vc.config_count < vs.max_configs);
 			{
 				Response.StatusCode = 404;
 				return Content("Could not find a suitable config.");
+			}
+		}
+
+		/// <returns>Payment alias using which user can top up account balance</returns>
+		[HttpGet("GetPaymentAlias/{login}")]
+		[ServiceFilter(typeof(BannedClientsFilter))]
+		public string GetPaymentAlias(string login)
+		{
+			if (new Account(login).exists)
+			{
+				return Aliasing.NewAliasForLogin(login);
+			}
+			else
+			{
+				Response.StatusCode = 404;
+				return "The account to create alias for does not seem to exist.";
 			}
 		}
 	}

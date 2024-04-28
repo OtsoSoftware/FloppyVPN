@@ -51,6 +51,10 @@
 		public static string privateIP = "";
 		public static string x = "";
 
+
+		/// <summary>
+		/// Applies localized strings
+		/// </summary>
 		public static void Alize()
 		{
 			switch (lang)
@@ -61,7 +65,7 @@
 					errorConnectingCaption = "Could not connect";
 					statusNotConnected = "Disconnected";
 					statusConnected = "Connected";
-					cantFindDriver = "Could not find wg.exe. Fatal.\nSome installation files may be missing.";
+					cantFindDriver = "Could not find floppydriver.exe. Fatal.\nSome installation files may be missing.";
 					fileMenu = "&File";
 					optionsMenu = "&Options";
 					helpMenu = "&Help";
@@ -104,7 +108,7 @@
 					errorConnectingCaption = "Не удалось подключить";
 					statusNotConnected = "Отключено";
 					statusConnected = "Подключено";
-					cantFindDriver = "Не удалось найти wg.exe. Критично.\nНекоторых файлов установки явно недостаёт.";
+					cantFindDriver = "Не удалось найти floppydriver.exe. Критично.\nНекоторых файлов установки явно недостаёт.";
 					fileMenu = "Файл";
 					optionsMenu = "Опции";
 					helpMenu = "Помощь";
@@ -147,7 +151,7 @@
 					errorConnectingCaption = "Не владося під'єднати";
 					statusNotConnected = "Від'єднано";
 					statusConnected = "Під'єднано";
-					cantFindDriver = "Не вдалося знайти wg.exe. Це недобре...\nДеякі файли встановлення загублені.";
+					cantFindDriver = "Не вдалося знайти floppydriver.exe. Це недобре...\nДеякі файли встановлення загублені.";
 					fileMenu = "Файл";
 					optionsMenu = "Опції";
 					helpMenu = "Допомога";
@@ -190,7 +194,7 @@
 					errorConnectingCaption = "接続に失敗しました";
 					statusNotConnected = "無効";
 					statusConnected = "接続されている";
-					cantFindDriver = "Wgが見つかりませんでした。wg.exe\n重要だ。\nいくつかのインストールファイルが明らかに欠落しています。";
+					cantFindDriver = "Wgが見つかりませんでした。floppydriver.exe\n重要だ。\nいくつかのインストールファイルが明らかに欠落しています。";
 					fileMenu = "File";
 					optionsMenu = "Options";
 					helpMenu = "Help";
