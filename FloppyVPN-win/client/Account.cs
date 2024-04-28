@@ -32,8 +32,17 @@ namespace FloppyVPN
 			string _response = Communicator.GetString($"{PathsAndLinks.orchestratorURL}/Api/App/GetAccountData/{_login}",
 				out _, out _);
 
-			JObject response = JObject.Parse(_response);
-			
+			JObject response;
+
+			try
+			{
+				response = JObject.Parse(_response);
+			}
+			catch
+			{
+				return false;
+			}
+
 			if (!(bool)response["exists"])
 				return false;
 

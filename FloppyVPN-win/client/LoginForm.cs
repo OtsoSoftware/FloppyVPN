@@ -6,6 +6,8 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FloppyVPN
@@ -17,13 +19,6 @@ namespace FloppyVPN
 			InitializeComponent();
 			LocalizeInterface();
 			this.DialogResult = DialogResult.No;
-
-			string cachedlogin = IniFile.GetValue("login") ?? "";
-			if (cachedlogin != "")
-			{
-				txtLogin.Text = cachedlogin;
-				buttLogin_Click();
-			}
 		}
 
 		private void LocalizeInterface()
@@ -43,6 +38,13 @@ namespace FloppyVPN
 
 		private void buttLogin_Click(object sender = null, EventArgs e = null)
 		{
+			if (txtLogin.Text.Length < 6)
+			{
+				Thread.Sleep(new Random().Next(300, 900));
+				new MsgBox("Incorrect login").ShowDialog();
+				return;
+			}
+
 			bool successFullyLoggedIn = Account.LogIn(txtLogin.Text);
 
 			if (successFullyLoggedIn)
@@ -52,8 +54,20 @@ namespace FloppyVPN
 			}
 			else
 			{
-				this.DialogResult = DialogResult.Yes;
+				this.DialogResult = DialogResult.No;
 				new MsgBox(Loc.unableToLogInText, Loc.unableToLoginCaption, MessageBoxIcon.Error).ShowDialog();
+			}
+		}
+
+		void LoginForm_Load(object sender, EventArgs e)
+		{
+			//Task.Delay(100).GetAwaiter().GetResult();
+
+			string savedLogin = IniFile.GetValue("login") ?? "";
+			if (savedLogin != "")
+			{
+				txtLogin.Text = savedLogin;
+				buttLogin_Click();
 			}
 		}
 	}

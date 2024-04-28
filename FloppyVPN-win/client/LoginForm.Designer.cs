@@ -167,6 +167,7 @@
 			this.Margin = new System.Windows.Forms.Padding(2);
 			this.Name = "LoginForm";
 			this.Text = "FloppyVPN";
+			this.Load += new System.EventHandler(this.LoginForm_Load);
 			this.Controls.SetChildIndex(this.borderPanel, 0);
 			this.borderPanel.ResumeLayout(false);
 			this.borderPanel.PerformLayout();

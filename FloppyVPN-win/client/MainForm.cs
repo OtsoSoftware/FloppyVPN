@@ -25,9 +25,10 @@ namespace FloppyVPN
 			InitializeComponent();
 			ApplyLocalizedTexts();
 
+			LogIn();
+
 			if (connectAfterLaunch)
 			{
-				
 				ToTray(true);
 				Connect();
 			}
@@ -158,6 +159,14 @@ namespace FloppyVPN
 		{
 			try
 			{
+				// First, get config of selected country code but only if:
+				// a) selected country does NOT already match the current config country code
+				// b) there is currently no valid config at all
+				if (ConnectionConfig.CurrentCountryCode != SelectedCountryCode() || !ConnectionConfig.IsValid)
+				{
+					ConnectionConfig.Obtain(SelectedCountryCode());
+				}
+
 				Vpn.Connect();
 				buttConnectDisconnect.Text = Loc.disconnect;
 				buttConnectDisconnect.Image = Resources.connected;
@@ -218,11 +227,12 @@ namespace FloppyVPN
 			if (logined == DialogResult.Yes)
 			{
 				buttRefreshData_Click();
+				this.Show();
+				this.ShowInTaskbar = true;
 			}
 			else
 			{
-				new Thread(() => new LoginForm().Show()).Start();
-				Close();
+				Environment.Exit(0);
 			}
 		}
 
@@ -258,6 +268,24 @@ namespace FloppyVPN
 
 			stripIPpublic.Text = Loc.publicIP + ConnectionConfig.IPv4Address ?? "-";
 			stripIPprivate.Text = Loc.privateIP + ConnectionConfig.IPv6Address ?? "-";
+
+
+		}
+
+		void FillCountriesList()
+		{
+			string[] available_country_codes = ConnectionConfig.GetAvailableCountryCodes();
+
+
+		}
+
+		void boxCountry_SelectedIndexChanged(object sender, EventArgs e)
+		{
+		}
+
+		string SelectedCountryCode()
+		{
+			return boxCountry.Text;
 		}
 
 		void buttAddTime_Click(object sender, EventArgs e)

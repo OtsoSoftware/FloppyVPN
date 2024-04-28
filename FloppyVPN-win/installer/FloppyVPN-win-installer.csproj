@@ -109,8 +109,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="menulogo.png" />
-    <None Include="folder.png" />
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>

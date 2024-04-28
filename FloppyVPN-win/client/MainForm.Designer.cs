@@ -54,7 +54,7 @@
 			this.buttWebsite = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupConnection = new System.Windows.Forms.GroupBox();
 			this.pictureCountry = new System.Windows.Forms.PictureBox();
-			this.boxServer = new System.Windows.Forms.ComboBox();
+			this.boxCountry = new System.Windows.Forms.ComboBox();
 			this.buttConnectDisconnect = new System.Windows.Forms.Button();
 			this.pictureConnectionIllustration = new System.Windows.Forms.PictureBox();
 			this.groupAccount = new System.Windows.Forms.GroupBox();
@@ -303,7 +303,7 @@
 			// 
 			this.groupConnection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(214)))), ((int)(((byte)(206)))));
 			this.groupConnection.Controls.Add(this.pictureCountry);
-			this.groupConnection.Controls.Add(this.boxServer);
+			this.groupConnection.Controls.Add(this.boxCountry);
 			this.groupConnection.Controls.Add(this.buttConnectDisconnect);
 			this.groupConnection.Controls.Add(this.pictureConnectionIllustration);
 			this.groupConnection.FlatStyle = System.Windows.Forms.FlatStyle.System;
@@ -331,19 +331,20 @@
 			this.pictureCountry.TabIndex = 16;
 			this.pictureCountry.TabStop = false;
 			// 
-			// boxServer
+			// boxCountry
 			// 
-			this.boxServer.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.boxServer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.boxServer.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.boxServer.FormattingEnabled = true;
-			this.boxServer.Items.AddRange(new object[] {
+			this.boxCountry.BackColor = System.Drawing.Color.WhiteSmoke;
+			this.boxCountry.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.boxCountry.FlatStyle = System.Windows.Forms.FlatStyle.System;
+			this.boxCountry.FormattingEnabled = true;
+			this.boxCountry.Items.AddRange(new object[] {
             "Poland (Kurwaserver)"});
-			this.boxServer.Location = new System.Drawing.Point(146, 88);
-			this.boxServer.Margin = new System.Windows.Forms.Padding(4);
-			this.boxServer.Name = "boxServer";
-			this.boxServer.Size = new System.Drawing.Size(204, 24);
-			this.boxServer.TabIndex = 15;
+			this.boxCountry.Location = new System.Drawing.Point(146, 88);
+			this.boxCountry.Margin = new System.Windows.Forms.Padding(4);
+			this.boxCountry.Name = "boxCountry";
+			this.boxCountry.Size = new System.Drawing.Size(204, 24);
+			this.boxCountry.TabIndex = 15;
+			this.boxCountry.SelectedIndexChanged += new System.EventHandler(this.boxCountry_SelectedIndexChanged);
 			// 
 			// buttConnectDisconnect
 			// 
@@ -643,7 +644,7 @@
 		private System.Windows.Forms.ToolStripDropDownButton buttRevealIp;
 		private System.Windows.Forms.ToolStripMenuItem buttUpdate;
 		private System.Windows.Forms.ToolStripMenuItem buttSplitTunneling;
-		private System.Windows.Forms.ComboBox boxServer;
+		private System.Windows.Forms.ComboBox boxCountry;
 		private System.Windows.Forms.PictureBox pictureCountry;
 		private System.Windows.Forms.ToolStripMenuItem stripIPprivate;
 		private System.Windows.Forms.ToolStripMenuItem stripIPpublic;

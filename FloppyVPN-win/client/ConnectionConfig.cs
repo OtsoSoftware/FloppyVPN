@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace FloppyVPN
 		/// Validness of current config. Basically - can we connect or not
 		/// </summary>
 		public static bool IsValid { get; private set; }
-		public static string CurrentCountryCode { get; private set; }
+		public static string CurrentCountryCode { get; set; }
 		public static string IPv4Address { get; private set; }
 		public static string IPv6Address { get; private set; }
 		public static string ConfString { get; private set; }
@@ -51,6 +52,18 @@ namespace FloppyVPN
 				IsValid = false;
 				return false;
 			}
+		}
+
+		public static string[] GetAvailableCountryCodes()
+		{
+			string _response = Communicator.GetString($"{PathsAndLinks.orchestratorURL}/Api/App/GetCountriesList/{Account.login}",
+				out bool isSuccessful,
+				out int statusCode);
+
+			if (!isSuccessful)
+				throw new Exception(statusCode.ToString());
+
+			return JsonConvert.DeserializeObject<string[]>(_response);
 		}
 	}
 }

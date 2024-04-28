@@ -19,7 +19,7 @@ namespace FloppyVPN
 		static void Main(string[] args)
 		{
 			//only single instance:
-			Mutex mutex = new Mutex(true, "q2gcl75BlLXN9K60SVT3dcJJ3P8eSQQi", out bool result);
+			Mutex mutex = new Mutex(true, "FloppyVPN_ClientLXN9K60SVT3dcJJ3P8eSQQi", out bool result);
 			if (!result)
 			{
 				new MsgBox(Loc.alreadylaunched);
@@ -65,9 +65,11 @@ namespace FloppyVPN
 			//kill possible driver running from previous sessions:
 			Vpn.Disconnect();
 
+			//restore last used country code:
+			ConnectionConfig.CurrentCountryCode = IniFile.GetValue("cc") != "" ? IniFile.GetValue("cc") : null;
+
 			//finally, start the gui:
 			Application.Run(new MainForm(connectAfterLaunch));
-
 		}
 	}
 }
