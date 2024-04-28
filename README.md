@@ -5,6 +5,14 @@
 Please use the official website to register, download and use FloppyVPN - http://floppy.jp.net. 
 If you want to compile it yourself or learn more about the project - continue reading.
 
+## Why FloppyVPN?
+- Anonymity by design
+- 0 data collection
+- Anonymous balance topup links that can be shared with friends
+- Can't be simplier for the end user
+- Own apps for each platform
+- Crypto & p2p payment system
+
 ## Stack
 - Servers: C# (ASP.NET Core 6)
 - Website: C#; HTML, CSS, JS (ASP.NET Core 6 MVC)
@@ -25,3 +33,5 @@ Expanding a new VPN server on a new Linux box is easy and is being automated as 
 
 ## Deploying
 ### How to fully deploy the app.
+
+Figure it out yourself lol

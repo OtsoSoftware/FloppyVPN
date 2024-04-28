@@ -27,6 +27,9 @@ namespace FloppyVPN
 
 			LogIn();
 
+			FillCountriesList();
+			SelectCountryCode(ConnectionConfig.CurrentCountryCode);
+
 			if (connectAfterLaunch)
 			{
 				ToTray(true);
@@ -269,14 +272,18 @@ namespace FloppyVPN
 			stripIPpublic.Text = Loc.publicIP + ConnectionConfig.IPv4Address ?? "-";
 			stripIPprivate.Text = Loc.privateIP + ConnectionConfig.IPv6Address ?? "-";
 
-
+			FillCountriesList();
 		}
 
 		void FillCountriesList()
 		{
+			string selectedCountryCode = SelectedCountryCode();
 			string[] available_country_codes = ConnectionConfig.GetAvailableCountryCodes();
 
+			boxCountry.Items.Clear();
+			boxCountry.Items.AddRange(available_country_codes);
 
+			SelectCountryCode(selectedCountryCode);
 		}
 
 		void boxCountry_SelectedIndexChanged(object sender, EventArgs e)
@@ -286,6 +293,17 @@ namespace FloppyVPN
 		string SelectedCountryCode()
 		{
 			return boxCountry.Text;
+		}
+
+		void SelectCountryCode(string country_code)
+		{
+			int index = boxCountry.FindString(country_code);
+			if (index != -1) //if found last country
+				boxCountry.SelectedIndex = index;
+			else //if not found last country
+				index = new Random().Next(0, boxCountry.Items.Count - 1);
+
+			boxCountry.SelectedIndex = index;
 		}
 
 		void buttAddTime_Click(object sender, EventArgs e)
