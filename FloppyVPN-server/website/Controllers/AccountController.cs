@@ -40,7 +40,8 @@ namespace FloppyVPN.Controllers
 				}
 				else
 				{
-					string response = Communicator.GetHttp(url: $"{Config.cache["orchestrator_url"]}/Api/Website/RegisterAccount",
+					string response = Communicator.GetHttp(
+						url: $"{Config.cache["orchestrator_url"]}/Api/Website/RegisterAccount",
 						hashed_user_ip_address: ServerTools.GetHashedIPAddress(HttpContext.Request).ToString(),
 						status_code: out HttpStatusCode statusCode,
 						is_successful: out bool isSuccessful,
@@ -86,7 +87,8 @@ namespace FloppyVPN.Controllers
 				return Redirect("/login");
 			}
 
-			string response = Communicator.GetHttp(url: $"{Config.cache["orchestrator_url"]}/Api/Website/LogintoAccount/{enteredLogin}",
+			string response = Communicator.GetHttp(
+				url: $"{Config.cache["orchestrator_url"]}/Api/Website/LogintoAccount/{enteredLogin}",
 				hashed_user_ip_address: ServerTools.GetHashedIPAddress(HttpContext.Request).ToString(),
 				status_code: out HttpStatusCode statusCode,
 				is_successful: out bool isSuccessful,
@@ -113,7 +115,8 @@ namespace FloppyVPN.Controllers
 				return Redirect($"/Error/{(int)statusCode}");
 			}
 
-			string alias = Communicator.GetHttp(url: $"{Config.cache["orchestrator_url"]}/Api/Website/CreateLoginAlias/{enteredLogin}",
+			string alias = Communicator.GetHttp(
+				url: $"{Config.cache["orchestrator_url"]}/Api/Website/CreateLoginAlias/{enteredLogin}",
 				hashed_user_ip_address: ServerTools.GetHashedIPAddress(HttpContext.Request).ToString(),
 				status_code: out HttpStatusCode aliasStatusCode,
 				is_successful: out bool aliasIsSuccessful,
@@ -139,7 +142,8 @@ namespace FloppyVPN.Controllers
 		[HttpGet("TopUp/{alias}")]
 		public IActionResult TopUp(string alias) // Serves the TopUp page for an account
 		{
-			string acc_existance = Communicator.GetHttp(url: $"{Config.cache["orchestrator_url"]}/Api/Website/AccountExistsByAlias/{alias}",
+			string acc_existance = Communicator.GetHttp(
+				url: $"{Config.cache["orchestrator_url"]}/Api/Website/AccountExistsByAlias/{alias}",
 				hashed_user_ip_address: ServerTools.GetHashedIPAddress(HttpContext.Request).ToString(),
 				status_code: out _,
 				is_successful: out _,
@@ -149,7 +153,8 @@ namespace FloppyVPN.Controllers
 			if (!acc_existance.Contains(bool.TrueString))
 				return Redirect("/Error/404");
 
-			string response = Communicator.GetHttp(url: $"{Config.cache["orchestrator_url"]}/Api/Website/GetCurrenciesTable",
+			string response = Communicator.GetHttp(
+				url: $"{Config.cache["orchestrator_url"]}/Api/Website/GetCurrenciesTable",
 				hashed_user_ip_address: ServerTools.GetHashedIPAddress(HttpContext.Request).ToString(),
 				status_code: out HttpStatusCode statusCode,
 				is_successful: out bool isSuccessful,
@@ -168,7 +173,8 @@ namespace FloppyVPN.Controllers
 			string currency_code = Request.Form["currency_code"];
 			int months_amount = int.Parse(Request.Form["months_amount"]);
 
-			string new_payment_id = Communicator.GetHttp(url: $"{Config.cache["orchestrator_url"]}/Api/Website/CreateNewPayment/{alias}/{currency_code}/{months_amount}",
+			string new_payment_id = Communicator.GetHttp(
+				url: $"{Config.cache["orchestrator_url"]}/Api/Website/CreateNewPayment/{alias}/{currency_code}/{months_amount}",
 				hashed_user_ip_address: ServerTools.GetHashedIPAddress(HttpContext.Request).ToString(),
 				status_code: out HttpStatusCode statusCode,
 				is_successful: out bool isSuccessful,
@@ -184,7 +190,8 @@ namespace FloppyVPN.Controllers
 		[HttpGet("Payment/{payment_id}")]
 		public IActionResult Payment(string payment_id) // Serves the page of an individual payment
 		{
-			string responsePaymentInfo = Communicator.GetHttp(url: $"{Config.cache["orchestrator_url"]}/Api/Website/GetPaymentInfo/{payment_id}",
+			string responsePaymentInfo = Communicator.GetHttp(
+				url: $"{Config.cache["orchestrator_url"]}/Api/Website/GetPaymentInfo/{payment_id}",
 				hashed_user_ip_address: ServerTools.GetHashedIPAddress(HttpContext.Request).ToString(),
 				status_code: out HttpStatusCode statusCode,
 				is_successful: out bool isSuccessful,
@@ -195,7 +202,8 @@ namespace FloppyVPN.Controllers
 
 			DataRow paymentInfo = Rialize.Dese<DataRow>(responsePaymentInfo);
 
-			string responseCurrencyInfo = Communicator.GetHttp(url: $"{Config.cache["orchestrator_url"]}/Api/Website/GetCurrencyInfo/{paymentInfo["currency_code"]}",
+			string responseCurrencyInfo = Communicator.GetHttp(
+				url: $"{Config.cache["orchestrator_url"]}/Api/Website/GetCurrencyInfo/{paymentInfo["currency_code"]}",
 				hashed_user_ip_address: ServerTools.GetHashedIPAddress(HttpContext.Request).ToString(),
 				status_code: out _,
 				is_successful: out _,

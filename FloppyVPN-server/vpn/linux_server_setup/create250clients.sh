@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This is a sample script that generates 250 (251) clients on a server.
-# To be only used for tests or as an example of how wg config provisioning works
+# To be only used for tests or as an example of how wg (awg) config provisioning works
 
 # Create required folders
 mkdir -p /etc/amnezia/amneziawg

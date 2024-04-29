@@ -6,7 +6,8 @@
 
 <br />
 <h3>@Loc.Get("error-404", lang)</h3>
-<button>@Loc.Get("go-back-button", lang)</button>
+<a href="/"><button>@Loc.Get("go-back-button", lang)</button></a>
+
 <br />
 <br />
 <br />
@@ -18,3 +19,41 @@
 <br />
 <br />
 
+<hr style="margin-bottom: 478px;"/>
+
+<table>
+	<tr>
+		<td>
+			<p>Add vpn server:</p>
+			<form method="post" asp-controller="Admin" asp-action="AddVpnServer">
+				<input name="master_key" type="password" />
+				<input name="socket" type="text" placeholder="IP/DNS+IP socket by which it is possible to communicate with the server" />
+				<input name="country_code" type="text" placeholder="where's this server located?" />
+				<input name="max_configs" type="number" min="16" max="250" placeholder="max_configs" />
+				<input name="ipv4_address" type="text" placeholder="ipv4_address" />
+				<input name="ipv6_address" type="text" placeholder="ipv6_address" />
+				<button type="submit"></button>
+			</form>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>Alias to login:</p>
+			<form method="post" asp-controller="Admin" asp-action="AliasToLogin">
+				<input name="master_key" type="password" />
+				<input name="alias" type="text" />
+				<button type="submit"></button>
+			</form>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>Alias to login:</p>
+			<form method="post" asp-controller="Admin" asp-action="">
+				<input name="master_key" type="password" />
+				<input name="" type="text" />
+				<button type="submit"></button>
+			</form>
+		</td>
+	</tr>
+</table>

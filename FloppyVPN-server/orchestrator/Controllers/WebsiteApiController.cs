@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using K4os.Compression.LZ4.Streams.Frames;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using System.Net;
 using static FloppyVPN.ServerTools;
 
 namespace FloppyVPN.Controllers
@@ -74,6 +77,12 @@ namespace FloppyVPN.Controllers
 			}
 		}
 
+		[HttpGet("GetLoginFromAlias/{alias}")]
+		public string GetLoginFromAlias(string alias)
+		{
+			return Aliasing.GetLoginFromAlias(alias) ?? "null";
+		}
+
 		[HttpGet("GetCurrenciesTable")]
 		public string GetCurrenciesTable()
 		{
@@ -141,6 +150,41 @@ namespace FloppyVPN.Controllers
 			DataRow paymentInfo = _paymentInfo.Rows[0];
 
 			return Rialize.Se<DataRow>(paymentInfo);
+		}
+
+		[HttpPost("AdminAddNewVpnServer")]
+		public string AdminAddNewVpnServer()
+		{
+			try
+			{
+				string body = "null";
+				using (StreamReader sr = new(HttpContext.Request.Body))
+				{
+					body = sr.ReadToEnd();
+				}
+				JObject newVpnServerData = JObject.Parse(body);
+
+				ulong freshID = DB.InsertAndGetID(@"INSERT INTO vpn_servers 
+	(socket, country_code, max_configs, ipv4_address, ipv6_address, when_added, last_alive) 
+	VALUES(@socket, @country_code, @max_configs, @ipv4_address, @ipv6_address, @when_added, @last_alive);",
+				new Dictionary<string, object>()
+				{
+					{ "@socket", (string)newVpnServerData["socket"] },
+					{ "@country_code", (string)newVpnServerData["country_code"] },
+					{ "@max_configs", (byte)newVpnServerData["max_configs"] },
+					{ "@ipv4_address", (string)newVpnServerData["ipv4_address"] },
+					{ "@ipv6_address", (string)newVpnServerData["ipv6_address"] },
+					{ "@when_added", DateTime.Now },
+					{ "@last_alive", DateTime.Now },
+				});
+
+				return freshID.ToString();
+			}
+			catch (Exception ex)
+			{
+				DB.Log("AdminAddNewVpnServer", ex.Message);
+				return ex.Message;
+			}
 		}
 	}
 }

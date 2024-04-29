@@ -116,7 +116,7 @@ WHERE (vc.config_count IS NULL OR vc.config_count < vs.max_configs);
 			}
 		}
 
-		/// <returns>Payment alias using which user can top up account balance</returns>
+		/// <returns> A new payment alias using which user can top up account balance </returns>
 		[HttpGet("GetPaymentAlias/{login}")]
 		[ServiceFilter(typeof(BannedClientsFilter))]
 		public string GetPaymentAlias(string login)
