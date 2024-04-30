@@ -35,7 +35,7 @@ H3 = 1183456273
 H4 = 2112541503
 EOF
 
-# Create configs from 1 to 250 and additional test.conf от 1 до 250 и дополнительный test.conf
+# Create configs from 1 to 250 and additional test.conf
 for i in {1..251}; do
   awg genkey | tee /root/privateClient$i.key | awg pubkey > /root/publicClient$i.key
   clientPrivateKey=$(cat /root/privateClient$i.key)

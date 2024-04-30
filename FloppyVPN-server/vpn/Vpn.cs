@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace FloppyVPN
@@ -8,28 +9,23 @@ namespace FloppyVPN
 		private static readonly string ConfigFolderPath = "/etc/amnezia/amneziawg/";
 		private static readonly string ServerConfigFileName = "awg0.conf";
 		private static readonly string ServerConfigFilePath = Path.Combine(ConfigFolderPath, ServerConfigFileName);
-		private static readonly string ServerInterfaceName = "awg0";
-		private static readonly string WGCommand = "awg";
 
 		public static string CreateClientConfig(ulong config_id)
 		{
 			// Generate client keys
-			string clientPrivateKey = GenerateKey();
-			string clientPublicKey = GenerateKey();
-			string clientPSK = GeneratePSK();
+			string clientPrivateKey = ShellExecute("awg genkey");
+			string clientPublicKey = ShellExecute($"echo \"{clientPrivateKey}\" | awg pubkey");
+			string clientPSK = ShellExecute("awg genpsk");
 
 			string clientName = $"client{config_id}";
 			byte addressNumber = GetFreeAddressNumber();
 
 			bool ipv6supported = false;
 			if (Config.cache["ipv6_support"].ToString() == bool.TrueString)
-			{
 				ipv6supported = true;
-			}
 
 			// Update server config
 			File.AppendAllText(ServerConfigFilePath, $@"
-
 #{clientName}
 [Peer]
 PublicKey = {clientPublicKey}
@@ -37,16 +33,14 @@ PresharedKey = {clientPSK}
 AllowedIPs = 10.7.0.{addressNumber}/32{(ipv6supported ? $", fd0d:86fa:c3bc::{addressNumber}/128" : "")}
 ");
 
-			// Refresh interface gently
+			// Refresh interface gracefully
 			RefreshInterface();
 
 			// Generate user config
-			string newClientConfig = $@"
-[Interface]
-Address = 10.7.0.{addressNumber}/32
-{(ipv6supported ? $"Address = fd0d:86fa:c3bc::{addressNumber}/128" : "")}
-DNS = {Config.cache["dnsv4"]}
-{(ipv6supported ? $"DNS = {Config.cache["dnsv6"]}" : "")}
+			string newClientConfig = 
+$@"[Interface]
+Address = 10.7.0.{addressNumber}/32{(ipv6supported ? $"\nAddress = fd0d:86fa:c3bc::{addressNumber}/128" : "")}
+DNS = {Config.cache["dnsv4"]}{(ipv6supported ? $"\nDNS = {Config.cache["dnsv6"]}" : "")}
 PrivateKey = {clientPrivateKey}
 Jc = 5
 Jmin = 20
@@ -59,8 +53,7 @@ H3 = 1183456273
 H4 = 2112541503
 
 [Peer]
-Endpoint = {Config.cache["ipv4_address"]}:51235
-{(ipv6supported ? $"Endpoint = {Config.cache["ipv6_address"]}:51235" : "")}
+Endpoint = {Config.cache["ipv4_address"]}:{Config.cache["vpn_listen_port"]}{(ipv6supported ? $"\nEndpoint = {Config.cache["ipv6_address"]}:51235" : "")}
 PublicKey = {Config.cache["server_public_key"]}
 PresharedKey = {clientPSK}
 AllowedIPs = 0.0.0.0/0{(ipv6supported ? ", ::/0" : "")}
@@ -134,7 +127,7 @@ PersistentKeepalive = 25
 						continue;
 					}
 
-					if (removeSection && line.StartsWith("["))
+					if (removeSection && line.StartsWith("#"))
 					{
 						removeSection = false;
 					}
@@ -150,82 +143,49 @@ PersistentKeepalive = 25
 			RefreshInterface();
 		}
 
-		private static string GenerateKey()
-		{
-			Process process = Process.Start(new ProcessStartInfo
-			{
-				FileName = WGCommand,
-				Arguments = "genkey",
-				RedirectStandardOutput = true,
-				UseShellExecute = false
-			});
-
-			string key = process.StandardOutput.ReadToEnd().Trim();
-			process.WaitForExit();
-			return key;
-		}
-
-		private static string GeneratePSK()
-		{
-			var process = Process.Start(new ProcessStartInfo
-			{
-				FileName = WGCommand,
-				Arguments = "genpsk",
-				RedirectStandardOutput = true,
-				UseShellExecute = false
-			});
-
-			string psk = process.StandardOutput.ReadToEnd().Trim();
-			process.WaitForExit();
-			return psk;
-		}
-
 		public static void CreateServerConfigIfNotYet()
 		{
 			if (!string.IsNullOrEmpty(Config.Get("server_public_key")) && !string.IsNullOrEmpty(Config.Get("server_private_key")) && File.Exists(ServerConfigFilePath))
 				return;
 
-			var process = Process.Start(new ProcessStartInfo
-			{
-				FileName = WGCommand,
-				Arguments = "genkey",
-				RedirectStandardOutput = true,
-				UseShellExecute = false
-			});
+			Vpn.DownInterface();
+			Thread.Sleep(1000);
 
-			string serverPrivateKey = process.StandardOutput.ReadToEnd().Trim();
-			process.WaitForExit();
+			//var process = Process.Start(new ProcessStartInfo
+			//{
+			//	FileName = WGCommand,
+			//	Arguments = "genkey",
+			//	RedirectStandardOutput = true,
+			//	UseShellExecute = false
+			//});
+
+			//string serverPrivateKey = process.StandardOutput.ReadToEnd().Trim();
+			string serverPrivateKey = ShellExecute("awg genkey");
+			//process.WaitForExit();
 
 			Config.Set("server_private_key", serverPrivateKey);
 
-			process = Process.Start(new ProcessStartInfo
-			{
-				FileName = WGCommand,
-				Arguments = $"pubkey <<< \"{serverPrivateKey}\"",
-				RedirectStandardOutput = true,
-				UseShellExecute = false
-			});
 
-			string serverPublicKey = process.StandardOutput.ReadToEnd().Trim();
-			process.WaitForExit();
+			//string serverPublicKey = process.StandardOutput.ReadToEnd().Trim();
+			string serverPublicKey = ShellExecute($"echo \"{serverPrivateKey}\" | awg pubkey");
 
 			Config.Set("server_public_key", serverPublicKey);
 
-			Console.WriteLine($"Generated and set the server private and public keys: \n{serverPrivateKey}\n{serverPublicKey}");
+			Console.WriteLine($"Generated and set the server private and public keys:\n{serverPrivateKey}\n{serverPublicKey}");
+
+			bool ipv6supported = false;
+			if (Config.Get("ipv6_support") == bool.TrueString)
+				ipv6supported = true;
 
 			//creating server config:
-				File.WriteAllText(ServerConfigFilePath, $@"
-# ENDPOINT {Config.Get("ipv4_address")}
-# ENDPOINT {Config.Get("ipv6_address")}
+			File.WriteAllText(ServerConfigFilePath, 
+$@"# ENDPOINT {Config.Get("ipv4_address")}{(ipv6supported ? $"\n# ENDPOINT {Config.Get("ipv6_address")}" : "")}
 [Interface]
-Address = 10.7.0.0/24
-Address = fd0d:86fa:c3bc::1/64
-PrivateKey = {Config.Get("server_public_key")}
-ListenPort = {Config.Get("listen_port")}
-PostUp = iptables -t nat -A POSTROUTING -s 10.7.0.0/24 -o eth0 -j SNAT --to-source {Config.Get("ipv4_address")}
-PostUp = ip6tables -t nat -A POSTROUTING -s fd0d:86fa:c3bc::1/64 -o eth0 -j SNAT --to-source {Config.Get("ipv6_address")} // Add IPv6 NAT rule
-PostDown = iptables -t nat -D POSTROUTING -s 10.7.0.0/24 -o eth0 -j SNAT --to-source {Config.Get("ipv4_address")}
-PostDown = ip6tables -t nat -D POSTROUTING -s fd0d:86fa:c3bc::1/64 -o eth0 -j SNAT --to-source {Config.Get("ipv6_address")} // Add IPv6 NAT rule
+Address = 10.7.0.0/24{(ipv6supported ? "\nAddress = fd0d:86fa:c3bc::1/64" : "")}
+PrivateKey = {Config.Get("server_private_key")}
+ListenPort = {Config.Get("vpn_listen_port")}
+PostUp = iptables -t nat -A POSTROUTING -s 10.7.0.0/24 -o {Config.Get("internet_interface_name")} -j SNAT --to-source {Config.Get("ipv4_address")}{(ipv6supported ? $"\nPostUp = ip6tables -t nat -A POSTROUTING -s fd0d:86fa:c3bc::1/64 -o {Config.Get("internet_interface_name")} -j SNAT --to-source {Config.Get("ipv6_address")}" : "")}
+PostDown = iptables -t nat -D POSTROUTING -s 10.7.0.0/24 -o {Config.Get("internet_interface_name")} -j SNAT --to-source {Config.Get("ipv4_address")}{(ipv6supported ? $"\nPostDown = ip6tables -t nat -D POSTROUTING -s fd0d:86fa:c3bc::1/64 -o {Config.Get("internet_interface_name")} -j SNAT --to-source {Config.Get("ipv6_address")}" : "")}
 Jc = 5
 Jmin = 20
 Jmax = 1180
@@ -238,22 +198,26 @@ H4 = 2112541503
 ");
 		}
 
+		/// <summary>
+		/// Refreshes interface configuration gracefully, 
+		/// without affecting existing connections
+		/// </summary>
 		private static void RefreshInterface()
 		{
-			ExecuteShellCommand($"syncconf {ServerInterfaceName} <(awg-quick strip {ServerInterfaceName})");
+			ShellExecute($"awg syncconf awg0 <(awg-quick strip awg0)");
 		}
 
 		public static void UpInterface()
 		{
-			ExecuteShellCommand("awg-quick down awg0");
+			ShellExecute("awg-quick up awg0");
 		}
 
 		public static void DownInterface()
 		{
-			ExecuteShellCommand("awg-quick up awg0");
+			ShellExecute("awg-quick down awg0");
 		}
 
-		private static string ExecuteShellCommand(string command)
+		private static string ShellExecute(string command)
 		{
 			var process = Process.Start(new ProcessStartInfo
 			{
@@ -263,7 +227,7 @@ H4 = 2112541503
 				UseShellExecute = false
 			});
 
-			string output = process.StandardOutput.ReadToEnd();
+			string output = process.StandardOutput.ReadToEnd().Trim().Trim('\n');
 			process.WaitForExit();
 			return output;
 		}

@@ -19,12 +19,16 @@ namespace FloppyVPN
 			}
 			GC.KeepAlive(mutex);
 
-			ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
 			Config.EnsureFileIntegrity();
 
 			new Thread(() => Config.CacheRefresher()).Start();
 			new Thread(() => Worker.Start()).Start();
+
+			Thread.Sleep(1000);
+
+			Console.WriteLine(Provisioner.GetConfig(8, "CZ", 1));
+			Console.ReadLine();
+			Environment.Exit(0);
 
 			Startup(args);
 		}
@@ -33,17 +37,13 @@ namespace FloppyVPN
 		{
 			WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-			builder.Services.AddControllers(options =>
-			{
-				//options.Filters.AddService<MasterKeyValidationFilter>(); // Add the filter as a service filter
-			});
-
+			builder.Services.AddControllers();
 
 			builder.Services.AddEndpointsApiExplorer();
-			builder.Services.AddSwaggerGen(c =>
-			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "Orchestrator server API", Version = "v1" });
-			});
+			//builder.Services.AddSwaggerGen(c =>
+			//{
+			//	c.SwaggerDoc("v1", new OpenApiInfo { Title = "Orchestrator server API", Version = "v1" });
+			//});
 
 			builder.Services.Configure<KestrelServerOptions>(options =>
 			{
@@ -61,7 +61,6 @@ namespace FloppyVPN
 			builder.Services.AddScoped<SoftbannedUsersFilter>();
 			builder.Services.AddScoped<BannedUsersFilter>();
 			builder.Services.AddScoped<BannedClientsFilter>();
-
 
 			// Disable crazy logging
 			builder.Host.ConfigureLogging(logging =>

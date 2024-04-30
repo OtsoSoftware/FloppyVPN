@@ -4,21 +4,22 @@
 ##### setting AmneziaWG: awg0 + client config
 _______________________________
 
-##### patching linux kernel
+##### Patching linux kernel
 
 #0
-apt update
-apt dist-upgrade
+apt update && apt dist-upgrade -y
 reboot
 apt install linux-headers-$(uname -r)
 
 #1
 apt autoremove -y
-uname -r
+apt-get update && apt-get full-upgrade -y
 
 #2
-apt-get update
-apt-get full-upgrade -y
+apt install -y unzip
+apt install -y iptables
+apt install -y nftables
+apt install -y git
 
 #3 make sure at least one repo ("deb-src...") exists and is not commented
 vi /etc/apt/sources.list
@@ -26,7 +27,6 @@ vi /etc/apt/sources.list
 #4
 apt install -y software-properties-common python3-launchpadlib gnupg2 linux-headers-$(uname -r)
 apt install -y dkms
-
 
 
 
@@ -44,7 +44,7 @@ lsmod | grep amneziawg
 
 
 ##### Installing amneziawg-tools
-cd /root
+cd /root/
 git clone https://github.com/amnezia-vpn/amneziawg-tools
 cd /root/amneziawg-tools/src
 make /root/amneziawg-tools/src

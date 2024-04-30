@@ -41,17 +41,18 @@
 			<p>Alias to login:</p>
 			<form method="post" asp-controller="Admin" asp-action="AliasToLogin">
 				<input name="master_key" type="password" />
-				<input name="alias" type="text" />
+				<input name="alias" type="text" placeholder="alias" />
 				<button type="submit"></button>
 			</form>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<p>Alias to login:</p>
-			<form method="post" asp-controller="Admin" asp-action="">
+			<p>Add days to account:</p>
+			<form method="post" asp-controller="Admin" asp-action="AddDaysToAccount">
 				<input name="master_key" type="password" />
-				<input name="" type="text" />
+				<input name="login" type="text" placeholder="login" />
+				<input name="days" type="number" min="1" max="365" placeholder="days" />
 				<button type="submit"></button>
 			</form>
 		</td>

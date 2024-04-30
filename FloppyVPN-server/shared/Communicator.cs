@@ -44,7 +44,7 @@ namespace FloppyVPN
 				client.DefaultRequestHeaders.Add("master_key", master_key);
 				client.DefaultRequestHeaders.Add("hashed_user_ip_address", hashed_user_ip_address);
 
-				HttpContent content = new StringContent(body, System.Text.Encoding.UTF8, "application/json");
+				HttpContent content = new StringContent(body, System.Text.Encoding.UTF8);
 				HttpResponseMessage response = client.PostAsync(url, content).Result;
 
 				status_code = response.StatusCode;
@@ -78,7 +78,7 @@ namespace FloppyVPN
 				requestBody = sr.ReadToEnd();
 			}
 
-			return requestBody;
+			return Cryption.De(requestBody, Config.cache["master_key"].ToString());
 		}
 
 		public static string EncodeBody(this string response)

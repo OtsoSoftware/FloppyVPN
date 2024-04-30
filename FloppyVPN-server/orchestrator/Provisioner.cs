@@ -1,8 +1,8 @@
 ﻿namespace FloppyVPN
 {
 	/// <summary>
-	/// Provides accounts with VPN configs and removes them from unpaid ones.
 	/// Deals with vpn servers.
+	/// Provides accounts with VPN configs and removes them from unpaid ones.
 	/// </summary>
 	internal static class Provisioner
 	{
@@ -58,8 +58,12 @@
 		/// <returns>ID of an obtained/created config.</returns>
 		public static ulong GetConfig(ulong account_id, string country_code, int device_type)
 		{
-			DataTable suchConfigsFound = DB.GetDataTable("SELECT * FROM `vpn_configs` " +
-				"WHERE `account` = @account_id AND `device_type` = @device_type AND `country_code` = @country_code;",
+			DataTable suchConfigsFound = DB.GetDataTable(@"SELECT vc.*
+FROM vpn_configs vc
+INNER JOIN vpn_servers vs ON vc.server = vs.id
+WHERE vc.account = @account_id
+  AND vc.device_type = @device_type
+  AND vs.country_code = @country_code;",
 				new Dictionary<string, object>()
 				{
 					{ "@account_id", account_id },
@@ -93,7 +97,7 @@
 				DB.Log("CreateConfig()", $"Lacking vpn servers in country code {country_code}.");
 				return 0;
 			}
-
+			Console.WriteLine($"found vpn server: {vpnServerID}");
 			//create vpn config on vpn server itself:
 			DataRow vpnServerInfo = DB.GetDataTable($"SELECT * FROM `vpn_servers` WHERE `id` = {vpnServerID};").Rows[0];
 
@@ -142,11 +146,18 @@
 		/// If not specified, configs on any device types will be deleted.</param>
 		private static void DeleteConfigs(ulong account_id, string country_code = "all", int device_type = 0)
 		{
-			string countryCodeParameter = country_code == "all" ? "" : $" AND `country_code` = '{country_code}'";
-			string deviceTypeParameter = device_type == 0 ? "" : $" AND `device_type` = {device_type}";
+			string countryCodeParameter = country_code == "all" ? "" : $" AND `vs`.`country_code` = '{country_code}'";
+			string deviceTypeParameter = device_type == 0 ? "" : $" AND `vc`.`device_type` = {device_type}";
 
-			string[] vpnConfigsOfAccountToDelete = DB.FirstColumnAsArray($"SELECT `id` FROM `vpn_configs` " +
-				$"WHERE `account` = {account_id}{countryCodeParameter}{deviceTypeParameter};");
+			string query = $@"
+    SELECT `vc`.`id`
+    FROM `vpn_configs` AS `vc`
+    INNER JOIN `vpn_servers` AS `vs` ON `vc`.`server` = `vs`.`id`
+    WHERE `vc`.`account` = {account_id}
+      {countryCodeParameter}
+      {deviceTypeParameter};";
+
+			string[] vpnConfigsOfAccountToDelete = DB.FirstColumnAsArray(query);
 
 			foreach (string vpnConfigToDelete in vpnConfigsOfAccountToDelete)
 			{
@@ -169,7 +180,7 @@
 				try
 				{
 					Communicator.PostHttp($"http://{vpnServerSocket}/DeleteConfig", 
-						body: "configID".EncodeBody(), 
+						body: configID.ToString().EncodeBody(), 
 						"", "", out _, out isSuccessful);
 				}
 				catch

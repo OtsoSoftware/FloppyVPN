@@ -77,5 +77,12 @@ namespace FloppyVPN.Controllers
 
 			return Content(response);
 		}
+
+		[HttpGet]
+		public IActionResult AddDaysToAccount()
+		{
+
+			return Content("");
+		}
 	}
 }

@@ -17,15 +17,15 @@ public static class Listener
 	{
 		var builder = WebApplication.CreateBuilder();
 
-		var app = builder.Build();
-
 		builder.Services.Configure<KestrelServerOptions>(options =>
 		{
 			options.AllowSynchronousIO = true;
 		});
 
+		WebApplication app = builder.Build();
+
 		app.Urls.Clear();
-		app.Urls.Add("http://*:1513");
+		app.Urls.Add($"http://*:{Config.Get("api_listen_port")}");
 
 
 
@@ -37,7 +37,7 @@ public static class Listener
 
 
 		//deletes the specified config by ID
-		app.MapDelete("/DeleteConfig", (HttpContext context) =>
+		app.MapPost("/DeleteConfig", (HttpContext context) =>
 		{
 			try
 			{
@@ -64,16 +64,16 @@ public static class Listener
 			catch (Exception ex)
 			{
 				context.Response.StatusCode = 500;
-				return ("Could not create config: " + ex.Message).EncodeBody();
+				return $"Could not create config: {ex.Message}".EncodeBody();
 			}
 		});
 
 
 		//
-		app.MapGet("/", (HttpContext context) =>
-		{
-			return "vpn";
-		});
+		//app.MapGet("/", (HttpContext context) =>
+		//{
+		//	return "vpn";
+		//});
 
 
 		app.Run();

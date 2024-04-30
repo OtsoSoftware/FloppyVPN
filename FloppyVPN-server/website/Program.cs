@@ -24,9 +24,6 @@ namespace FloppyVPN
 			new Thread(() => Loc.AutoRefresh()).Start();
 
 
-			ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
-
 			Startup(args);
 		}
 
