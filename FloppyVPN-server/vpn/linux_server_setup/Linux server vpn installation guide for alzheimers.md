@@ -4,8 +4,6 @@
 ##### setting AmneziaWG: awg0 + client config
 _______________________________
 
-##### Patching linux kernel
-
 #0
 apt update && apt dist-upgrade -y
 reboot

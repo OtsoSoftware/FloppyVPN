@@ -214,5 +214,19 @@ namespace FloppyVPN.Controllers
 				return ex.Message;
 			}
 		}
+
+		[HttpGet("AdminFlushVpnServer/{vpn_server_id}")]
+		public string AdminFlushVpnServer(string vpn_server_id)
+		{
+			try
+			{
+				Provisioner.FlushVpnServer(ulong.Parse(vpn_server_id));
+				return "Done, I guess.";
+			}
+			catch (Exception ex)
+			{
+				return ex.Message;
+			}
+		}
 	}
 }

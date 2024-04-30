@@ -21,7 +21,7 @@ SET @@SESSION.SQL_LOG_BIN= 0;
 -- GTID state at the beginning of the backup 
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '50affa9b-dad1-11ee-8d98-525400123456:1-5426';
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '50affa9b-dad1-11ee-8d98-525400123456:1-5840';
 
 --
 -- Table structure for table `accounts`
@@ -38,7 +38,7 @@ CREATE TABLE `accounts` (
   `days_left` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `accounts_UN` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='It is what it is.';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='It is what it is.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,6 +72,23 @@ CREATE TABLE `captchas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `countries`
+--
+
+DROP TABLE IF EXISTS `countries`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `countries` (
+  `code` char(2) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'XX' COMMENT 'two-letter uppercase country code',
+  `name_en` varchar(32) COLLATE utf8mb4_general_ci NOT NULL,
+  `name_ru` varchar(32) COLLATE utf8mb4_general_ci NOT NULL,
+  `name_ua` varchar(32) COLLATE utf8mb4_general_ci NOT NULL,
+  `name_jp` varchar(32) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Country codes and names';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `currencies`
 --
 
@@ -84,6 +101,7 @@ CREATE TABLE `currencies` (
   `currency_code` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `currency_name` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `payment_service` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'What service to use to process payments of this currency',
+  `network` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `month_cost` decimal(20,10) NOT NULL,
   `minimum_sum` decimal(20,10) NOT NULL COMMENT 'The minimal total sum that can be paid in this currency',
   `icon` varchar(100) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '/imgs/currencies/default.png',
@@ -148,9 +166,11 @@ DROP TABLE IF EXISTS `p2p_addresses`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `p2p_addresses` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `currency_code` char(3) COLLATE utf8mb4_general_ci NOT NULL,
+  `network` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `address` varchar(64) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Collection of payment addresses to be used when initializing p2p payments';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Collection of payment addresses to be used when initializing p2p payments';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +181,7 @@ DROP TABLE IF EXISTS `payments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payments` (
-  `id` char(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Unique and anonymous payment ID in hash, also used in payment URL',
+  `id` char(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Unique and anonymous payment ID in hash, also used in payment URL',
   `login` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Login of the account balance of which is being topped up',
   `network` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'Currency network',
   `currency_code` varchar(8) COLLATE utf8mb4_general_ci NOT NULL,
@@ -192,7 +212,7 @@ CREATE TABLE `requests` (
   `successful` tinyint(1) NOT NULL,
   `request` varchar(128) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'What resource was requested',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=656 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='The journal of all requests to the system. Mainly used for karma calculation';
+) ENGINE=InnoDB AUTO_INCREMENT=860 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='The journal of all requests to the system. Mainly used for karma calculation';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +235,7 @@ CREATE TABLE `vpn_configs` (
   CONSTRAINT `vpn_configs_accounts_FK` FOREIGN KEY (`account`) REFERENCES `accounts` (`id`),
   CONSTRAINT `vpn_configs_device_types_FK` FOREIGN KEY (`device_type`) REFERENCES `device_types` (`device_type`),
   CONSTRAINT `vpn_configs_vpn_servers_FK` FOREIGN KEY (`server`) REFERENCES `vpn_servers` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -253,4 +273,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-30 17:20:07
+-- Dump completed on 2024-04-30 23:14:37

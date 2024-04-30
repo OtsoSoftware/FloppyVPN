@@ -116,5 +116,25 @@ namespace FloppyVPN.Controllers
 
 			return Content(response);
 		}
+
+		[HttpPost]
+		public IActionResult FlushVpnServer()
+		{
+			string master_key = HttpContext.Request.Form["master_key"];
+			string vpn_server_id = HttpContext.Request.Form["vpn_server_id"];
+
+			if (master_key != Config.cache["master_key"].ToString())
+				return Content("null");
+
+			string response = Communicator.GetHttp(
+				url: $"{Config.cache["orchestrator_url"]}/Api/Website/AdminFlushVpnServer/{vpn_server_id}",
+				hashed_user_ip_address: ServerTools.GetHashedIPAddress(HttpContext.Request).ToString(),
+				status_code: out _,
+				is_successful: out _,
+				Config.cache["master_key"].ToString()
+			);
+
+			return Content(response);
+		}
 	}
 }

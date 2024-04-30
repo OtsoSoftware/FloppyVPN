@@ -211,7 +211,7 @@ WHERE vc.account = @account_id
 		/// <summary>
 		/// Deletes a vpn server and its configs from the system.
 		/// </summary>
-		static void FlushVpnServer(ulong vpn_server_id)
+		public static void FlushVpnServer(ulong vpn_server_id)
 		{
 			DB.Execute($"DELETE FROM `vpn_configs` WHERE `server` = {vpn_server_id};");
 			DB.Execute($"DELETE FROM `vpn_servers` WHERE `id` = {vpn_server_id};");

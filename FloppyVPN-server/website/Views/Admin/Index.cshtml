@@ -43,7 +43,7 @@
 			<form method="post" asp-controller="Admin" asp-action="AddDaysToAccount">
 				<input name="master_key" type="password" />
 				<input name="login" type="text" placeholder="login" />
-				<input name="days_amount" type="number" min="1" max="365" placeholder="days_amount" />
+				<input name="days_amount" type="number" min="1" max="365" placeholder="days amount" />
 				<button type="submit"></button>
 			</form>
 		</td>
@@ -53,17 +53,17 @@
 			<p>Confirm payment manually by its ID:</p>
 			<form method="post" asp-controller="Admin" asp-action="ConfirmPaymentByID">
 				<input name="master_key" type="password" />
-				<input name="payment_id" type="text" placeholder="payment_id" />
+				<input name="payment_id" type="text" placeholder="payment id" />
 				<button type="submit"></button>
 			</form>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<p>:</p>
-			<form method="post" asp-controller="Admin" asp-action="">
+			<p>Totally flush (remove) vpn server with its configs:</p>
+			<form method="post" asp-controller="Admin" asp-action="FlushVpnServer">
 				<input name="master_key" type="password" />
-				<input name="login" type="text" placeholder="login" />
+				<input name="vpn_server_id" type="text" placeholder="vpn server id" />
 				<button type="submit"></button>
 			</form>
 		</td>
