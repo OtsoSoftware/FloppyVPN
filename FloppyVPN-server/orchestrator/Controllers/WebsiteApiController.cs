@@ -206,14 +206,7 @@ namespace FloppyVPN.Controllers
 		{
 			try
 			{
-				DB.Execute("UPDATE `payments` SET `status` = @status, `is_paid` = @is_paid " +
-					"WHERE `id` = @payment_id",
-					new Dictionary<string, object>()
-					{
-						{ "@status", PaymentsManager.PaymentStatuses.confirmed.ToString() },
-						{ "@is_paid", true },
-						{ "@payment_id", payment_id }
-					});
+				PaymentsManager.ConfirmPayment(payment_id);
 				return "Done, I guess.";
 			}
 			catch (Exception ex)

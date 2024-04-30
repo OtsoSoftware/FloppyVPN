@@ -13,8 +13,9 @@
 				DeleteUnpaidAccounts();
 				DeleteOldRequests();
 				Provisioner.FlushConfigsOfDeletedAccounts();
+				DeleteOldPayments();
 
-				Thread.Sleep(15 * 1000 * 60);
+				Thread.Sleep(15 * 1000 * 60); //minutes
 			}
 		}
 
@@ -24,6 +25,11 @@
 		}
 
 		static void DeleteOldRequests()
+		{
+
+		}
+
+		static void DeleteOldPayments()
 		{
 
 		}

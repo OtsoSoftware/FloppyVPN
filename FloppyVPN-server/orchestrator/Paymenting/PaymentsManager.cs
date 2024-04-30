@@ -19,10 +19,35 @@ internal static class PaymentsManager
 		confirmed //when confirmed manually
 	}
 
+	public static void ConfirmPayment(string payment_id)
+	{
+		// Get payment data:
+		DataRow payment = DB.GetDataTable("SELECT * FROM `payments` WHERE `id` = @payment_id;",
+			new Dictionary<string, object>()
+			{
+				{ "@payment_id", payment_id }
+			}).Rows[0];
+
+		if ((bool)payment["is_paid"] == false)
+		{
+			Account acc = new(payment["login"].ToString());
+			acc.AddTime((int)payment["months_to_add"]);
+
+			DB.Execute("UPDATE `payments` SET `status` = @status, `is_paid` = @is_paid " +
+				"WHERE `id` = @payment_id",
+				new Dictionary<string, object>()
+				{
+					{ "@status", PaymentStatuses.confirmed.ToString() },
+					{ "@is_paid", true },
+					{ "@payment_id", payment_id }
+				});
+		}
+	}
+
 	public static string GenerateNewPaymentID()
 	{
 		generatingPaymentID:
-		string new_payment_id = Cryption.GenerateRandomString(30);
+		string new_payment_id = Cryption.GenerateRandomString(24);
 
 		DataTable _paymentIds = DB.GetDataTable("SELECT * FROM `payments` WHERE `id` = @new_payment_id;",
 			new Dictionary<string, object>()

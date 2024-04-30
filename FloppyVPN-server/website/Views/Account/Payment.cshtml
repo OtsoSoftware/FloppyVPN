@@ -23,6 +23,7 @@
 		<td><b>@Loc.Get("payment-currency", lang)</b></td>
 		<td>@currencyData["currency_code"].ToString().ToUpper() (@currencyData["currency_name"])</td>
 	</tr>
+	@*
 	@if ((paymentData["network"] ?? "").ToString() != "")
 	{
 		<tr>
@@ -30,6 +31,7 @@
 			<td>@paymentData["network"]</td>
 		</tr>
 	}
+	*@
 	<tr>
 		<td><b>@Loc.Get("address-to-pay-to", lang)</b></td>
 		<td>@paymentData["address_to_pay_to"]</td>
@@ -41,8 +43,8 @@
 	@if ((paymentData["comment_to_attach"] ?? "").ToString() != "")
 	{
 		<tr>
-			<td><b>@Loc.Get("payment-comment", lang)</b></td>
-			<td>@paymentData["comment_to_attach"]</td>
+			<td><b class="highlight">@Loc.Get("payment-comment", lang)</b></td>
+			<td class="highlight">@paymentData["comment_to_attach"]</td>
 		</tr>
 	}
 	<tr>

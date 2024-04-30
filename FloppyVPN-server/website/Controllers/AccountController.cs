@@ -34,7 +34,7 @@ namespace FloppyVPN.Controllers
 			{
 				TempData.Remove("FormSubmitted");
 
-				if (Config.cache["allow_registration"].ToString() == bool.FalseString)
+				if (Config.cache["allow_operations"].ToString() == bool.FalseString)
 				{
 					return Redirect("/Error/503");
 				}

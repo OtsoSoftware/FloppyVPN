@@ -88,7 +88,6 @@ namespace FloppyVPN
 			buttStartup.Text = Loc.startupButton;
 			buttLanguage.Text = Loc.languageButton;
 			buttRefreshData.Text = Loc.refreshbutton;
-			//labelCurrentIpCaption.Text = Loc.currentIP;
 			buttAddToStartup.Text = Loc.addToStartup;
 			buttRemoveFromStartup.Text = Loc.removeFromStartup;
 			buttUpdate.Text = Loc.updateButton;

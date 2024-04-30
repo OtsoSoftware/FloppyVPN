@@ -612,7 +612,14 @@
   <row>
     <name>payment_status-done</name>
     <en>The payment was successful.</en>
-    <ru>Платіж успішно пройшов.</ru>
+    <ru>Платёж прошел успешно.</ru>
+    <uk>Платіж успішно пройшов.</uk>
+    <ja>支払いは成功しました。</ja>
+  </row>
+  <row>
+    <name>payment_status-confirmed</name>
+    <en>The payment was successful.</en>
+    <ru>Платёж успешно подтверждён.</ru>
     <uk>Платіж успішно пройшов.</uk>
     <ja>支払いは成功しました。</ja>
   </row>

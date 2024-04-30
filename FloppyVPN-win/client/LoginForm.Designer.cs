@@ -33,12 +33,16 @@
 			this.windowMenu = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.buttCloseLoginForm = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttLanguage = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupLogin = new System.Windows.Forms.GroupBox();
 			this.buttRegister = new System.Windows.Forms.Button();
 			this.labelLoginEntering = new System.Windows.Forms.Label();
 			this.txtLogin = new System.Windows.Forms.TextBox();
 			this.buttLogin = new System.Windows.Forms.Button();
+			this.buttEN = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttRU = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttUK = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttJA = new System.Windows.Forms.ToolStripMenuItem();
 			this.borderPanel.SuspendLayout();
 			this.windowMenu.SuspendLayout();
 			this.groupLogin.SuspendLayout();
@@ -63,13 +67,13 @@
 			this.windowMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.windowMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.toolStripMenuItem1});
+            this.buttLanguage});
 			this.windowMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
 			this.windowMenu.Location = new System.Drawing.Point(0, 0);
 			this.windowMenu.Name = "windowMenu";
 			this.windowMenu.Padding = new System.Windows.Forms.Padding(3, 2, 0, 5);
 			this.windowMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.windowMenu.Size = new System.Drawing.Size(336, 29);
+			this.windowMenu.Size = new System.Drawing.Size(336, 31);
 			this.windowMenu.TabIndex = 16;
 			this.windowMenu.Text = "windowMenu";
 			// 
@@ -87,11 +91,17 @@
 			this.buttCloseLoginForm.Size = new System.Drawing.Size(124, 26);
 			this.buttCloseLoginForm.Text = "Close";
 			// 
-			// toolStripMenuItem1
+			// buttLanguage
 			// 
-			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(85, 22);
-			this.toolStripMenuItem1.Text = "Language";
+			this.buttLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttEN,
+            this.buttRU,
+            this.buttUK,
+            this.buttJA});
+			this.buttLanguage.Name = "buttLanguage";
+			this.buttLanguage.Size = new System.Drawing.Size(85, 22);
+			this.buttLanguage.Text = "Language";
+			this.buttLanguage.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.buttLanguage_DropDownItemClicked);
 			// 
 			// groupLogin
 			// 
@@ -158,6 +168,30 @@
 			this.buttLogin.UseVisualStyleBackColor = false;
 			this.buttLogin.Click += new System.EventHandler(this.buttLogin_Click);
 			// 
+			// buttEN
+			// 
+			this.buttEN.Name = "buttEN";
+			this.buttEN.Size = new System.Drawing.Size(224, 26);
+			this.buttEN.Text = "English";
+			// 
+			// buttRU
+			// 
+			this.buttRU.Name = "buttRU";
+			this.buttRU.Size = new System.Drawing.Size(224, 26);
+			this.buttRU.Text = "Русский";
+			// 
+			// buttUK
+			// 
+			this.buttUK.Name = "buttUK";
+			this.buttUK.Size = new System.Drawing.Size(224, 26);
+			this.buttUK.Text = "Українська";
+			// 
+			// buttJA
+			// 
+			this.buttJA.Name = "buttJA";
+			this.buttJA.Size = new System.Drawing.Size(224, 26);
+			this.buttJA.Text = "日本語";
+			// 
 			// LoginForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -190,6 +224,10 @@
 		private System.Windows.Forms.MenuStrip windowMenu;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem buttCloseLoginForm;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem buttLanguage;
+		private System.Windows.Forms.ToolStripMenuItem buttEN;
+		private System.Windows.Forms.ToolStripMenuItem buttRU;
+		private System.Windows.Forms.ToolStripMenuItem buttUK;
+		private System.Windows.Forms.ToolStripMenuItem buttJA;
 	}
 }

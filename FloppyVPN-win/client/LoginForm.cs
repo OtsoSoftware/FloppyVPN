@@ -17,11 +17,11 @@ namespace FloppyVPN
 		public LoginForm()
 		{
 			InitializeComponent();
-			LocalizeInterface();
+			ApplyLocalizedTexts();
 			this.DialogResult = DialogResult.No;
 		}
 
-		private void LocalizeInterface()
+		void ApplyLocalizedTexts()
 		{
 			fileToolStripMenuItem.Text = Loc.fileMenu;
 			buttCloseLoginForm.Text = Loc.close;
@@ -31,12 +31,12 @@ namespace FloppyVPN
 			groupLogin.Text = Loc.loginGroup;
 		}
 
-		private void buttRegister_Click(object sender, EventArgs e)
+		void buttRegister_Click(object sender, EventArgs e)
 		{
 			Utils.LaunchWebsite($"{PathsAndLinks.websiteURL}/register");
 		}
 
-		private void buttLogin_Click(object sender = null, EventArgs e = null)
+		void buttLogin_Click(object sender = null, EventArgs e = null)
 		{
 			if (txtLogin.Text.Length < 6)
 			{
@@ -69,6 +69,23 @@ namespace FloppyVPN
 				txtLogin.Text = savedLogin;
 				buttLogin_Click();
 			}
+		}
+
+		void buttLanguage_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+		{
+			if (e.ClickedItem == buttEN)
+				Loc.lang = "en";
+			else if (e.ClickedItem == buttRU)
+				Loc.lang = "ru";
+			else if (e.ClickedItem == buttUK)
+				Loc.lang = "uk";
+			else if (e.ClickedItem == buttJA)
+				Loc.lang = "ja";
+
+			IniFile.SetValue("lang", Loc.lang);
+
+			Loc.Alize();
+			ApplyLocalizedTexts();
 		}
 	}
 }

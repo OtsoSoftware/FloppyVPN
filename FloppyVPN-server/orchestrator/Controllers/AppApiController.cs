@@ -93,6 +93,7 @@ WHERE (vc.config_count IS NULL OR vc.config_count < vs.max_configs);
 		public IActionResult GetConfig(string login, string country_code, int device_type)
 		{
 			Account account = new(login);
+
 			if (!account.exists)
 			{
 				Karma karma = new(ServerTools.GetHashedIPAddress(HttpContext.Request));
@@ -101,7 +102,11 @@ WHERE (vc.config_count IS NULL OR vc.config_count < vs.max_configs);
 				HttpContext.Response.StatusCode = 403;
 				return Content("Such account does not exist");
 			}
-
+			else if (account.days_left <= 0)
+			{
+				HttpContext.Response.StatusCode = 402;
+				return Content("Please top up your balance!");
+			}
 
 			ulong config_id = Provisioner.GetConfig((ulong)account.accountData["id"], country_code, device_type);
 			DataRow config = DB.GetDataTable($"SELECT * FROM `vpn_configs` WHERE `id` = {config_id};").Rows[0];
