@@ -6,12 +6,11 @@ Please use the official website to register, download and use FloppyVPN - http:/
 If you want to compile it yourself or learn more about the project - continue reading.
 
 ## Why FloppyVPN?
-- Anonymity by design
-- 0 data collection
-- Anonymous balance topup links that can be shared with friends
+- Anonymity by design: 0 data collection
+- Anonymous balance topup links that can be shared
 - Can't be simplier for the end user
 - Own apps for each platform
-- Crypto & p2p payment system
+- Crypto & p2p balance topups
 
 ## Stack
 - Servers: C# (ASP.NET Core 6)

@@ -63,9 +63,7 @@ namespace FloppyVPN.Controllers
 			string alias = HttpContext.Request.Form["alias"];
 
 			if (master_key != Config.cache["master_key"].ToString())
-			{
 				return Content("null");
-			}
 
 			string? response = Communicator.GetHttp(
 				url: $"{Config.cache["orchestrator_url"]}/Api/Website/GetLoginFromAlias/{alias}",
@@ -78,11 +76,45 @@ namespace FloppyVPN.Controllers
 			return Content(response);
 		}
 
-		[HttpGet]
+		[HttpPost]
 		public IActionResult AddDaysToAccount()
 		{
+			string master_key = HttpContext.Request.Form["master_key"];
+			string login = HttpContext.Request.Form["login"];
+			string days_amount = HttpContext.Request.Form["days_amount"];
 
-			return Content("");
+			if (master_key != Config.cache["master_key"].ToString())
+				return Content("null");
+
+			string response = Communicator.GetHttp(
+				url: $"{Config.cache["orchestrator_url"]}/Api/Website/AdminAddDaysToAccount/{login}/{days_amount}",
+				hashed_user_ip_address: ServerTools.GetHashedIPAddress(HttpContext.Request).ToString(),
+				status_code: out _,
+				is_successful: out _,
+				Config.cache["master_key"].ToString()
+			);
+
+			return Content(response);
+		}
+
+		[HttpPost]
+		public IActionResult ConfirmPaymentByID()
+		{
+			string master_key = HttpContext.Request.Form["master_key"];
+			string payment_id = HttpContext.Request.Form["payment_id"];
+
+			if (master_key != Config.cache["master_key"].ToString())
+				return Content("null");
+
+			string response = Communicator.GetHttp(
+				url: $"{Config.cache["orchestrator_url"]}/Api/Website/AdminConfirmPaymentByID/{payment_id}",
+				hashed_user_ip_address: ServerTools.GetHashedIPAddress(HttpContext.Request).ToString(),
+				status_code: out _,
+				is_successful: out _,
+				Config.cache["master_key"].ToString()
+			);
+
+			return Content(response);
 		}
 	}
 }

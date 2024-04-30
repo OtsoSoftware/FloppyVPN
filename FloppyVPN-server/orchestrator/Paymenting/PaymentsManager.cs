@@ -15,7 +15,8 @@ internal static class PaymentsManager
 		waiting_deposit,
 		confirming,
 		not_enough,
-		done
+		done, //when payment processed
+		confirmed //when confirmed manually
 	}
 
 	public static string GenerateNewPaymentID()
@@ -54,12 +55,9 @@ internal static class PaymentsManager
 		return sum;
 	}
 
-	public static string WritePaymentIntoDB(string? new_payment_id, string login, string currency_code, string network, string external_payment_id,
+	public static void WritePaymentIntoDB(string new_payment_id, string login, string currency_code, string network, string external_payment_id,
 		int months_to_add, decimal amount_to_pay, string address_to_pay_to, string comment_to_attach, DateTime when_created, DateTime to_be_paid_till)
 	{
-		if (string.IsNullOrEmpty(new_payment_id))
-			new_payment_id = GenerateNewPaymentID();
-
 		DB.Execute("INSERT INTO payments (id, login, network, currency_code, external_payment_id, months_to_add, amount_to_pay, address_to_pay_to, comment_to_attach, when_created, to_be_paid_till, status, is_paid) " +
 		"VALUES(@id, @login, @network, @currency_code, @external_payment_id, @months_to_add, @amount_to_pay, @address_to_pay_to, @comment_to_attach, @when_created, @to_be_paid_till, @status, 0);",
 		new Dictionary<string, object>()
@@ -79,7 +77,6 @@ internal static class PaymentsManager
 		});
 
 		Thread.Sleep(100);
-		return new_payment_id;
 	}
 
 	/// <summary>
@@ -97,12 +94,23 @@ internal static class PaymentsManager
 			login = acc.login;
 
 		// Determine which payment service this currency code belongs to:
-		string payment_service = (DB.GetValue("SELECT `payment_service` FROM `currencies` " +
-			"WHERE `currency_code` = @currency_code;",
-			new Dictionary<string, object>()
-			{
-				{ "@currency_code", currency_code }
-			}) ?? "unspecified").ToString();
+		DataRow currency_data;
+		try
+		{
+			currency_data = DB.GetDataTable(
+				"SELECT * FROM `currencies` WHERE `currency_code` = @currency_code;",
+				new Dictionary<string, object>()
+				{
+					{ "@currency_code", currency_code }
+				}).Rows[0];
+		}
+		catch
+		{
+			throw new Exception("Requested currency not found");
+		}
+
+		string payment_service = currency_data["payment_service"].ToString();
+		string currency_network = currency_data["network"].ToString();
 
 		string new_payment_id;
 
@@ -111,15 +119,14 @@ internal static class PaymentsManager
 			case "nowpayments":
 				new_payment_id = PaymentsServices.Create_NowPayments(login, sum, currency_code, months_to_add);
 				break;
-			case "sbp_p2p":
-				new_payment_id = PaymentsServices.Create_SBP(login, currency_code, months_to_add);
+			case "p2p":
+				new_payment_id = PaymentsServices.Create_P2P(login, sum, currency_code, currency_network, months_to_add);
 				break;
 			default:
 				DB.Log("CreatePayment()", 
 					$"Unable to find appropriate method to create an invoice " +
 					$"using payment service {payment_service} for currency {currency_code}");
 				throw new Exception("Approptiate invoice creation method not found");
-				break;
 		}
 
 		return new_payment_id;

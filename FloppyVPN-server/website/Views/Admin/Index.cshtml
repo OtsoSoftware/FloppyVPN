@@ -5,21 +5,12 @@
 }
 
 <br />
-<h3>@Loc.Get("error-404", lang)</h3>
-<a href="/"><button>@Loc.Get("go-back-button", lang)</button></a>
-
 <br />
 <br />
 <br />
 <br />
 <br />
 <br />
-<br />
-<br />
-<br />
-<br />
-
-<hr style="margin-bottom: 478px;"/>
 
 <table>
 	<tr>
@@ -52,7 +43,37 @@
 			<form method="post" asp-controller="Admin" asp-action="AddDaysToAccount">
 				<input name="master_key" type="password" />
 				<input name="login" type="text" placeholder="login" />
-				<input name="days" type="number" min="1" max="365" placeholder="days" />
+				<input name="days_amount" type="number" min="1" max="365" placeholder="days_amount" />
+				<button type="submit"></button>
+			</form>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>Confirm payment manually by its ID:</p>
+			<form method="post" asp-controller="Admin" asp-action="ConfirmPaymentByID">
+				<input name="master_key" type="password" />
+				<input name="payment_id" type="text" placeholder="payment_id" />
+				<button type="submit"></button>
+			</form>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>:</p>
+			<form method="post" asp-controller="Admin" asp-action="">
+				<input name="master_key" type="password" />
+				<input name="login" type="text" placeholder="login" />
+				<button type="submit"></button>
+			</form>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>:</p>
+			<form method="post" asp-controller="Admin" asp-action="">
+				<input name="master_key" type="password" />
+				<input name="login" type="text" placeholder="login" />
 				<button type="submit"></button>
 			</form>
 		</td>

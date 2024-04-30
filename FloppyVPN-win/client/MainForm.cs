@@ -1,4 +1,5 @@
 ﻿using FloppyVPN.Properties;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Resources;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -18,6 +20,8 @@ namespace FloppyVPN
 {
 	public partial class MainForm : ClassicForm
 	{
+		private readonly string countryCode_and_countryName_separator = " | ";
+
 		public MainForm(bool connectAfterLaunch)
 		{
 			Application.ThreadException += new ThreadExceptionEventHandler(Utils.Exception);
@@ -28,7 +32,7 @@ namespace FloppyVPN
 			LogIn();
 
 			FillCountriesList();
-			SelectCountryCode(ConnectionConfig.CurrentCountryCode);
+			SelectCountryCode(Conf.CurrentCountryCode);
 
 			if (connectAfterLaunch)
 			{
@@ -165,9 +169,9 @@ namespace FloppyVPN
 				// First, get config of selected country code but only if:
 				// a) selected country does NOT already match the current config country code
 				// b) there is currently no valid config at all
-				if (ConnectionConfig.CurrentCountryCode != SelectedCountryCode() || !ConnectionConfig.IsValid)
+				if (Conf.CurrentCountryCode != SelectedCountryCode() || !Conf.IsValid)
 				{
-					ConnectionConfig.Obtain(SelectedCountryCode());
+					Conf.Obtain(SelectedCountryCode());
 				}
 
 				Vpn.Connect();
@@ -269,8 +273,8 @@ namespace FloppyVPN
 			Account.LogIn(Account.login);
 			labelAccountStatus.Text = $"Login: {Account.masked_login}\nPaid till: {Account.paid_till}\nDays left: {Account.days_left}";
 
-			stripIPpublic.Text = Loc.publicIP + ConnectionConfig.IPv4Address ?? "-";
-			stripIPprivate.Text = Loc.privateIP + ConnectionConfig.IPv6Address ?? "-";
+			stripIPpublic.Text = Loc.publicIP + Conf.IPv4Address ?? "-";
+			stripIPprivate.Text = Loc.privateIP + Conf.IPv6Address ?? "-";
 
 			FillCountriesList();
 		}
@@ -278,29 +282,46 @@ namespace FloppyVPN
 		void FillCountriesList()
 		{
 			string selectedCountryCode = SelectedCountryCode();
-			string[] available_country_codes = ConnectionConfig.GetAvailableCountryCodes();
+			JArray available_country_codes = Conf.GetAvailableCountryCodes();
 
 			boxCountry.Items.Clear();
-			boxCountry.Items.AddRange(available_country_codes);
+
+			foreach (JObject available_country in available_country_codes)
+			{
+				string country_code = available_country["country_code"].ToString();
+				string country_name = available_country["country_name"].ToString();
+
+				boxCountry.Items.Add(string.Join(countryCode_and_countryName_separator, country_code, country_name));
+			}
 
 			SelectCountryCode(selectedCountryCode);
 		}
 
 		void boxCountry_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			try
+			{
+				ResourceManager rm = CountriesFlags.ResourceManager;
+				Bitmap myImage = (Bitmap)rm.GetObject(SelectedCountryCode().ToLower());
+
+				pictureCountry.BackgroundImage = myImage;
+			}
+			catch
+			{
+			}
 		}
 
 		string SelectedCountryCode()
 		{
-			return boxCountry.Text;
+			return boxCountry.Text.Split(new string[] { countryCode_and_countryName_separator }, StringSplitOptions.None)[0];
 		}
 
 		void SelectCountryCode(string country_code)
 		{
-			int index = boxCountry.FindString(country_code);
-			if (index != -1) //if found last country
+			int index = boxCountry.FindString(country_code + countryCode_and_countryName_separator);
+			if (index != -1) //if found country
 				boxCountry.SelectedIndex = index;
-			else //if not found last country
+			else //if not found country
 				index = new Random().Next(0, boxCountry.Items.Count - 1);
 
 			boxCountry.SelectedIndex = index;
@@ -321,6 +342,11 @@ namespace FloppyVPN
 		void buttSplitTunneling_Click(object sender, EventArgs e)
 		{
 			new MsgBox("Split tunneling is not yet implemented, sorry.");
+		}
+
+		void labelVersionCaption_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show(Conf.IsValid.ToString());
 		}
 	}
 }

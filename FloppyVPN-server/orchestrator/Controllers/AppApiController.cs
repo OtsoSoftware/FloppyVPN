@@ -42,11 +42,11 @@ namespace FloppyVPN.Controllers
 		}
 
 		/// <returns>
-		/// List of availables country codes user has VPN configs in that belong to a user
+		/// Array of availables country codes user has VPN configs in that belong to a user
 		/// </returns>
-		[HttpGet("GetCountriesList/{login}")]
+		[HttpGet("GetAvailableCountryCodes/{login}/{language}")]
 		[ServiceFilter(typeof(BannedClientsFilter))]
-		public IActionResult GetCountriesList(string login)
+		public IActionResult GetAvailableCountryCodes(string login, string language)
 		{
 			Account account = new(login);
 
@@ -59,7 +59,7 @@ namespace FloppyVPN.Controllers
 				return Content("You do not have access to these routes.");
 			}
 
-			string[] countryCodesAvailable = DB.FirstColumnAsArray($@"
+			string[] availableCCs = DB.FirstColumnAsArray($@"
 SELECT DISTINCT vs.country_code
 FROM vpn_servers vs
 LEFT JOIN (
@@ -70,14 +70,25 @@ LEFT JOIN (
 WHERE (vc.config_count IS NULL OR vc.config_count < vs.max_configs);
 			");
 
-			string jsonResponse = JsonConvert.SerializeObject(countryCodesAvailable);
+			JArray countryCodesArray = new();
+			foreach (string availableCC in availableCCs)
+			{
+				string country_name = "Chezhia";
+
+				countryCodesArray.Add(new JObject()
+				{
+					{ "country_code", availableCC },
+					{ "country_name", country_name }
+				});
+			}
+			string jsonResponse = countryCodesArray.ToString();
 
 			Response.Headers.Add("Content-Type", "application/json");
 			return Content(jsonResponse, "application/json");
 		}
 
 		/// <returns>Specific VPN config to connect to</returns>
-		[HttpGet("GetConfig/{login}/{vpn_country_code}/{device_type}")]
+		[HttpGet("GetConfig/{login}/{country_code}/{device_type}")]
 		[ServiceFilter(typeof(BannedClientsFilter))]
 		public IActionResult GetConfig(string login, string country_code, int device_type)
 		{

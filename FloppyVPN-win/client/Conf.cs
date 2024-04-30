@@ -10,7 +10,7 @@ namespace FloppyVPN
 	/// <summary>
 	/// Represents current connection config for VPN
 	/// </summary>
-	internal static class ConnectionConfig
+	internal static class Conf
 	{
 		/// <summary>
 		/// Validness of current config. Basically - can we connect or not
@@ -54,16 +54,17 @@ namespace FloppyVPN
 			}
 		}
 
-		public static string[] GetAvailableCountryCodes()
+		public static JArray GetAvailableCountryCodes()
 		{
-			string _response = Communicator.GetString($"{PathsAndLinks.orchestratorURL}/Api/App/GetCountriesList/{Account.login}",
+			string _response = Communicator.GetString(
+				$"{PathsAndLinks.orchestratorURL}/Api/App/GetAvailableCountryCodes/{Account.login}/{Loc.lang}",
 				out bool isSuccessful,
 				out int statusCode);
 
 			if (!isSuccessful)
-				throw new Exception(statusCode.ToString());
+				throw new Exception($"Failed to get locations list:{statusCode}");
 
-			return JsonConvert.DeserializeObject<string[]>(_response);
+			return JArray.Parse(_response);
 		}
 	}
 }

@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
-    <Compile Include="ConnectionConfig.cs" />
+    <Compile Include="Conf.cs" />
     <Compile Include="IniFile.cs" />
     <Compile Include="Loc.cs" />
     <Compile Include="LoginForm.cs">

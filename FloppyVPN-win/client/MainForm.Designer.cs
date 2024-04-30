@@ -63,7 +63,7 @@
 			this.buttAddTime = new System.Windows.Forms.Button();
 			this.labelAccountStatus = new System.Windows.Forms.Label();
 			this.statusBar = new System.Windows.Forms.StatusStrip();
-			this.labelCurrentIpCaption = new System.Windows.Forms.ToolStripStatusLabel();
+			this.labelVersionCaption = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.buttRevealIp = new System.Windows.Forms.ToolStripDropDownButton();
 			this.stripIPprivate = new System.Windows.Forms.ToolStripMenuItem();
@@ -324,10 +324,10 @@
 			this.pictureCountry.Enabled = false;
 			this.pictureCountry.ErrorImage = null;
 			this.pictureCountry.InitialImage = null;
-			this.pictureCountry.Location = new System.Drawing.Point(115, 88);
+			this.pictureCountry.Location = new System.Drawing.Point(115, 90);
 			this.pictureCountry.Margin = new System.Windows.Forms.Padding(4);
 			this.pictureCountry.Name = "pictureCountry";
-			this.pictureCountry.Size = new System.Drawing.Size(25, 25);
+			this.pictureCountry.Size = new System.Drawing.Size(25, 20);
 			this.pictureCountry.TabIndex = 16;
 			this.pictureCountry.TabStop = false;
 			// 
@@ -446,7 +446,7 @@
 			this.statusBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.statusBar.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.labelCurrentIpCaption,
+            this.labelVersionCaption,
             this.toolStripStatusLabel2,
             this.buttRevealIp});
 			this.statusBar.Location = new System.Drawing.Point(0, 414);
@@ -455,11 +455,12 @@
 			this.statusBar.TabIndex = 11;
 			this.statusBar.Text = "statusStrip1";
 			// 
-			// labelCurrentIpCaption
+			// labelVersionCaption
 			// 
-			this.labelCurrentIpCaption.Name = "labelCurrentIpCaption";
-			this.labelCurrentIpCaption.Size = new System.Drawing.Size(47, 18);
-			this.labelCurrentIpCaption.Text = "v1.0.0";
+			this.labelVersionCaption.Name = "labelVersionCaption";
+			this.labelVersionCaption.Size = new System.Drawing.Size(47, 18);
+			this.labelVersionCaption.Text = "v1.0.0";
+			this.labelVersionCaption.Click += new System.EventHandler(this.labelVersionCaption_Click);
 			// 
 			// toolStripStatusLabel2
 			// 
@@ -611,7 +612,7 @@
 		private System.Windows.Forms.ToolStripMenuItem buttTrayExit;
 		private System.Windows.Forms.StatusStrip statusBar;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-		private System.Windows.Forms.ToolStripStatusLabel labelCurrentIpCaption;
+		private System.Windows.Forms.ToolStripStatusLabel labelVersionCaption;
 		private System.Windows.Forms.GroupBox groupConnection;
 		private System.Windows.Forms.Button buttConnectDisconnect;
 		private System.Windows.Forms.PictureBox pictureConnectionIllustration;

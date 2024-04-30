@@ -186,5 +186,40 @@ namespace FloppyVPN.Controllers
 				return ex.Message;
 			}
 		}
+
+		[HttpGet("AdminAddDaysToAccount/{login}/{days_amount}")]
+		public string AdminAddDaysToAccount(string login, int days_amount)
+		{
+			DateTime current_paidTill = (DateTime)DB.GetValue($"SELECT `paid_till` FROM `accounts` WHERE `login` = '{login}'");
+			DateTime new_paidTill = current_paidTill.AddDays(days_amount);
+			DB.Execute("UPDATE `accounts` SET `paid_till` = @new_paidTill WHERE `login` = @login;",
+				new Dictionary<string, object>()
+				{
+					{ "@new_paidTill", new_paidTill },
+					{ "@login", login }
+				});
+			return $"Done, I guess.\nOld paid_till:{current_paidTill}\nNew paid_till:{new Account(login).paid_till}";
+		}
+
+		[HttpGet("AdminConfirmPaymentByID/{payment_id}")]
+		public string AdminConfirmPaymentByID(string payment_id)
+		{
+			try
+			{
+				DB.Execute("UPDATE `payments` SET `status` = @status, `is_paid` = @is_paid " +
+					"WHERE `id` = @payment_id",
+					new Dictionary<string, object>()
+					{
+						{ "@status", PaymentsManager.PaymentStatuses.confirmed.ToString() },
+						{ "@is_paid", true },
+						{ "@payment_id", payment_id }
+					});
+				return "Done, I guess.";
+			}
+			catch (Exception ex)
+			{
+				return ex.Message;
+			}
+		}
 	}
 }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,14 +23,16 @@ namespace FloppyVPN
 		{
 			try
 			{
-				try { Disconnect(); } catch { }
+				try { Disconnect(); Thread.Sleep(100); } catch { }
 
-				if (!File.Exists(pathToConf))
-					throw new Exception("Config file does not exist!");
+				if (!Conf.IsValid)
+					throw new Exception("Connection config is in invalid state!");
+				else
+					File.WriteAllText(pathToConf, Conf.ConfString, Encoding.Unicode);
 
 				ProcessStartInfo psi = new ProcessStartInfo();
 				psi.FileName = pathToDriver;
-				psi.Arguments = $"/installtunnelservice \"{pathToConf}\"";
+				psi.Arguments = $@"/installtunnelservice ""{pathToConf}""";
 				psi.RedirectStandardOutput = true;
 				psi.RedirectStandardError = true;
 				psi.UseShellExecute = false;
@@ -79,9 +82,9 @@ namespace FloppyVPN
 				catch
 				{
 				}
-
-				connected = false;
 			}
+
+			connected = false;
 		}
 	}
 }

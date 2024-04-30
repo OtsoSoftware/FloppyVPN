@@ -24,11 +24,7 @@ namespace FloppyVPN
 			new Thread(() => Config.CacheRefresher()).Start();
 			new Thread(() => Worker.Start()).Start();
 
-			Thread.Sleep(1000);
-
-			Console.WriteLine(Provisioner.GetConfig(8, "CZ", 1));
-			Console.ReadLine();
-			Environment.Exit(0);
+			Thread.Sleep(300);
 
 			Startup(args);
 		}
@@ -40,10 +36,10 @@ namespace FloppyVPN
 			builder.Services.AddControllers();
 
 			builder.Services.AddEndpointsApiExplorer();
-			//builder.Services.AddSwaggerGen(c =>
-			//{
-			//	c.SwaggerDoc("v1", new OpenApiInfo { Title = "Orchestrator server API", Version = "v1" });
-			//});
+			builder.Services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "Orchestrator server API", Version = "v1" });
+			});
 
 			builder.Services.Configure<KestrelServerOptions>(options =>
 			{
