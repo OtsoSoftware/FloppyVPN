@@ -123,7 +123,7 @@ namespace FloppyVPN.Controllers
 			}
 
 			//create the payment:
-			string new_payment_id = Paymenting.Create_NowPayments(login, currency_code, months_amount);
+			string new_payment_id = PaymentsManager.CreatePayment(login, currency_code, months_amount);
 
 			Karma karma = new(Filters.GetHashedIpFromHeaders(HttpContext.Request));
 			karma.LogRequest(Karma.LogRequestResources.payment_creation, true);

@@ -37,9 +37,9 @@ namespace FloppyVPN
 		/// <param name="body">The body of the request.</param>
 		/// <param name="master_key">The value of the "master_key" header.</param>
 		/// <returns>The response body.</returns>
-		public static string PostHttp(string url, string body, string master_key, string hashed_user_ip_address, out HttpStatusCode status_code, out bool is_successful)
+		public static string PostHttp(string url, string body, string master_key, string hashed_user_ip_address, out HttpStatusCode status_code, out bool is_successful, double timeout = 30)
 		{
-			using (HttpClient client = new())
+			using (HttpClient client = new() { Timeout = TimeSpan.FromSeconds(timeout) })
 			{
 				client.DefaultRequestHeaders.Add("master_key", master_key);
 				client.DefaultRequestHeaders.Add("hashed_user_ip_address", hashed_user_ip_address);

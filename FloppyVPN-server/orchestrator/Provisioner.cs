@@ -112,9 +112,21 @@ WHERE vc.account = @account_id
 					{ "@device_type", device_type }
 				});
 
-			string newConfig = Communicator.PostHttp($"http://{vpnServerInfo["socket"]}/CreateConfig",
-				body: newConfigID.ToString().EncodeBody(),
-				"", "", out _, out bool isSuccessful);
+			bool isSuccessful;
+			string newConfig = "";
+
+			try
+			{
+				newConfig = Communicator.PostHttp($"http://{vpnServerInfo["socket"]}/CreateConfig",
+					body: newConfigID.ToString().EncodeBody(),
+					"", "", out _, out isSuccessful, 15);
+
+				isSuccessful = newConfig.Length > 64 || isSuccessful;
+			}
+			catch
+			{
+				isSuccessful = false;
+			}
 
 			if (isSuccessful)
 			{
@@ -150,12 +162,12 @@ WHERE vc.account = @account_id
 			string deviceTypeParameter = device_type == 0 ? "" : $" AND `vc`.`device_type` = {device_type}";
 
 			string query = $@"
-    SELECT `vc`.`id`
-    FROM `vpn_configs` AS `vc`
-    INNER JOIN `vpn_servers` AS `vs` ON `vc`.`server` = `vs`.`id`
-    WHERE `vc`.`account` = {account_id}
-      {countryCodeParameter}
-      {deviceTypeParameter};";
+	SELECT `vc`.`id`
+	FROM `vpn_configs` AS `vc`
+	INNER JOIN `vpn_servers` AS `vs` ON `vc`.`server` = `vs`.`id`
+	WHERE `vc`.`account` = {account_id}
+	  {countryCodeParameter}
+	  {deviceTypeParameter};";
 
 			string[] vpnConfigsOfAccountToDelete = DB.FirstColumnAsArray(query);
 
