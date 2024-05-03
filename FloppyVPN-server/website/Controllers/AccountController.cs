@@ -25,13 +25,11 @@ namespace FloppyVPN.Controllers
 		[HttpPost]
 		public IActionResult PerformRegistration()
 		{
-			// Set TempData flag indicating that the form was submitted
-			TempData["FormSubmitted"] = true;
-
 			// Redirect to the Registered action to render the Registered view
 			// Only open "Registered" (which actually registers a user) when redirected from "Register"
 			if ((bool)(TempData["FormSubmitted"] ?? false) == true)
 			{
+				TempData["FormSubmitted"] = false;
 				TempData.Remove("FormSubmitted");
 
 				if (Config.cache["allow_operations"].ToString() == bool.FalseString)

@@ -30,7 +30,7 @@ apt install -y dkms
 
 ##### Installing amneziawg
 
-# Put "amneziawg-X.tar" in the /root
+# Put "amneziawg-X.tar" in the /root (X stands for the patch that suits the kernel version)
 # then:
 tar xf amneziawg-X.tar
 mv amneziawg-X /usr/src
@@ -67,15 +67,45 @@ sysctl -w net.ipv6.conf.all.forwarding=1
 sysctl -p
 
 
+*now please put compiled vpn server build on the server!*
+
+### assume /root/Publish/FloppyVPN-server-vpn is a full path to executable
+
+chmod +x /root/Publish/FloppyVPN-server-vpn
+
+*now launch server, close server and fill CONFIG.XML file!*
+
+touch /etc/systemd/system/floppyvpn_server.service
+chmod 664 /etc/systemd/system/floppyvpn_server.service
+
+
+
+echo "[Unit]
+Description=FloppyVPN vpn server
+
+[Service]
+ExecStart=/root/Publish/FloppyVPN-server-vpn
+
+[Install]
+WantedBy=multi-user.target" > /etc/systemd/system/floppyvpn_server.service
+
+
+
+systemctl daemon-reload
+systemctl enable floppyvpn_server
+
+systemctl start floppyvpn_server
+
+### now the service is running in the background!
+### make sure to enter the new vpn server into system using, say, admin panel. gl hf!
 
 
 
 
-# From now, either go and blast floppyvpn vpn server software which will handle things itself from now on, or continue reading to learn how stuff is done
 
 
 
-
+# Continue reading this document only to learn how stuff is done manually
 
 
 # Use script to create sample server and client configs
@@ -86,8 +116,5 @@ awg-quick down awg0
 awg-quick up awg0
 awg
 
-
-
 # How to refresh awg0 without clients sessions interruptions:
 awg syncconf awg0 <(awg-quick strip awg0)
-

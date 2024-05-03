@@ -4,6 +4,7 @@
 @{
 	string lang = GetCurrentLanguage(this);
 	ViewData["Title"] = Loc.Get("title_register", lang);
+	TempData["FormSubmitted"] = true;
 }
 
 <h3 id="header-account-register">@Loc.Get("header-account-register", lang)</h3>
