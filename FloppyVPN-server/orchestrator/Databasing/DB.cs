@@ -7,53 +7,6 @@ namespace FloppyVPN
 		private static readonly string connectionString = $"Server={Config.cache["db_host"]};Port={Config.cache["db_port"]};Database={Config.cache["db_name"]};User={Config.cache["db_user"]};Password={Config.cache["db_password"]};AllowPublicKeyRetrieval=true;";
 
 
-		public static void Backupper()
-		{
-			for (; ; )
-			{
-				Thread.Sleep(15 * 1000 * 60);
-
-				string backupDir = Path.GetFullPath(Config.Get("db_backups_folder"));
-
-				if (!Directory.Exists(backupDir))
-					Directory.CreateDirectory(backupDir);
-
-
-				string backupName = $"backup {DateTime.Now.ToDate()}.sql".Replace(":", "-");
-				string backupPath = Path.Combine(backupDir, backupName);
-
-				Backup(backupPath);
-			}
-		}
-
-		public static void Backup(string backupPath)
-		{
-			try
-			{
-				if (File.Exists(backupPath))
-					throw new Exception("Dump file already exists");
-
-				using (MySqlConnection connection = new(connectionString))
-				{
-					using (MySqlCommand command = new())
-					{
-						using (MySqlBackup mb = new(command))
-						{
-							command.Connection = connection;
-							connection.Open();
-							mb.ExportToFile(backupPath);
-							connection.Close();
-							Console.WriteLine("Backup completed successfully.");
-						}
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine($"An error occurred when attempting to backup: {ex.Message}");
-			}
-		}
-
 		public static void Log(string sender, string message)
 		{
 			DateTime now = DateTime.Now;
@@ -75,8 +28,6 @@ namespace FloppyVPN
 				Console.WriteLine("Something unexpected happens - could not even write log into the DB!");
 			}
 		}
-
-
 
 
 		public static void Execute(string query, Dictionary<string, object> parameters = null)

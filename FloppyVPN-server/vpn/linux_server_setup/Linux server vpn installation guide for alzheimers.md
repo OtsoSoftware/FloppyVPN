@@ -69,9 +69,10 @@ sysctl -p
 
 *now please put compiled vpn server build on the server!*
 
-### assume /root/Publish/FloppyVPN-server-vpn is a full path to executable
 
-chmod +x /root/Publish/FloppyVPN-server-vpn
+### assume /root/FloppyVPN_vpn_server/FloppyVPN-server-vpn is a full path to executable
+
+chmod +x /root/FloppyVPN_vpn_server/FloppyVPN-server-vpn
 
 *now launch server, close server and fill CONFIG.XML file!*
 
@@ -84,7 +85,7 @@ echo "[Unit]
 Description=FloppyVPN vpn server
 
 [Service]
-ExecStart=/root/Publish/FloppyVPN-server-vpn
+ExecStart=/root/FloppyVPN_vpn_server/FloppyVPN-server-vpn
 
 [Install]
 WantedBy=multi-user.target" > /etc/systemd/system/floppyvpn_server.service

@@ -74,7 +74,6 @@ namespace FloppyVPN
 			WebApplication app = builder.Build();
 
 			app.MapControllers();
-
 			app.Urls.Clear();
 			app.Urls.Add("http://localhost:1440");
 

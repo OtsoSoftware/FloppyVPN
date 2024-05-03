@@ -10,7 +10,7 @@ namespace FloppyVPN
 		public static readonly string startupShortcutPath = Path.Combine(appDataDir, "Microsoft\\Windows\\Start Menu\\Programs\\Startup", "FloppyVPN.lnk");
 		public static readonly string iniFilePath = Path.Combine(appDataDir, "config.ini");
 
-		public static readonly string orchestratorURL = "http://localhost:1440";
-		public static readonly string websiteURL = "http://localhost:1441";
+		public static readonly string orchestratorURL = "https://orchestrator.floppy.jp.net";
+		public static readonly string websiteURL = "https://floppy.jp.net";
 	}
 }

@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>FloppyVPN</RootNamespace>
+    <StartupObject></StartupObject>
+    <IsPublishable>False</IsPublishable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -65,6 +67,10 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Views\Home\Admin.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\setups\" />
   </ItemGroup>
 
 </Project>
