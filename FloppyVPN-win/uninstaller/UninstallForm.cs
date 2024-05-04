@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace FloppyVPN
 {
-	public partial class UninstallForm : Form
+	public partial class UninstallForm : ClassicForm
 	{
 		public UninstallForm()
 		{
 			InitializeComponent();
+		}
+
+		void UninstallForm_Load(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

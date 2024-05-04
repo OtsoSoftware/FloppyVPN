@@ -84,7 +84,7 @@ WHERE vc.account = @account_id
 				Thread.Sleep(100);
 			}
 
-			// Find the suitable server (which has available clients amount that we need):
+			// Find the suitable server (which has available client slot):
 			string? vpnServerID = (DB.GetValue($"SELECT vs.id, vs.socket, vs.country_code, vs.max_configs " +
 				$"FROM vpn_servers vs " +
 				$"LEFT JOIN (SELECT server, COUNT(DISTINCT account) AS num_configs " +
@@ -97,7 +97,7 @@ WHERE vc.account = @account_id
 				DB.Log("CreateConfig()", $"Lacking vpn servers in country code {country_code}.");
 				return 0;
 			}
-			Console.WriteLine($"found vpn server: {vpnServerID}");
+
 			//create vpn config on vpn server itself:
 			DataRow vpnServerInfo = DB.GetDataTable($"SELECT * FROM `vpn_servers` WHERE `id` = {vpnServerID};").Rows[0];
 
@@ -122,6 +122,7 @@ WHERE vc.account = @account_id
 					"", "", out _, out isSuccessful, 15);
 
 				isSuccessful = newConfig.Length > 64 || isSuccessful;
+				isSuccessful = newConfig.Contains("[Peer]") || isSuccessful;
 			}
 			catch
 			{

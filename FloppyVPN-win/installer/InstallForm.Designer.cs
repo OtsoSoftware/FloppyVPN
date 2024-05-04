@@ -46,44 +46,40 @@
 			this.miniicon = new System.Windows.Forms.PictureBox();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.centertext3 = new System.Windows.Forms.Label();
-			this.checkboxshortcut = new System.Windows.Forms.CheckBox();
+			this.checkboxDesktopShortcut = new System.Windows.Forms.CheckBox();
 			this.digestrichbox = new System.Windows.Forms.RichTextBox();
 			this.launchcheckbox = new System.Windows.Forms.CheckBox();
 			this.progressBar1 = new System.Windows.Forms.ProgressBar();
 			this.windowPanel = new System.Windows.Forms.Panel();
+			this.checkboxMenuShortcut = new System.Windows.Forms.CheckBox();
 			this.uppersettingoption = new System.Windows.Forms.LinkLabel();
-			this.windowBox = new System.Windows.Forms.ToolStrip();
-			this.labelCaption = new System.Windows.Forms.ToolStripLabel();
-			this.boxClose = new System.Windows.Forms.ToolStripButton();
 			this.panelDown.SuspendLayout();
 			this.panelUp.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.miniicon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.windowPanel.SuspendLayout();
-			this.windowBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panelDown
 			// 
-			this.panelDown.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.panelDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panelDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(214)))), ((int)(((byte)(206)))));
 			this.panelDown.Controls.Add(this.buttonBack);
 			this.panelDown.Controls.Add(this.buttonCancel);
 			this.panelDown.Controls.Add(this.buttonNext);
 			this.panelDown.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.panelDown.ForeColor = System.Drawing.Color.White;
-			this.panelDown.Location = new System.Drawing.Point(0, 497);
+			this.panelDown.Location = new System.Drawing.Point(0, 411);
 			this.panelDown.Margin = new System.Windows.Forms.Padding(0);
 			this.panelDown.Name = "panelDown";
-			this.panelDown.Size = new System.Drawing.Size(696, 58);
+			this.panelDown.Size = new System.Drawing.Size(674, 58);
 			this.panelDown.TabIndex = 0;
 			// 
 			// buttonBack
 			// 
 			this.buttonBack.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.buttonBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.buttonBack.Location = new System.Drawing.Point(394, 16);
+			this.buttonBack.Location = new System.Drawing.Point(369, 16);
 			this.buttonBack.Margin = new System.Windows.Forms.Padding(2);
 			this.buttonBack.Name = "buttonBack";
 			this.buttonBack.Size = new System.Drawing.Size(91, 28);
@@ -97,7 +93,7 @@
 			// 
 			this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.buttonCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.buttonCancel.Location = new System.Drawing.Point(591, 16);
+			this.buttonCancel.Location = new System.Drawing.Point(566, 16);
 			this.buttonCancel.Margin = new System.Windows.Forms.Padding(2);
 			this.buttonCancel.Name = "buttonCancel";
 			this.buttonCancel.Size = new System.Drawing.Size(91, 28);
@@ -110,7 +106,7 @@
 			// 
 			this.buttonNext.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.buttonNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.buttonNext.Location = new System.Drawing.Point(486, 16);
+			this.buttonNext.Location = new System.Drawing.Point(461, 16);
 			this.buttonNext.Margin = new System.Windows.Forms.Padding(2);
 			this.buttonNext.Name = "buttonNext";
 			this.buttonNext.Size = new System.Drawing.Size(91, 28);
@@ -121,24 +117,27 @@
 			// 
 			// panelUp
 			// 
+			this.panelUp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(214)))), ((int)(((byte)(206)))));
 			this.panelUp.Controls.Add(this.pictureBox2);
 			this.panelUp.Controls.Add(this.uppertext2);
 			this.panelUp.Controls.Add(this.uppertext1);
 			this.panelUp.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panelUp.Location = new System.Drawing.Point(252, 25);
+			this.panelUp.Location = new System.Drawing.Point(207, 0);
 			this.panelUp.Margin = new System.Windows.Forms.Padding(2);
 			this.panelUp.Name = "panelUp";
-			this.panelUp.Size = new System.Drawing.Size(444, 58);
+			this.panelUp.Size = new System.Drawing.Size(467, 58);
 			this.panelUp.TabIndex = 2;
 			this.panelUp.Visible = false;
 			// 
 			// pictureBox2
 			// 
+			this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
+			this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Right;
-			this.pictureBox2.Location = new System.Drawing.Point(385, 0);
+			this.pictureBox2.Location = new System.Drawing.Point(400, 0);
 			this.pictureBox2.Margin = new System.Windows.Forms.Padding(2);
 			this.pictureBox2.Name = "pictureBox2";
-			this.pictureBox2.Size = new System.Drawing.Size(59, 58);
+			this.pictureBox2.Size = new System.Drawing.Size(67, 58);
 			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureBox2.TabIndex = 1;
 			this.pictureBox2.TabStop = false;
@@ -159,19 +158,19 @@
 			this.uppertext1.Location = new System.Drawing.Point(21, 9);
 			this.uppertext1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.uppertext1.Name = "uppertext1";
-			this.uppertext1.Size = new System.Drawing.Size(668, 22);
+			this.uppertext1.Size = new System.Drawing.Size(422, 22);
 			this.uppertext1.TabIndex = 2;
 			this.uppertext1.Text = "label1";
 			// 
 			// greetingLabel
 			// 
 			this.greetingLabel.Font = new System.Drawing.Font("Verdana", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.greetingLabel.Location = new System.Drawing.Point(265, 54);
+			this.greetingLabel.Location = new System.Drawing.Point(233, 54);
 			this.greetingLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.greetingLabel.Name = "greetingLabel";
 			this.greetingLabel.Size = new System.Drawing.Size(416, 60);
 			this.greetingLabel.TabIndex = 4;
-			this.greetingLabel.Text = "Welcome to the Master Launcher install wizard.";
+			this.greetingLabel.Text = "Welcome to the FloppyVPN setup wizard.";
 			// 
 			// greetingSub
 			// 
@@ -199,7 +198,7 @@
 			// 
 			this.buttonbrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.buttonbrowse.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.buttonbrowse.Location = new System.Drawing.Point(574, 214);
+			this.buttonbrowse.Location = new System.Drawing.Point(521, 214);
 			this.buttonbrowse.Margin = new System.Windows.Forms.Padding(2);
 			this.buttonbrowse.Name = "buttonbrowse";
 			this.buttonbrowse.Size = new System.Drawing.Size(89, 28);
@@ -223,13 +222,13 @@
 			// 
 			// centertext2
 			// 
-			this.centertext2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.centertext2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.centertext2.Location = new System.Drawing.Point(34, 168);
 			this.centertext2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.centertext2.Name = "centertext2";
-			this.centertext2.Size = new System.Drawing.Size(626, 45);
+			this.centertext2.Size = new System.Drawing.Size(576, 31);
 			this.centertext2.TabIndex = 10;
-			this.centertext2.Text = "Программа установит Mister Launcher в следующую папку";
+			this.centertext2.Text = "FloppyVPN will be installed to the specified folder";
 			this.centertext2.Visible = false;
 			// 
 			// miniicon
@@ -245,12 +244,13 @@
 			// 
 			// pictureBox1
 			// 
-			this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+			this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+			this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
-			this.pictureBox1.Location = new System.Drawing.Point(0, 25);
+			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
 			this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
 			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(252, 472);
+			this.pictureBox1.Size = new System.Drawing.Size(207, 411);
 			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.pictureBox1.TabIndex = 3;
 			this.pictureBox1.TabStop = false;
@@ -266,19 +266,19 @@
 			this.centertext3.Text = "centertext3";
 			this.centertext3.Visible = false;
 			// 
-			// checkboxshortcut
+			// checkboxDesktopShortcut
 			// 
-			this.checkboxshortcut.AutoSize = true;
-			this.checkboxshortcut.Checked = true;
-			this.checkboxshortcut.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkboxshortcut.Location = new System.Drawing.Point(36, 214);
-			this.checkboxshortcut.Margin = new System.Windows.Forms.Padding(2);
-			this.checkboxshortcut.Name = "checkboxshortcut";
-			this.checkboxshortcut.Size = new System.Drawing.Size(116, 20);
-			this.checkboxshortcut.TabIndex = 12;
-			this.checkboxshortcut.Text = "create shortcut";
-			this.checkboxshortcut.UseVisualStyleBackColor = true;
-			this.checkboxshortcut.Visible = false;
+			this.checkboxDesktopShortcut.AutoSize = true;
+			this.checkboxDesktopShortcut.Checked = true;
+			this.checkboxDesktopShortcut.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkboxDesktopShortcut.Location = new System.Drawing.Point(36, 208);
+			this.checkboxDesktopShortcut.Margin = new System.Windows.Forms.Padding(2);
+			this.checkboxDesktopShortcut.Name = "checkboxDesktopShortcut";
+			this.checkboxDesktopShortcut.Size = new System.Drawing.Size(129, 22);
+			this.checkboxDesktopShortcut.TabIndex = 12;
+			this.checkboxDesktopShortcut.Text = "create shortcut";
+			this.checkboxDesktopShortcut.UseVisualStyleBackColor = true;
+			this.checkboxDesktopShortcut.Visible = false;
 			// 
 			// digestrichbox
 			// 
@@ -288,7 +288,7 @@
 			this.digestrichbox.Location = new System.Drawing.Point(35, 158);
 			this.digestrichbox.Margin = new System.Windows.Forms.Padding(2);
 			this.digestrichbox.Name = "digestrichbox";
-			this.digestrichbox.Size = new System.Drawing.Size(626, 278);
+			this.digestrichbox.Size = new System.Drawing.Size(614, 233);
 			this.digestrichbox.TabIndex = 13;
 			this.digestrichbox.Text = "digest will be here";
 			this.digestrichbox.Visible = false;
@@ -314,19 +314,19 @@
 			this.progressBar1.Location = new System.Drawing.Point(35, 142);
 			this.progressBar1.Margin = new System.Windows.Forms.Padding(2);
 			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(624, 32);
+			this.progressBar1.Size = new System.Drawing.Size(614, 24);
 			this.progressBar1.TabIndex = 22;
 			this.progressBar1.Value = 10;
 			this.progressBar1.Visible = false;
 			// 
 			// windowPanel
 			// 
-			this.windowPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(214)))), ((int)(((byte)(206)))));
-			this.windowPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.windowPanel.BackColor = System.Drawing.Color.WhiteSmoke;
+			this.windowPanel.Controls.Add(this.checkboxMenuShortcut);
+			this.windowPanel.Controls.Add(this.checkboxDesktopShortcut);
 			this.windowPanel.Controls.Add(this.uppersettingoption);
 			this.windowPanel.Controls.Add(this.panelUp);
 			this.windowPanel.Controls.Add(this.pictureBox1);
-			this.windowPanel.Controls.Add(this.windowBox);
 			this.windowPanel.Controls.Add(this.launchcheckbox);
 			this.windowPanel.Controls.Add(this.centertext2);
 			this.windowPanel.Controls.Add(this.buttonbrowse);
@@ -338,18 +338,31 @@
 			this.windowPanel.Controls.Add(this.centertext1);
 			this.windowPanel.Controls.Add(this.miniicon);
 			this.windowPanel.Controls.Add(this.greetingLabel);
-			this.windowPanel.Controls.Add(this.checkboxshortcut);
 			this.windowPanel.Controls.Add(this.greetingSub);
 			this.windowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.windowPanel.Location = new System.Drawing.Point(0, 0);
+			this.windowPanel.Location = new System.Drawing.Point(6, 31);
 			this.windowPanel.Margin = new System.Windows.Forms.Padding(2);
 			this.windowPanel.Name = "windowPanel";
-			this.windowPanel.Size = new System.Drawing.Size(700, 559);
+			this.windowPanel.Size = new System.Drawing.Size(674, 469);
 			this.windowPanel.TabIndex = 23;
+			// 
+			// checkboxMenuShortcut
+			// 
+			this.checkboxMenuShortcut.AutoSize = true;
+			this.checkboxMenuShortcut.Checked = true;
+			this.checkboxMenuShortcut.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkboxMenuShortcut.Location = new System.Drawing.Point(35, 234);
+			this.checkboxMenuShortcut.Margin = new System.Windows.Forms.Padding(2);
+			this.checkboxMenuShortcut.Name = "checkboxMenuShortcut";
+			this.checkboxMenuShortcut.Size = new System.Drawing.Size(129, 22);
+			this.checkboxMenuShortcut.TabIndex = 24;
+			this.checkboxMenuShortcut.Text = "create shortcut";
+			this.checkboxMenuShortcut.UseVisualStyleBackColor = true;
+			this.checkboxMenuShortcut.Visible = false;
 			// 
 			// uppersettingoption
 			// 
-			this.uppersettingoption.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.uppersettingoption.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.uppersettingoption.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
 			this.uppersettingoption.LinkColor = System.Drawing.Color.MidnightBlue;
 			this.uppersettingoption.Location = new System.Drawing.Point(36, 114);
@@ -361,67 +374,23 @@
 			this.uppersettingoption.Text = "uppertext0";
 			this.uppersettingoption.Visible = false;
 			// 
-			// windowBox
-			// 
-			this.windowBox.AutoSize = false;
-			this.windowBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("windowBox.BackgroundImage")));
-			this.windowBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.windowBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.windowBox.GripMargin = new System.Windows.Forms.Padding(0);
-			this.windowBox.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.windowBox.ImageScalingSize = new System.Drawing.Size(20, 20);
-			this.windowBox.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.labelCaption,
-            this.boxClose});
-			this.windowBox.Location = new System.Drawing.Point(0, 0);
-			this.windowBox.Name = "windowBox";
-			this.windowBox.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.windowBox.Size = new System.Drawing.Size(696, 25);
-			this.windowBox.TabIndex = 0;
-			this.windowBox.Text = "toolStrip1";
-			// 
-			// labelCaption
-			// 
-			this.labelCaption.BackColor = System.Drawing.Color.Transparent;
-			this.labelCaption.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.labelCaption.ForeColor = System.Drawing.Color.White;
-			this.labelCaption.Image = ((System.Drawing.Image)(resources.GetObject("labelCaption.Image")));
-			this.labelCaption.Margin = new System.Windows.Forms.Padding(4, 1, 0, 2);
-			this.labelCaption.Name = "labelCaption";
-			this.labelCaption.Size = new System.Drawing.Size(186, 22);
-			this.labelCaption.Text = "FloppyVPN — SETUP";
-			this.labelCaption.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
-			// boxClose
-			// 
-			this.boxClose.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.boxClose.BackColor = System.Drawing.Color.Transparent;
-			this.boxClose.BackgroundImage = global::FloppyVPN.Properties.Resources.close_normal;
-			this.boxClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.boxClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.boxClose.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.boxClose.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.boxClose.Name = "boxClose";
-			this.boxClose.Size = new System.Drawing.Size(29, 22);
-			this.boxClose.Text = "toolStripButton2";
-			this.boxClose.ToolTipText = "Quit and disconnect";
-			// 
 			// InstallForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.BackColor = System.Drawing.Color.White;
-			this.ClientSize = new System.Drawing.Size(700, 559);
+			this.ClientSize = new System.Drawing.Size(686, 506);
 			this.Controls.Add(this.windowPanel);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Margin = new System.Windows.Forms.Padding(2);
 			this.MaximizeBox = false;
 			this.Name = "InstallForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "MisterLauncher Installer";
+			this.Text = "FloppyVPN — SETUP";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
 			this.Load += new System.EventHandler(this.Form1_Load);
+			this.Controls.SetChildIndex(this.windowPanel, 0);
 			this.panelDown.ResumeLayout(false);
 			this.panelUp.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -429,8 +398,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.windowPanel.ResumeLayout(false);
 			this.windowPanel.PerformLayout();
-			this.windowBox.ResumeLayout(false);
-			this.windowBox.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -454,15 +421,13 @@
 		private System.Windows.Forms.Label centertext1;
 		private System.Windows.Forms.Label centertext2;
 		private System.Windows.Forms.Label centertext3;
-		private System.Windows.Forms.CheckBox checkboxshortcut;
+		private System.Windows.Forms.CheckBox checkboxDesktopShortcut;
 		private System.Windows.Forms.RichTextBox digestrichbox;
 		private System.Windows.Forms.CheckBox launchcheckbox;
 		private System.Windows.Forms.ProgressBar progressBar1;
 		private System.Windows.Forms.Panel windowPanel;
-		private System.Windows.Forms.ToolStrip windowBox;
-		private System.Windows.Forms.ToolStripLabel labelCaption;
-		private System.Windows.Forms.ToolStripButton boxClose;
 		private System.Windows.Forms.LinkLabel uppersettingoption;
+		private System.Windows.Forms.CheckBox checkboxMenuShortcut;
 	}
 }
 

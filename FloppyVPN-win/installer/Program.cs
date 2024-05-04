@@ -11,21 +11,19 @@ namespace FloppyVPN
 {
 	internal static class Program
 	{
-		public static string programname = "FloppyVPN";
-		public static string publishername = "OtsoSoftware";
+		public static readonly string programname = "FloppyVPN";
+		public static readonly string publishername = "OtsoSoftware";
 		public static string language = "en";
-		public static string localappdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-		public static string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-		public static string tempfolder = Path.GetTempPath();
-		public static string tempfile = Path.Combine(tempfolder, "FloppyVPN_archive.zip");
-		public static string programfiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-		public static string installfolder = Path.Combine(localappdata, "Programs", "FloppyVPN");
-		public static string pathtoinstalledexe = Path.Combine(installfolder, "FloppyVPN.exe");
-		public static string startmenushortcutfolder = Path.Combine(appdata, "Microsoft", "Windows", "Start Menu");
-		public static string startmenushortcutfile = Path.Combine(startmenushortcutfolder, "FloppyVPN.lnk");
+		public static readonly string commonappdata = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+		public static readonly string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+		public static readonly string tempfolder = Path.GetTempPath();
+		public static readonly string tempfile = Path.Combine(tempfolder, "FloppyVPN_archive.zip");
+		public static readonly string programfiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+		public static string installfolder = Path.Combine(commonappdata, "Programs", "FloppyVPN");
+		public static string pathtoinstalledexe = "";
 
-		public static string linkToDistro = $"{PathsAndLinks.orchestratorURL}/repo/";
-		public static string linkToDriver = $"{PathsAndLinks.orchestratorURL}/repo/";
+		public static string linkToDistro = $"{PathsAndLinks.websiteURL}/setups/win/";
+		//public static string linkToDriver = $"{PathsAndLinks.orchestratorURL}/setups/";
 
 
 
@@ -38,7 +36,7 @@ namespace FloppyVPN
 		static void Main()
 		{
 			//single instance:
-			var mutex = new Mutex(true, "floppyvpninstaller8g78wegy4hnrtsjr6j6rjysjs6ryjgyshs985ygh", out bool result);
+			var mutex = new Mutex(true, "floppyvpninstaller8g78wegy4hnrtsjr6j6rjysj", out bool result);
 			if (!result)
 			{
 				Environment.Exit(0);
@@ -65,19 +63,19 @@ namespace FloppyVPN
 			switch (arch)
 			{
 				case Architecture.X64:
-					linkToDriver += "x86_64.msi";
+					linkToDistro += "x86_64.zip";
 					break;
 				case Architecture.Arm64:
-					linkToDriver += "arm64.msi";
+					linkToDistro += "arm64.zip";
 					break;
 				case Architecture.X86:
-					linkToDriver += "x86.msi";
+					linkToDistro += "x86.zip";
 					break;
 				default:
 					if (Environment.Is64BitOperatingSystem)
-						linkToDriver += "x86_64.msi";
+						linkToDistro += "x86_64.zip";
 					else
-						linkToDriver += "x86.msi";
+						linkToDistro += "x86.zip";
 					break;
 			}
 

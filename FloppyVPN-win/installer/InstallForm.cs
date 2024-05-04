@@ -12,29 +12,29 @@ using FloppyVPN.Properties;
 
 namespace FloppyVPN
 {
-	public partial class InstallForm : Form
+	public partial class InstallForm : ClassicForm
 	{
-		private int currentPage = 1;
+		int currentPage = 1;
 
 		public InstallForm()
 		{
 			InitializeComponent();
 		}
 
-		private void Form1_Load(object sender, EventArgs e)
+		void Form1_Load(object sender, EventArgs e)
 		{
-			Task.Delay(1);
 			Text = Loc.window_title();
+			this.SetWindowTitle(Loc.window_title());
 			greetingLabel.Text = Loc.greeting_main();
 			greetingSub.Text = Loc.greeting_sub();
 			buttonBack.Text = Loc.back();
 			buttonCancel.Text = Loc.cancel();
 			buttonNext.Text = Loc.next();
 			centertext2.Text = Loc.press_next_to_choose_folser();
-			checkboxshortcut.Text = Loc.create_shortcut();
+			checkboxDesktopShortcut.Text = Loc.create_desktop_shortcut();
+			checkboxMenuShortcut.Text = Loc.create_menu_shortcut();
 			launchcheckbox.Text = Loc.launch_program_box();
 			uppersettingoption_SetLink();
-
 		}
 
 		void uppersettingoption_SetLink()
@@ -44,6 +44,8 @@ namespace FloppyVPN
 
 		void LoadPage(int pageNumberToLoad)
 		{
+			Task.Delay(228).GetAwaiter().GetResult();
+
 			if (pageNumberToLoad == 1) //greetings
 			{
 				panelUp.Visible = false;
@@ -75,27 +77,15 @@ namespace FloppyVPN
 				uppertext1.Text = Loc.uppertext1_1();
 				uppertext2.Text = Loc.uppertext2_1();
 				Program.installfolder = installlocationtext.Text;
+				checkboxDesktopShortcut.Visible = false;
+				checkboxMenuShortcut.Visible = false;
 			}
-			else if (pageNumberToLoad == 3) //menu folder
-			{
-				installlocationtext.Visible = true;
-				miniicon.Visible = true;
-				centertext3.Visible = false;
-				miniicon.Image = Resources.computer;
-				centertext1.Visible = true;
-				centertext2.Visible = true;
-				centertext1.Text = Loc.program_will_be_installed_to2();
-				installlocationtext.Text = "(Default)";
-				uppertext1.Text = Loc.uppertext1_2();
-				uppertext2.Text = Loc.uppertext2_2();
-				checkboxshortcut.Visible = false;
-				buttonbrowse.Visible = true;
-			}
-			else if (pageNumberToLoad == 4) //additional tasks
+			else if (pageNumberToLoad == 3) //additional tasks
 			{
 				installlocationtext.Visible = false;
 				buttonbrowse.Visible = false;
-				checkboxshortcut.Visible = true;
+				checkboxDesktopShortcut.Visible = true;
+				checkboxMenuShortcut.Visible = true;
 				centertext1.Visible = false;
 				centertext2.Visible = false;
 				centertext3.Visible = true;
@@ -105,18 +95,21 @@ namespace FloppyVPN
 				uppertext2.Text = Loc.uppertext2_3();
 				buttonNext.Text = Loc.next();
 			}
-			else if (pageNumberToLoad == 5) //digest and confirmation
+			else if (pageNumberToLoad == 4) //digest and confirmation
 			{
+				checkboxDesktopShortcut.Visible = false;
+				checkboxMenuShortcut.Visible = false;
 				buttonNext.Text = Loc.install();
+				buttonBack.Enabled = false;
 				digestrichbox.Text = Loc.ready_digest();
+				centertext2.Visible = false;
 				uppertext1.Text = Loc.uppertext1_4();
 				uppertext2.Text = Loc.uppertext2_4();
 				digestrichbox.Visible = true;
 			}
-			else if (pageNumberToLoad == 6) //process
+			else if (pageNumberToLoad == 5) //process
 			{
 				Install();
-				buttonBack.Enabled = false;
 				buttonCancel.Enabled = false;
 				buttonNext.Enabled = false;
 				progressBar1.Visible = true;
@@ -125,7 +118,7 @@ namespace FloppyVPN
 				uppertext2.Text = Loc.uppertext2_6();
 				progressBar1.Visible = true;
 			}
-			else if (pageNumberToLoad == 7) //finish
+			else if (pageNumberToLoad == 6) //finish
 			{
 				greetingLabel.Text = Loc.goodbye_main();
 				greetingSub.Text = Loc.goodbye_sub();
@@ -153,7 +146,7 @@ namespace FloppyVPN
 		{
 			e.Cancel = true;
 
-			if (currentPage >= 9)
+			if (currentPage >= 6)
 			{
 				if (launchcheckbox.Checked == true)
 				{
@@ -207,7 +200,7 @@ namespace FloppyVPN
 					DialogResult result = dialog.ShowDialog();
 					if (result == DialogResult.OK)
 					{
-						Program.installfolder = Path.Combine(dialog.SelectedPath + "MisterLauncher");
+						Program.installfolder = Path.Combine(dialog.SelectedPath, "FloppyVPN");
 					}
 				}
 				installlocationtext.Text = Program.installfolder;
@@ -220,7 +213,7 @@ namespace FloppyVPN
 
 		async void Install()
 		{
-			//clear old files first:
+			//first, clear old files:
 			try
 			{
 				DirectoryInfo di = new DirectoryInfo(Program.installfolder);
@@ -244,8 +237,9 @@ namespace FloppyVPN
 
 			progressBar1.Value = 20;
 
+			Program.pathtoinstalledexe = Path.Combine(Program.installfolder, "FloppyVPN Client.exe");
 
-			//download the archive containing the latest version:
+			//download the archive containing the latest version files:
 			progressBar1.Value = 40;
 			uppersettingoption.Text = Loc.installing2();
 			await Task.Run(() =>
@@ -314,32 +308,35 @@ namespace FloppyVPN
 							subkey.SetValue("Publisher", Program.publishername);
 						}
 					}
-
 				}
 				catch
 				{
 				}
 
-				//desktop shortcut creation:
-				if (checkboxshortcut.Checked == true)
+				// Desktop shortcut creation:
+				if (checkboxDesktopShortcut.Checked)
 				{
 					try
 					{
-						ShortcutMaker.Create(Program.pathtoinstalledexe, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "MisterLauncher.lnk"), Loc.shortcut_description());
+						ShortcutMaker.Create(Program.pathtoinstalledexe, PathsAndLinks.desktopShortcutPath, Loc.shortcut_description());
 					}
-					catch (Exception)
+					catch (Exception ex)
 					{
 					}
 				}
 
-				//Start shortcut creation:
-				try
+				// Start shortcut creation:
+				if (checkboxMenuShortcut.Checked)
 				{
-					ShortcutMaker.Create(Program.pathtoinstalledexe, Program.startmenushortcutfile, Loc.shortcut_description());
+					try
+					{
+						ShortcutMaker.Create(Program.pathtoinstalledexe, PathsAndLinks.menuShortcutPath, Loc.shortcut_description());
+					}
+					catch (Exception ex)
+					{
+					}
 				}
-				catch (Exception)
-				{
-				}
+
 
 				//clear temp files:
 				try { File.Delete(Program.tempfile); } catch { }

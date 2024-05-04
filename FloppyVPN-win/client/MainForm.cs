@@ -184,7 +184,9 @@ namespace FloppyVPN
 			}
 			catch (Exception ex)
 			{
-				new MsgBox(ex.Message, "FloppyVPN", MessageBoxIcon.Error, MessageBoxButtons.RetryCancel).ShowDialog();
+				DialogResult dr = new MsgBox(ex.Message, "FloppyVPN", MessageBoxIcon.Error, MessageBoxButtons.RetryCancel).ShowDialog();
+				if (dr == DialogResult.Retry)
+					Connect();
 			}
 		}
 
@@ -280,20 +282,27 @@ namespace FloppyVPN
 
 		void FillCountriesList()
 		{
-			string selectedCountryCode = SelectedCountryCode();
-			JArray available_country_codes = Conf.GetAvailableCountryCodes();
-
-			boxCountry.Items.Clear();
-
-			foreach (JObject available_country in available_country_codes)
+			try
 			{
-				string country_code = available_country["country_code"].ToString();
-				string country_name = available_country["country_name"].ToString();
+				string selectedCountryCode = SelectedCountryCode();
+				JArray available_country_codes = Conf.GetAvailableCountryCodes();
 
-				boxCountry.Items.Add(string.Join(countryCode_and_countryName_separator, country_code, country_name));
+				boxCountry.Items.Clear();
+
+				foreach (JObject available_country in available_country_codes)
+				{
+					string country_code = available_country["country_code"].ToString();
+					string country_name = available_country["country_name"].ToString();
+
+					boxCountry.Items.Add(string.Join(countryCode_and_countryName_separator, country_code, country_name));
+				}
+
+				SelectCountryCode(selectedCountryCode);
+
 			}
-
-			SelectCountryCode(selectedCountryCode);
+			catch
+			{
+			}
 		}
 
 		void boxCountry_SelectedIndexChanged(object sender, EventArgs e)
@@ -333,7 +342,7 @@ namespace FloppyVPN
 				out _);
 
 			if (isSuccessful)
-				Utils.LaunchWebsite($"{PathsAndLinks.websiteURL}/Account/TopUp/{newAlias}");
+				Utils.LaunchWebsite($"{PathsAndLinks.websiteURL}/TopUp/{newAlias}");
 			else
 				new MsgBox(newAlias, "Error getting an alias").ShowDialog();
 		}

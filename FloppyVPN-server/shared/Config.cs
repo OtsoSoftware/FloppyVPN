@@ -48,7 +48,7 @@ namespace FloppyVPN
 			for (; ; )
 			{
 				cache = LoadDataTable(ConfigFilePath).Rows[0];
-				Thread.Sleep(15 * 1000);
+				Thread.Sleep(30 * 1000);
 			}
 		}
 

@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>I:\I\GOVNOCODE\FloppyVPN\FloppyVPN-server\orchestrator\..\bin\FloppyVPN_orchestrator\</_PublishTargetUrl>
-    <History>True|2024-05-03T20:41:38.1098085Z;True|2024-05-03T22:30:24.2030636+03:00;True|2024-05-03T21:20:18.3707590+03:00;</History>
+    <History>True|2024-05-04T07:41:22.0556890Z;True|2024-05-03T23:41:38.1098085+03:00;True|2024-05-03T22:30:24.2030636+03:00;True|2024-05-03T21:20:18.3707590+03:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

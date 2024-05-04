@@ -39,8 +39,8 @@ AllowedIPs = 10.7.0.{addressNumber}/32{(ipv6supported ? $", fd0d:86fa:c3bc::{add
 			// Generate user config
 			string newClientConfig = 
 $@"[Interface]
-Address = 10.7.0.{addressNumber}/32{(ipv6supported ? $"\nAddress = fd0d:86fa:c3bc::{addressNumber}/128" : "")}
-DNS = {Config.cache["dnsv4"]}{(ipv6supported ? $"\nDNS = {Config.cache["dnsv6"]}" : "")}
+Address = 10.7.0.{addressNumber}/32{(ipv6supported ? $", fd0d:86fa:c3bc::{addressNumber}/128" : "")}
+DNS = {Config.cache["dnsv4"]}{(ipv6supported ? $", {Config.cache["dnsv6"]}" : "")}
 PrivateKey = {clientPrivateKey}
 Jc = 5
 Jmin = 20
@@ -53,7 +53,7 @@ H3 = 1183456273
 H4 = 2112541503
 
 [Peer]
-Endpoint = {Config.cache["ipv4_address"]}:{Config.cache["vpn_listen_port"]}{(ipv6supported ? $"\nEndpoint = {Config.cache["ipv6_address"]}:51235" : "")}
+Endpoint = {Config.cache["domain_name_or_ipv4"]}:{Config.cache["vpn_listen_port"]}
 PublicKey = {Config.cache["server_public_key"]}
 PresharedKey = {clientPSK}
 AllowedIPs = 0.0.0.0/0{(ipv6supported ? ", ::/0" : "")}

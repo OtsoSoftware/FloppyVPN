@@ -23,6 +23,7 @@ namespace FloppyVPN
 
 			new Thread(() => Config.CacheRefresher()).Start();
 			new Thread(() => Worker.Start()).Start();
+			new Thread(() => Provisioner.VpnServersWatchdog()).Start();
 
 			Thread.Sleep(300);
 

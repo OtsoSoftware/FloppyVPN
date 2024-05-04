@@ -73,7 +73,9 @@ WHERE (vc.config_count IS NULL OR vc.config_count < vs.max_configs);
 			JArray countryCodesArray = new();
 			foreach (string availableCC in availableCCs)
 			{
-				string country_name = "Chezhia";
+				string country_name = (DB.GetValue(
+					$"SELECT `name_{availableCC.ToLower()}` FROM `countries` WHERE `code` = '{availableCC}';"
+					) ?? "Unknown").ToString();
 
 				countryCodesArray.Add(new JObject()
 				{

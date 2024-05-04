@@ -96,6 +96,7 @@ systemctl daemon-reload
 systemctl enable floppyvpn_server
 
 systemctl start floppyvpn_server
+systemctl status floppyvpn_server
 
 ### now the service is running in the background!
 ### make sure to enter the new vpn server into system using, say, admin panel. gl hf!

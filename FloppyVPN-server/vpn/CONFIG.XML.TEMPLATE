@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Config>
 	<master_key>qwerty12</master_key>
+	<domain_name_or_ipv4></domain_name_or_ipv4>
 	<ipv4_address></ipv4_address>
 	<ipv6_address></ipv6_address>
 	<ipv6_support>False</ipv6_support>
