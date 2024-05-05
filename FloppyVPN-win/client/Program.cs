@@ -65,9 +65,6 @@ namespace FloppyVPN
 			//kill possible driver running from previous sessions:
 			Vpn.Disconnect();
 
-			//restore last used country code:
-			Conf.CurrentCountryCode = IniFile.GetValue("cc") != "" ? IniFile.GetValue("cc") : null;
-
 			//finally, start the gui:
 			Application.Run(new MainForm(connectAfterLaunch));
 		}

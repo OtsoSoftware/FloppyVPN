@@ -42,15 +42,15 @@ $@"[Interface]
 Address = 10.7.0.{addressNumber}/32{(ipv6supported ? $", fd0d:86fa:c3bc::{addressNumber}/128" : "")}
 DNS = {Config.cache["dnsv4"]}{(ipv6supported ? $", {Config.cache["dnsv6"]}" : "")}
 PrivateKey = {clientPrivateKey}
-Jc = 5
-Jmin = 20
-Jmax = 1180
-S1 = 127
-S2 = 59
-H1 = 1012599525
-H2 = 1289564734
-H3 = 1183456273
-H4 = 2112541503
+Jc = {Config.cache["Jc"]}
+Jmin = {Config.cache["Jmin"]}
+Jmax = {Config.cache["Jmax"]}
+S1 = {Config.cache["S1"]}
+S2 = {Config.cache["S2"]}
+H1 = {Config.cache["H1"]}
+H2 = {Config.cache["H2"]}
+H3 = {Config.cache["H3"]}
+H4 = {Config.cache["H4"]}
 
 [Peer]
 Endpoint = {Config.cache["domain_name_or_ipv4"]}:{Config.cache["vpn_listen_port"]}
@@ -186,15 +186,15 @@ PrivateKey = {Config.Get("server_private_key")}
 ListenPort = {Config.Get("vpn_listen_port")}
 PostUp = iptables -t nat -A POSTROUTING -s 10.7.0.0/24 -o {Config.Get("internet_interface_name")} -j SNAT --to-source {Config.Get("ipv4_address")}{(ipv6supported ? $"\nPostUp = ip6tables -t nat -A POSTROUTING -s fd0d:86fa:c3bc::1/64 -o {Config.Get("internet_interface_name")} -j SNAT --to-source {Config.Get("ipv6_address")}" : "")}
 PostDown = iptables -t nat -D POSTROUTING -s 10.7.0.0/24 -o {Config.Get("internet_interface_name")} -j SNAT --to-source {Config.Get("ipv4_address")}{(ipv6supported ? $"\nPostDown = ip6tables -t nat -D POSTROUTING -s fd0d:86fa:c3bc::1/64 -o {Config.Get("internet_interface_name")} -j SNAT --to-source {Config.Get("ipv6_address")}" : "")}
-Jc = 5
-Jmin = 20
-Jmax = 1180
-S1 = 127
-S2 = 59
-H1 = 1012599525
-H2 = 1289564734
-H3 = 1183456273
-H4 = 2112541503
+Jc = {Config.cache["Jc"]}
+Jmin = {Config.cache["Jmin"]}
+Jmax = {Config.cache["Jmax"]}
+S1 = {Config.cache["S1"]}
+S2 = {Config.cache["S2"]}
+H1 = {Config.cache["H1"]}
+H2 = {Config.cache["H2"]}
+H3 = {Config.cache["H3"]}
+H4 = {Config.cache["H4"]}
 ");
 		}
 

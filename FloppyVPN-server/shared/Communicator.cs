@@ -81,6 +81,11 @@ namespace FloppyVPN
 			return Cryption.De(requestBody, Config.cache["master_key"].ToString());
 		}
 
+		public static string DecodeBodyStr(this string encodedBodyAsString)
+		{
+			return Cryption.De(encodedBodyAsString, Config.cache["master_key"].ToString());
+		}
+
 		public static string EncodeBody(this string response)
 		{
 			return Cryption.En(response, Config.cache["master_key"].ToString());

@@ -102,7 +102,7 @@
 			this.windowPanel.Location = new System.Drawing.Point(0, 0);
 			this.windowPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.windowPanel.Name = "windowPanel";
-			this.windowPanel.Size = new System.Drawing.Size(409, 438);
+			this.windowPanel.Size = new System.Drawing.Size(406, 438);
 			this.windowPanel.TabIndex = 0;
 			// 
 			// panel1
@@ -154,7 +154,7 @@
 			this.windowMenu.Name = "windowMenu";
 			this.windowMenu.Padding = new System.Windows.Forms.Padding(2, 2, 0, 5);
 			this.windowMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.windowMenu.Size = new System.Drawing.Size(409, 28);
+			this.windowMenu.Size = new System.Drawing.Size(406, 28);
 			this.windowMenu.TabIndex = 15;
 			this.windowMenu.Text = "windowMenu";
 			// 
@@ -338,7 +338,7 @@
 			this.boxCountry.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.boxCountry.FormattingEnabled = true;
 			this.boxCountry.Items.AddRange(new object[] {
-            "Poland (Kurwaserver)"});
+            "XX | Error"});
 			this.boxCountry.Location = new System.Drawing.Point(146, 88);
 			this.boxCountry.Margin = new System.Windows.Forms.Padding(4);
 			this.boxCountry.Name = "boxCountry";
@@ -451,7 +451,7 @@
             this.buttRevealIp});
 			this.statusBar.Location = new System.Drawing.Point(0, 414);
 			this.statusBar.Name = "statusBar";
-			this.statusBar.Size = new System.Drawing.Size(409, 24);
+			this.statusBar.Size = new System.Drawing.Size(406, 24);
 			this.statusBar.TabIndex = 11;
 			this.statusBar.Text = "statusStrip1";
 			// 
@@ -566,15 +566,14 @@
 			this.borderPanel.Location = new System.Drawing.Point(6, 31);
 			this.borderPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.borderPanel.Name = "borderPanel";
-			this.borderPanel.Size = new System.Drawing.Size(409, 438);
+			this.borderPanel.Size = new System.Drawing.Size(406, 438);
 			this.borderPanel.TabIndex = 2;
 			// 
 			// MainForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.ClientSize = new System.Drawing.Size(421, 475);
+			this.ClientSize = new System.Drawing.Size(418, 475);
 			this.Controls.Add(this.borderPanel);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Margin = new System.Windows.Forms.Padding(2);

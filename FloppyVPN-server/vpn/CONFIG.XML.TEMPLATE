@@ -10,4 +10,13 @@
 	<internet_interface_name>eth0</internet_interface_name>
 	<dnsv4>1.1.1.1, 1.0.0.1</dnsv4>
 	<dnsv6>2606:4700:4700::1111, 2606:4700:4700::1001</dnsv6>
+	<Jc>5</Jc>
+	<Jmin>20</Jmin>
+	<Jmax>1180</Jmax>
+	<S1>127</S1>
+	<S2>59</S2>
+	<H1>1012599525</H1>
+	<H2>1289564734</H2>
+	<H3>1183456273</H3>
+	<H4>2112541503</H4>
 </Config>

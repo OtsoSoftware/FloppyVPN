@@ -16,7 +16,7 @@ namespace FloppyVPN
 		/// Validness of current config. Basically - can we connect or not
 		/// </summary>
 		public static bool IsValid { get; private set; }
-		public static string CurrentCountryCode { get; set; }
+		public static string CurrentCountryCode { get; private set; }
 		public static string IPv4Address { get; private set; }
 		public static string IPv6Address { get; private set; }
 		public static string ConfString { get; private set; }

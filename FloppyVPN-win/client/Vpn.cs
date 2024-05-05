@@ -41,14 +41,19 @@ namespace FloppyVPN
 				using (Process process = new Process { StartInfo = psi })
 				{
 					process.Start();
+					process.WaitForExit();
 				}
 
-				Task.Delay(new Random().Next(300, 700)).GetAwaiter().GetResult();
-				connected = true;
+				Task.Delay(new Random().Next(2000, 3000)).GetAwaiter().GetResult();
+
+				if (Process.GetProcessesByName(processName).Length > 0)
+					connected = true;
+				else
+					throw new Exception($"Driver dead");
 			}
 			catch (Exception ex)
 			{
-				throw new Exception($"Error connecting via driver: {ex.Message}");
+				throw new Exception($"Error using driver: {ex.Message}");
 			}
 		}
 

@@ -6,20 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>FloppyVPN</RootNamespace>
     <StartupObject></StartupObject>
-    <IsPublishable>False</IsPublishable>
+    <IsPublishable>True</IsPublishable>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Remove="Properties\launchSettings.json" />
-    <Content Remove="Views\Home\Admin.cshtml" />
-    <Content Remove="wwwroot\css\site.css" />
-    <Content Remove="wwwroot\fonts\MS Sans Serif Bold.ttf" />
-    <Content Remove="wwwroot\fonts\MSSansSerif.ttf" />
-    <Content Remove="wwwroot\imgs\account-addtime.png" />
-    <Content Remove="wwwroot\imgs\account-view.png" />
-    <Content Remove="wwwroot\imgs\icon.png" />
-    <Content Remove="wwwroot\imgs\write.png" />
-  </ItemGroup>
 
   <ItemGroup>
     <_WebToolingArtifacts Remove="Properties\launchSettings.json" />
@@ -70,7 +59,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\setups\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

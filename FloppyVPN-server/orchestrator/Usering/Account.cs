@@ -59,12 +59,15 @@ namespace FloppyVPN
 		{
 			try
 			{
-				days_left = (int)Math.Ceiling((paid_till - DateTime.Now).TotalDays);
+				days_left = (int)Math.Floor((paid_till - DateTime.Now).TotalDays);
 			}
 			catch
 			{
 				days_left = (int)0;
 			}
+
+			if (date_registered == paid_till)
+				days_left = 0;
 
 			DB.Execute($"UPDATE `accounts` SET `days_left` = @days_left WHERE `id` = @id;",
 				new Dictionary<string, object>()

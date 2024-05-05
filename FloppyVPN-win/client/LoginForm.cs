@@ -41,12 +41,12 @@ namespace FloppyVPN
 			if (txtLogin.Text.Length < 6)
 			{
 				Thread.Sleep(new Random().Next(300, 900));
-				new MsgBox("Incorrect login").ShowDialog();
+				new MsgBox("Incorrect login", Loc.unableToLoginCaption, MessageBoxIcon.Error).ShowDialog();
 				return;
 			}
 
 			bool successFullyLoggedIn = Account.LogIn(txtLogin.Text);
-
+			
 			if (successFullyLoggedIn)
 			{
 				this.DialogResult = DialogResult.Yes;
@@ -54,20 +54,17 @@ namespace FloppyVPN
 			}
 			else
 			{
-				this.DialogResult = DialogResult.No;
 				new MsgBox(Loc.unableToLogInText, Loc.unableToLoginCaption, MessageBoxIcon.Error).ShowDialog();
 			}
 		}
 
 		void LoginForm_Load(object sender, EventArgs e)
 		{
-			//Task.Delay(100).GetAwaiter().GetResult();
-
 			string savedLogin = IniFile.GetValue("login") ?? "";
 			if (savedLogin != "")
 			{
 				txtLogin.Text = savedLogin;
-				buttLogin_Click();
+				buttLogin.PerformClick();
 			}
 		}
 

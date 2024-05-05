@@ -34,15 +34,15 @@
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.buttCloseLoginForm = new System.Windows.Forms.ToolStripMenuItem();
 			this.buttLanguage = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttEN = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttRU = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttUK = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttJA = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupLogin = new System.Windows.Forms.GroupBox();
 			this.buttRegister = new System.Windows.Forms.Button();
 			this.labelLoginEntering = new System.Windows.Forms.Label();
 			this.txtLogin = new System.Windows.Forms.TextBox();
 			this.buttLogin = new System.Windows.Forms.Button();
-			this.buttEN = new System.Windows.Forms.ToolStripMenuItem();
-			this.buttRU = new System.Windows.Forms.ToolStripMenuItem();
-			this.buttUK = new System.Windows.Forms.ToolStripMenuItem();
-			this.buttJA = new System.Windows.Forms.ToolStripMenuItem();
 			this.borderPanel.SuspendLayout();
 			this.windowMenu.SuspendLayout();
 			this.groupLogin.SuspendLayout();
@@ -73,7 +73,7 @@
 			this.windowMenu.Name = "windowMenu";
 			this.windowMenu.Padding = new System.Windows.Forms.Padding(3, 2, 0, 5);
 			this.windowMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.windowMenu.Size = new System.Drawing.Size(336, 31);
+			this.windowMenu.Size = new System.Drawing.Size(336, 29);
 			this.windowMenu.TabIndex = 16;
 			this.windowMenu.Text = "windowMenu";
 			// 
@@ -102,6 +102,30 @@
 			this.buttLanguage.Size = new System.Drawing.Size(85, 22);
 			this.buttLanguage.Text = "Language";
 			this.buttLanguage.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.buttLanguage_DropDownItemClicked);
+			// 
+			// buttEN
+			// 
+			this.buttEN.Name = "buttEN";
+			this.buttEN.Size = new System.Drawing.Size(162, 26);
+			this.buttEN.Text = "English";
+			// 
+			// buttRU
+			// 
+			this.buttRU.Name = "buttRU";
+			this.buttRU.Size = new System.Drawing.Size(162, 26);
+			this.buttRU.Text = "Русский";
+			// 
+			// buttUK
+			// 
+			this.buttUK.Name = "buttUK";
+			this.buttUK.Size = new System.Drawing.Size(162, 26);
+			this.buttUK.Text = "Українська";
+			// 
+			// buttJA
+			// 
+			this.buttJA.Name = "buttJA";
+			this.buttJA.Size = new System.Drawing.Size(162, 26);
+			this.buttJA.Text = "日本語";
 			// 
 			// groupLogin
 			// 
@@ -167,30 +191,6 @@
 			this.buttLogin.UseCompatibleTextRendering = true;
 			this.buttLogin.UseVisualStyleBackColor = false;
 			this.buttLogin.Click += new System.EventHandler(this.buttLogin_Click);
-			// 
-			// buttEN
-			// 
-			this.buttEN.Name = "buttEN";
-			this.buttEN.Size = new System.Drawing.Size(224, 26);
-			this.buttEN.Text = "English";
-			// 
-			// buttRU
-			// 
-			this.buttRU.Name = "buttRU";
-			this.buttRU.Size = new System.Drawing.Size(224, 26);
-			this.buttRU.Text = "Русский";
-			// 
-			// buttUK
-			// 
-			this.buttUK.Name = "buttUK";
-			this.buttUK.Size = new System.Drawing.Size(224, 26);
-			this.buttUK.Text = "Українська";
-			// 
-			// buttJA
-			// 
-			this.buttJA.Name = "buttJA";
-			this.buttJA.Size = new System.Drawing.Size(224, 26);
-			this.buttJA.Text = "日本語";
 			// 
 			// LoginForm
 			// 

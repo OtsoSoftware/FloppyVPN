@@ -121,6 +121,8 @@ WHERE vc.account = @account_id
 					body: newConfigID.ToString().EncodeBody(),
 					"", "", out _, out isSuccessful, 15);
 
+				try { newConfig = newConfig.DecodeBodyStr(); } catch { }
+
 				isSuccessful = newConfig.Length > 64 || isSuccessful;
 				isSuccessful = newConfig.Contains("[Peer]") || isSuccessful;
 			}

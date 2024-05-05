@@ -11,7 +11,9 @@ namespace FloppyVPN.Controllers
 	[Route("Api/App")]
 	public class AppApiController : ControllerBase
 	{
-		/// <returns>Data about the account</returns>
+		/// <returns>
+		/// Data about the account
+		/// </returns>
 		[HttpGet("GetAccountData/{login}")]
 		[ServiceFilter(typeof(BannedClientsFilter))]
 		public IActionResult GetAccountData(string login)
@@ -48,6 +50,12 @@ namespace FloppyVPN.Controllers
 		[ServiceFilter(typeof(BannedClientsFilter))]
 		public IActionResult GetAvailableCountryCodes(string login, string language)
 		{
+			if (language.Length != 2)
+			{
+				HttpContext.Response.StatusCode = 405;
+				return Content("Your language code is wrong");
+			}
+
 			Account account = new(login);
 
 			if (!account.exists)
@@ -74,8 +82,8 @@ WHERE (vc.config_count IS NULL OR vc.config_count < vs.max_configs);
 			foreach (string availableCC in availableCCs)
 			{
 				string country_name = (DB.GetValue(
-					$"SELECT `name_{availableCC.ToLower()}` FROM `countries` WHERE `code` = '{availableCC}';"
-					) ?? "Unknown").ToString();
+					$"SELECT `name_{language}` FROM `countries` WHERE `code` = '{availableCC}';"
+					) ?? "Country").ToString();
 
 				countryCodesArray.Add(new JObject()
 				{
