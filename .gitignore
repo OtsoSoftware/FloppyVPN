@@ -5,11 +5,12 @@
 **/obj/
 **/.deps/
 **/.distfiles/
+**/.setups/
 
 # Windows shortcuts
 *.lnk
 
-# I don't want you to see this
+# I don't want you to see this... yet?
 **/drivers/
 PaymentsServices.cs
 PaymentsCallbackController.cs
