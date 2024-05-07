@@ -20,6 +20,7 @@ namespace FloppyVPN
 	public partial class MainForm : ClassicForm
 	{
 		private readonly string countryCode_and_countryName_separator = " | ";
+		private bool ignoreUIChanges = true;
 
 		public MainForm(bool connectAfterLaunch)
 		{
@@ -30,30 +31,37 @@ namespace FloppyVPN
 
 			LogIn();
 
+			ignoreUIChanges = true;
 			FillCountriesList();
-			SelectCountryCode(Conf.CurrentCountryCode);
+			ignoreUIChanges = false;
+
+			SelectCountryCode(IniFile.GetValue("cc"));
 
 			if (connectAfterLaunch)
 			{
-				ToTray(true);
+				SetTrayMode(true);
 				Connect();
 			}
 		}
 
-		void ToTray(bool hideIsTrue_showIsFalse)
+		void SetTrayMode(bool trayStatus)
 		{
-			if (hideIsTrue_showIsFalse)
+			if (trayStatus == true) //hide to tray
 			{
 				this.Hide();
 				trayIcon.Visible = true;
 				this.ShowInTaskbar = false;
 			}
-			else
+			else //restore window
 			{
 				this.Show();
 				trayIcon.Visible = false;
 				this.ShowInTaskbar = true;
+				this.WindowState = FormWindowState.Normal;
+				this.Activate();
 			}
+
+			new SoundPlayer(Resources.start).Play();
 		}
 
 		void ApplyLocalizedTexts()
@@ -69,7 +77,7 @@ namespace FloppyVPN
 				labelConnectionStatus.Text = Loc.statusNotConnected;
 			}
 
-			buttRefreshData_Click();
+			RefreshAccountData();
 
 			if (File.Exists(PathsAndLinks.startupShortcutPath))
 				buttStartupStatus.Text = Loc.startupStatusAdded;
@@ -96,18 +104,25 @@ namespace FloppyVPN
 
 		void MainForm_Closing(object sender, FormClosingEventArgs e)
 		{
-			DialogResult dialogResult = DialogResult.Yes;
-
-			if (Vpn.connected)
-				dialogResult = new MsgBox("Are you sure to close FLoppyVPN even though it is connected right now???", "Caution!", MessageBoxIcon.Question, MessageBoxButtons.YesNo).ShowDialog();
-
-			if (dialogResult == DialogResult.Yes)
+			if (e.CloseReason == CloseReason.UserClosing)
 			{
-				DisconnectAndQuit();
+				DialogResult dialogResult = DialogResult.Yes;
+
+				if (Vpn.connected)
+					dialogResult = new MsgBox(Loc.sureToClose, "Closement", MessageBoxIcon.Question, MessageBoxButtons.YesNo).ShowDialog();
+
+				if (dialogResult == DialogResult.Yes)
+				{
+					DisconnectAndQuit();
+				}
+				else
+				{
+					e.Cancel = true;
+				}
 			}
 			else
 			{
-				e.Cancel = true;
+				DisconnectAndQuit();
 			}
 		}
 
@@ -121,18 +136,20 @@ namespace FloppyVPN
 			try
 			{
 				trayIcon.Visible = false;
-				Disconnect();
+				Vpn.Disconnect();
 			}
 			catch
 			{
 			}
-
-			Environment.Exit(0);
+			finally
+			{
+				Environment.Exit(0);
+			}
 		}
 
 		void buttShow_Click(object sender, EventArgs e)
 		{
-
+			SetTrayMode(false);
 		}
 
 		void trayIcon_MouseClick(object sender, MouseEventArgs e)
@@ -140,13 +157,12 @@ namespace FloppyVPN
 			if (e.Button == MouseButtons.Right)
 			{
 				trayMenu.Show(Cursor.Position);
+				ShowInTaskbar = false;
+				trayIcon.Visible = true;
 			}
 			else if (e.Button == MouseButtons.Left)
 			{
-				Show();
-				ShowInTaskbar = true;
-				trayIcon.Visible = false;
-				new SoundPlayer(Resources.chimes).Play();
+				SetTrayMode(false);
 			}
 		}
 
@@ -157,11 +173,17 @@ namespace FloppyVPN
 			else
 				Connect();
 
-			buttRefreshData_Click();
+			RefreshConnectionData();
 		}
 
 		void Connect()
 		{
+			if (Account.days_left <= 0)
+			{
+				new MsgBox(Loc.noDaysLeft, Loc.errorConnectingCaption, MessageBoxIcon.Error).ShowDialog();
+				return;
+			}
+
 			try
 			{
 				// First, get config of selected country code but only if:
@@ -177,9 +199,10 @@ namespace FloppyVPN
 				buttConnectDisconnect.Image = Resources.connected;
 				labelConnectionStatus.Text = Loc.statusConnected;
 				pictureConnectionStatus.BackgroundImage = Resources.connected;
-				pictureConnectionIllustration.BackgroundImage = Resources.connection;
-
+				pictureConnectionIllustration.Image = Resources.connection;
 				buttTrayConnectDisconnect.Text = Loc.disconnect;
+
+				new Task(() => { DriverAliveStatusWatchdog(); }).Start();
 			}
 			catch (Exception ex)
 			{
@@ -197,9 +220,26 @@ namespace FloppyVPN
 			buttConnectDisconnect.Image = Resources.disconnected;
 			labelConnectionStatus.Text = Loc.statusNotConnected;
 			pictureConnectionStatus.BackgroundImage = Resources.disconnected;
-			pictureConnectionIllustration.BackgroundImage = Resources.no_connection;
-
+			pictureConnectionIllustration.Image = Resources.no_connection;
 			buttTrayConnectDisconnect.Text = Loc.connect;
+		}
+
+		async void DriverAliveStatusWatchdog()
+		{
+			for (; ; )
+			{
+				if (!Vpn.connected)
+					break;
+
+				await Task.Delay(2000);
+
+				if (Process.GetProcessesByName(Vpn.processName).Length > 0)
+				{
+					this.Invoke((Action)delegate { Disconnect(); });
+					new SoundPlayer(Resources.notify).Play();
+					new MsgBox(Loc.driverDied, Loc.errorConnectingCaption, MessageBoxIcon.Error).ShowDialog();
+				}
+			}
 		}
 
 		private void buttLanguage_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -233,7 +273,7 @@ namespace FloppyVPN
 			DialogResult logined = new LoginForm().ShowDialog();
 			if (logined == DialogResult.Yes)
 			{
-				buttRefreshData_Click();
+				RefreshAccountData();
 				this.Show();
 				this.ShowInTaskbar = true;
 			}
@@ -268,15 +308,23 @@ namespace FloppyVPN
 			Utils.LaunchWebsite(PathsAndLinks.websiteURL);
 		}
 
-		void buttRefreshData_Click(object sender = null, EventArgs e = null)
+		void buttRefreshData_Click(object sender, EventArgs e)
+		{
+			RefreshAccountData();
+		}
+
+		void RefreshAccountData()
 		{
 			Account.LogIn(Account.login);
-			labelAccountStatus.Text = $"Login: {Account.masked_login}\nPaid till: {Account.paid_till}\nDays left: {Account.days_left}";
-
-			stripIPpublic.Text = Loc.publicIP + Conf.IPv4Address ?? "-";
-			stripIPprivate.Text = Loc.privateIP + Conf.IPv6Address ?? "-";
+			labelAccountStatus.Text = $"{Loc.login}{Account.masked_login}\n{Loc.paidTill}{Account.paid_till}\n{Loc.daysLeft}{Account.days_left}";
 
 			FillCountriesList();
+		}
+
+		void RefreshConnectionData()
+		{
+			stripIPpublic.Text = Loc.publicIP + Conf.IPv4Address ?? "-";
+			stripIPprivate.Text = Loc.privateIP + Conf.IPv6Address ?? "-";
 		}
 
 		void FillCountriesList()
@@ -312,6 +360,9 @@ namespace FloppyVPN
 				Bitmap myImage = (Bitmap)rm.GetObject(SelectedCountryCode().ToLower());
 
 				pictureCountry.BackgroundImage = myImage;
+
+				if (!ignoreUIChanges)
+					IniFile.SetValue("cc", SelectedCountryCode());
 			}
 			catch
 			{
@@ -351,9 +402,17 @@ namespace FloppyVPN
 			new MsgBox("Split tunneling is not yet implemented, sorry.");
 		}
 
-		void labelVersionCaption_Click(object sender, EventArgs e)
+		void MainForm_Resize(object sender, EventArgs e)
 		{
-			MessageBox.Show(Conf.IsValid.ToString());
+			if (WindowState == FormWindowState.Minimized)
+			{
+				SetTrayMode(true);
+			}
+		}
+
+		void labelVersionCaption_DoubleClick(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

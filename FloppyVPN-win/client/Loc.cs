@@ -49,7 +49,12 @@
 		public static string retry = "";
 		public static string publicIP = "";
 		public static string privateIP = "";
-		public static string x = "";
+		public static string noDaysLeft = "";
+		public static string login = "";
+		public static string paidTill = "";
+		public static string daysLeft = "";
+		public static string sureToClose = "";
+		public static string driverDied = "";
 
 
 		/// <summary>
@@ -100,6 +105,12 @@
 					retry = "Retry";
 					publicIP = "Public IP: ";
 					privateIP = "Private IP: ";
+					noDaysLeft = "You don't have paid time left. Make sure to top up your balance.";
+					login = "Login: ";
+					paidTill = "Paid till: ";
+					daysLeft = "Days left: ";
+					sureToClose = "Are you sure to close FloppyVPN despite it is connected right now?";
+					driverDied = "Achtung! VPN driver dead!";
 
 					break;
 				case "ru":
@@ -143,6 +154,12 @@
 					retry = "Повтор";
 					publicIP = "Публичный IP: ";
 					privateIP = "Приватный IP: ";
+					noDaysLeft = "У вас не осталось оплаченного времени. Убедитесь, что баланс пополнен.";
+					login = "Логин: ";
+					paidTill = "Оплачено до: ";
+					daysLeft = "Осталось дней: ";
+					sureToClose = "Вы уверены, что хотите закрыть FloppyVPN, несмотря на то, что он сейчас подключён?";
+					driverDied = "Ахтунг! Драйвер VPN мертв!";
 
 					break;
 				case "uk":
@@ -186,6 +203,12 @@
 					retry = "Повтор";
 					publicIP = "Публічний IP: ";
 					privateIP = "Приватний IP: ";
+					noDaysLeft = "У вас не залишилось сплаченого часу. Переконайтесь, що рахунок поповнено.";
+					login = "Логін: ";
+					paidTill = "Сплачено до: ";
+					daysLeft = "Залишилось днів: ";
+					sureToClose = "Ви впевнені, що закриваєте FloppyVPN? Бо він підключений прямо зараз...";
+					driverDied = "Ахтунг! Драйвер VPN мертвий!";
 
 					break;
 				case "ja":
@@ -229,6 +252,12 @@
 					retry = "また！";
 					publicIP = "パブリックIP: ";
 					privateIP = "プライベートIP: ";
+					noDaysLeft = "あなたは残っている任意の有料の時間を持っていません。 バランスが補充されていることを確認してください。";
+					login = "ログイン：";
+					paidTill = "まで支払われた：";
+					daysLeft = "残り日数：";
+					sureToClose = "今すぐ接続されているにもかかわらず、FloppyVPNを確実に閉じますか？";
+					driverDied = "アクトゥン！ VPNドライバーが死んだ！";
 
 					break;
 			}

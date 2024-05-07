@@ -44,7 +44,7 @@ namespace FloppyVPN
 
 		void LoadPage(int pageNumberToLoad)
 		{
-			Task.Delay(228).GetAwaiter().GetResult();
+			Task.Delay(128).GetAwaiter().GetResult();
 
 			if (pageNumberToLoad == 1) //greetings
 			{
@@ -94,6 +94,7 @@ namespace FloppyVPN
 				uppertext1.Text = Loc.uppertext1_3();
 				uppertext2.Text = Loc.uppertext2_3();
 				buttonNext.Text = Loc.next();
+				digestrichbox.Visible = false;
 			}
 			else if (pageNumberToLoad == 4) //digest and confirmation
 			{
@@ -103,6 +104,7 @@ namespace FloppyVPN
 				buttonBack.Enabled = false;
 				digestrichbox.Text = Loc.ready_digest();
 				centertext2.Visible = false;
+				centertext3.Visible = false;
 				uppertext1.Text = Loc.uppertext1_4();
 				uppertext2.Text = Loc.uppertext2_4();
 				digestrichbox.Visible = true;
@@ -213,31 +215,28 @@ namespace FloppyVPN
 
 		async void Install()
 		{
-			//first, clear old files:
+			//delete previous package:
+			try { File.Delete(Program.tempfile); } catch { }
+
+			progressBar1.Value = 12;
+
+			//kill app processes:
 			try
 			{
-				DirectoryInfo di = new DirectoryInfo(Program.installfolder);
-				foreach (FileInfo file in di.GetFiles())
-				{
-					try { file.Delete(); } catch { }
-				}
-				foreach (DirectoryInfo dir in di.GetDirectories())
-				{
-					try { dir.Delete(true); } catch { }
-				}
+				foreach (Process process in Process.GetProcessesByName("FloppyVPN Client"))
+					process.Kill();
 
-				try { File.Delete(Program.tempfile); } catch { }
+				foreach (Process process in Process.GetProcessesByName("floppydriver"))
+					process.Kill();
+
+				Task.Delay(2000).GetAwaiter().GetResult();
 			}
 			catch
 			{
 			}
-			await Task.Delay(500);
-
-			Directory.CreateDirectory(Program.installfolder);
 
 			progressBar1.Value = 20;
 
-			Program.pathtoinstalledexe = Path.Combine(Program.installfolder, "FloppyVPN Client.exe");
 
 			//download the archive containing the latest version files:
 			progressBar1.Value = 40;
@@ -274,6 +273,29 @@ namespace FloppyVPN
 					}
 				}
 			});
+
+			//clear old installed files:
+			try
+			{
+				DirectoryInfo di = new DirectoryInfo(Program.installfolder);
+				foreach (FileInfo file in di.GetFiles())
+				{
+					try { file.Delete(); } catch { }
+				}
+				foreach (DirectoryInfo dir in di.GetDirectories())
+				{
+					try { dir.Delete(true); } catch { }
+				}
+			}
+			catch
+			{
+			}
+			await Task.Delay(500);
+
+			Directory.CreateDirectory(Program.installfolder);
+
+
+			Program.pathtoinstalledexe = Path.Combine(Program.installfolder, "FloppyVPN Client.exe");
 
 
 			//unpack the program archive into the temp folder:

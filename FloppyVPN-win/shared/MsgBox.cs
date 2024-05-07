@@ -29,7 +29,7 @@ namespace FloppyVPN
 			else if (msgicon == MessageBoxIcon.Question)
 				picMsgIcon.BackgroundImage = Resources.msg_question_0;
 			else //"Information"
-				picMsgIcon.Image = Resources.msg_information_0;
+				picMsgIcon.BackgroundImage = Resources.msg_information_0;
 
 
 			//set up buttons:

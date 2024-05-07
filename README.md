@@ -22,7 +22,7 @@ If you want to compile it yourself or learn more about the project - continue re
 
 Wireguard protocol (AmneziaWG) and related software is taken as the protocol and drivers of FloppyVPN. It is simple, fast and safe. All the apps use it.
 
-VPN servers use ports differ from standard WG ones to because in some networks you simply could not connect to a web resource on certain ports. Also, connections to these ports look a bit more legit.
+VPN servers use different ports and packet parameters so you can connect to them from as any network as possible.
 
 Servers (orchestrator one, website one and VPN ones) use an authorization key called "master_key" to communicate with each other via API. Without a same key no server-server communication is possible. The key is an alphanumeric string of any length (recommended length - from 16 to 64), is also used to perform administrative actions.
 

@@ -8,7 +8,7 @@
     <ProjectGuid>{0CEBB58D-1085-470B-8AF4-36DF56582D8A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>FloppyVPN</RootNamespace>
-    <AssemblyName>FloppyVPN SETUP</AssemblyName>
+    <AssemblyName>FloppyVPN_SETUP</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

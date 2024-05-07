@@ -52,6 +52,9 @@ make install
 awg-quick -v
 
 
+# disable qutomatic system updates (only for ubuntu)
+dpkg-reconfigure -plow unattended-upgrades
+
 
 ##### Setting AmneziaWG
 

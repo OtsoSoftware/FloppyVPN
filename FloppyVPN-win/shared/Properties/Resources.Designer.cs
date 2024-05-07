@@ -73,9 +73,59 @@ namespace FloppyVPN.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap bar_active1 {
+            get {
+                object obj = ResourceManager.GetObject("bar_active1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap bar_graph_0 {
+            get {
+                object obj = ResourceManager.GetObject("bar_graph_0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap bar_graph_default_0 {
+            get {
+                object obj = ResourceManager.GetObject("bar_graph_default_0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap bar_inactive {
             get {
                 object obj = ResourceManager.GetObject("bar_inactive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap box_frame_left {
+            get {
+                object obj = ResourceManager.GetObject("box_frame_left", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap box_frame_right {
+            get {
+                object obj = ResourceManager.GetObject("box_frame_right", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -141,6 +191,16 @@ namespace FloppyVPN.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap connect {
+            get {
+                object obj = ResourceManager.GetObject("connect", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap connected {
             get {
                 object obj = ResourceManager.GetObject("connected", resourceCulture);
@@ -161,6 +221,16 @@ namespace FloppyVPN.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap disconnect {
+            get {
+                object obj = ResourceManager.GetObject("disconnect", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap disconnected {
             get {
                 object obj = ResourceManager.GetObject("disconnected", resourceCulture);
@@ -174,6 +244,36 @@ namespace FloppyVPN.Properties {
         public static System.Drawing.Bitmap folder_pencil {
             get {
                 object obj = ResourceManager.GetObject("folder_pencil", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap frame_bottom {
+            get {
+                object obj = ResourceManager.GetObject("frame_bottom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap frame_left {
+            get {
+                object obj = ResourceManager.GetObject("frame_left", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap frame_top {
+            get {
+                object obj = ResourceManager.GetObject("frame_top", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -258,11 +358,61 @@ namespace FloppyVPN.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap scsi_0 {
+            get {
+                object obj = ResourceManager.GetObject("scsi_0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap settings {
+            get {
+                object obj = ResourceManager.GetObject("settings", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
         public static System.IO.UnmanagedMemoryStream start {
             get {
                 return ResourceManager.GetStream("start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap status {
+            get {
+                object obj = ResourceManager.GetObject("status", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap tip {
+            get {
+                object obj = ResourceManager.GetObject("tip", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap window_box {
+            get {
+                object obj = ResourceManager.GetObject("window_box", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

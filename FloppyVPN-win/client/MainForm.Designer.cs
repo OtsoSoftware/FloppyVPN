@@ -102,7 +102,7 @@
 			this.windowPanel.Location = new System.Drawing.Point(0, 0);
 			this.windowPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.windowPanel.Name = "windowPanel";
-			this.windowPanel.Size = new System.Drawing.Size(406, 438);
+			this.windowPanel.Size = new System.Drawing.Size(402, 438);
 			this.windowPanel.TabIndex = 0;
 			// 
 			// panel1
@@ -154,7 +154,7 @@
 			this.windowMenu.Name = "windowMenu";
 			this.windowMenu.Padding = new System.Windows.Forms.Padding(2, 2, 0, 5);
 			this.windowMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.windowMenu.Size = new System.Drawing.Size(406, 28);
+			this.windowMenu.Size = new System.Drawing.Size(402, 28);
 			this.windowMenu.TabIndex = 15;
 			this.windowMenu.Text = "windowMenu";
 			// 
@@ -372,6 +372,7 @@
 			this.pictureConnectionIllustration.Margin = new System.Windows.Forms.Padding(2);
 			this.pictureConnectionIllustration.Name = "pictureConnectionIllustration";
 			this.pictureConnectionIllustration.Size = new System.Drawing.Size(80, 71);
+			this.pictureConnectionIllustration.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.pictureConnectionIllustration.TabIndex = 13;
 			this.pictureConnectionIllustration.TabStop = false;
 			// 
@@ -451,7 +452,7 @@
             this.buttRevealIp});
 			this.statusBar.Location = new System.Drawing.Point(0, 414);
 			this.statusBar.Name = "statusBar";
-			this.statusBar.Size = new System.Drawing.Size(406, 24);
+			this.statusBar.Size = new System.Drawing.Size(402, 24);
 			this.statusBar.TabIndex = 11;
 			this.statusBar.Text = "statusStrip1";
 			// 
@@ -460,7 +461,7 @@
 			this.labelVersionCaption.Name = "labelVersionCaption";
 			this.labelVersionCaption.Size = new System.Drawing.Size(47, 18);
 			this.labelVersionCaption.Text = "v1.0.0";
-			this.labelVersionCaption.Click += new System.EventHandler(this.labelVersionCaption_Click);
+			this.labelVersionCaption.DoubleClick += new System.EventHandler(this.labelVersionCaption_DoubleClick);
 			// 
 			// toolStripStatusLabel2
 			// 
@@ -522,13 +523,14 @@
 			this.trayMenu.Name = "contextMenuStrip1";
 			this.trayMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.trayMenu.ShowItemToolTips = false;
-			this.trayMenu.Size = new System.Drawing.Size(190, 98);
+			this.trayMenu.Size = new System.Drawing.Size(194, 114);
 			this.trayMenu.Text = "FloppyVPN";
 			// 
 			// buttShow
 			// 
+			this.buttShow.Image = ((System.Drawing.Image)(resources.GetObject("buttShow.Image")));
 			this.buttShow.Name = "buttShow";
-			this.buttShow.Size = new System.Drawing.Size(189, 22);
+			this.buttShow.Size = new System.Drawing.Size(193, 26);
 			this.buttShow.Text = "Show window";
 			this.buttShow.Click += new System.EventHandler(this.buttShow_Click);
 			// 
@@ -536,26 +538,29 @@
 			// 
 			this.buttTrayStatus.Enabled = false;
 			this.buttTrayStatus.Name = "buttTrayStatus";
-			this.buttTrayStatus.Size = new System.Drawing.Size(189, 22);
+			this.buttTrayStatus.Size = new System.Drawing.Size(193, 26);
 			this.buttTrayStatus.Text = "Disconnected";
 			// 
 			// buttTrayConnectDisconnect
 			// 
 			this.buttTrayConnectDisconnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.buttTrayConnectDisconnect.Image = ((System.Drawing.Image)(resources.GetObject("buttTrayConnectDisconnect.Image")));
 			this.buttTrayConnectDisconnect.Name = "buttTrayConnectDisconnect";
-			this.buttTrayConnectDisconnect.Size = new System.Drawing.Size(189, 22);
+			this.buttTrayConnectDisconnect.Size = new System.Drawing.Size(193, 26);
 			this.buttTrayConnectDisconnect.Text = "Connect!";
 			this.buttTrayConnectDisconnect.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.buttTrayConnectDisconnect.Click += new System.EventHandler(this.buttConnectDisconnect_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(186, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(190, 6);
 			// 
 			// buttTrayExit
 			// 
+			this.buttTrayExit.Image = ((System.Drawing.Image)(resources.GetObject("buttTrayExit.Image")));
 			this.buttTrayExit.Name = "buttTrayExit";
-			this.buttTrayExit.Size = new System.Drawing.Size(189, 22);
+			this.buttTrayExit.Size = new System.Drawing.Size(193, 26);
 			this.buttTrayExit.Text = "Exit and disconnect";
 			this.buttTrayExit.Click += new System.EventHandler(this.boxClose_Click);
 			// 
@@ -566,14 +571,14 @@
 			this.borderPanel.Location = new System.Drawing.Point(6, 31);
 			this.borderPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.borderPanel.Name = "borderPanel";
-			this.borderPanel.Size = new System.Drawing.Size(406, 438);
+			this.borderPanel.Size = new System.Drawing.Size(402, 438);
 			this.borderPanel.TabIndex = 2;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.ClientSize = new System.Drawing.Size(418, 475);
+			this.ClientSize = new System.Drawing.Size(414, 475);
 			this.Controls.Add(this.borderPanel);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Margin = new System.Windows.Forms.Padding(2);
@@ -581,6 +586,7 @@
 			this.Name = "MainForm";
 			this.Text = "FloppyVPN";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_Closing);
+			this.Resize += new System.EventHandler(this.MainForm_Resize);
 			this.Controls.SetChildIndex(this.borderPanel, 0);
 			this.windowPanel.ResumeLayout(false);
 			this.windowPanel.PerformLayout();

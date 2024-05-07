@@ -53,8 +53,8 @@
     <name>pricing-2</name>
     <en>5$ / month</en>
     <ru>420 рублей в месяц</ru>
-    <uk>150 гривень на місяць</uk>
-    <ja>$3/月</ja>
+    <uk>170 гривень на місяць</uk>
+    <ja>$5/月</ja>
   </row>
   <row>
     <name>devices-caption</name>
@@ -177,17 +177,17 @@
   </row>
   <row>
     <name>feature7</name>
-    <en>1-5 locations</en>
-    <ru>1-3 локации</ru>
-    <uk>1-3 локації</uk>
-    <ja>1-3箇所</ja>
+    <en>Many locations</en>
+    <ru>Много стран</ru>
+    <uk>Багато країн</uk>
+    <ja>多くの国</ja>
   </row>
   <row>
     <name>feature8</name>
-    <en>Split tunneling</en>
-    <ru>Раздельное туннелирование</ru>
-    <uk>Роздільне тунелювання</uk>
-    <ja>個々のアプリケーションのトンネリング</ja>
+    <en>Own protocol</en>
+    <ru>Собственный протокол (не заблокирован!)</ru>
+    <uk>Власний протокол</uk>
+    <ja>独自のプロトコル</ja>
   </row>
   <row>
     <name>feature9</name>

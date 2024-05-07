@@ -156,6 +156,22 @@
     <None Include="Res\close-disabled.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Res\window_box.png" />
+    <None Include="Res\tip.png" />
+    <None Include="Res\status.png" />
+    <None Include="Res\settings.png" />
+    <None Include="Res\scsi-0.png" />
+    <None Include="Res\help_sheet-1.png" />
+    <None Include="Res\frame_top.png" />
+    <None Include="Res\frame_left.png" />
+    <None Include="Res\frame_bottom.png" />
+    <None Include="Res\executable-1.png" />
+    <None Include="Res\disconnect.png" />
+    <None Include="Res\bar_graph_default-0.png" />
+    <None Include="Res\bar_graph-0.png" />
+    <None Include="Res\box_frame_left.png" />
+    <None Include="Res\box_frame_right.png" />
+    <None Include="Res\connect.png" />
     <Content Include="Res\countryflags\ad.png" />
     <Content Include="Res\countryflags\ae.png" />
     <Content Include="Res\countryflags\af.png" />

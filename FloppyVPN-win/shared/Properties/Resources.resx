@@ -121,8 +121,23 @@
   <data name="bar_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Res\bar_active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="bar_active1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\bar_active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bar_graph_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\bar_graph-0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bar_graph_default_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\bar_graph_default-0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="bar_inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Res\bar_inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="box_frame_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\box_frame_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="box_frame_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\box_frame_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="chimes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Res\chimes.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -142,17 +157,32 @@
   <data name="computer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Res\computer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="connect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\connect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="connected" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Res\connected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="connection" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Res\connection.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="disconnect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\disconnect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="disconnected" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Res\disconnected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="folder_pencil" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Res\folder_pencil.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="frame_bottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\frame_bottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="frame_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\frame_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="frame_top" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\frame_top.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Res\logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -178,7 +208,22 @@
   <data name="no_connection" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Res\no_connection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="scsi_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\scsi-0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="start" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Res\start.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="status" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\status.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\tip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="window_box" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Res\window_box.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

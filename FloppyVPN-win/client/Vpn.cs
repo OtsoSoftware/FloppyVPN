@@ -13,10 +13,10 @@ namespace FloppyVPN
 	public static class Vpn
 	{
 		public static bool connected = false;
-		private static readonly string pathToConf = Path.Combine(PathsAndLinks.appDataDir, "FloppyVPN.conf");
+		private static readonly string pathToConf = Path.GetFullPath(Path.Combine(PathsAndLinks.appDataDir, "FloppyVPN.conf"));
 		private static readonly string tunnelName = "FloppyVPN";
-		private static readonly string processName = "floppydriver";
-		public static readonly string pathToDriver = Path.Combine(PathsAndLinks.appDir, "driver", $"{processName}.exe");
+		public static readonly string processName = "floppydriver";
+		public static readonly string pathToDriver = Path.GetFullPath(Path.Combine(PathsAndLinks.appDir, "driver", $"{processName}.exe"));
 
 
 		public static void Connect()
@@ -32,24 +32,28 @@ namespace FloppyVPN
 
 				ProcessStartInfo psi = new ProcessStartInfo();
 				psi.FileName = pathToDriver;
-				psi.Arguments = $@"/installtunnelservice ""{pathToConf}""";
+				psi.Arguments = $"/installtunnelservice \"{pathToConf}\"";
 				psi.RedirectStandardOutput = true;
 				psi.RedirectStandardError = true;
 				psi.UseShellExecute = false;
 				psi.CreateNoWindow = true;
+				int exitCode = 0;
+				string output = "";
 
 				using (Process process = new Process { StartInfo = psi })
 				{
 					process.Start();
 					process.WaitForExit();
+					exitCode = process.ExitCode;
+					output = process.StandardOutput.ReadToEnd();
 				}
 
-				Task.Delay(new Random().Next(2000, 3000)).GetAwaiter().GetResult();
+				Task.Delay(new Random().Next(2000, 2200)).GetAwaiter().GetResult();
 
 				if (Process.GetProcessesByName(processName).Length > 0)
 					connected = true;
 				else
-					throw new Exception($"Driver dead");
+					throw new Exception($"{Loc.driverDied}: {output} ({exitCode})");
 			}
 			catch (Exception ex)
 			{
@@ -72,21 +76,19 @@ namespace FloppyVPN
 				using (Process process = new Process { StartInfo = psi })
 				{
 					process.Start();
+					process.WaitForExit();
+					//try
+					//{
+					//	foreach (Process _process in Process.GetProcessesByName(processName))
+					//		_process.Kill();
+					//}
+					//catch
+					//{
+					//}
 				}
 			}
 			catch
 			{
-			}
-			finally
-			{
-				try
-				{
-					foreach (Process process in Process.GetProcessesByName(processName))
-						process.Kill();
-				}
-				catch
-				{
-				}
 			}
 
 			connected = false;
