@@ -17,8 +17,17 @@
 
 				foreach (DataRow vpnServer in vpnServers.Rows)
 				{
-					string vpnServerReply = Communicator.GetHttp($"http://{vpnServer["socket"]}/CheckAvailability", 
-						"", out _, out bool isSuccessful);
+					string vpnServerReply = "";
+					bool isSuccessful = false;
+
+					try
+					{
+						vpnServerReply = Communicator.GetHttp($"http://{vpnServer["socket"]}/CheckAvailability",
+							"", out _, out isSuccessful);
+					}
+					catch
+					{
+					}
 					
 					if (isSuccessful && vpnServerReply.Contains(" OK "))
 					{
