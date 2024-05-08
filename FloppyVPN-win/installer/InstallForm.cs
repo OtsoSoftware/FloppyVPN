@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Net.Http;
 using FloppyVPN.Properties;
+using System.Linq;
 
 namespace FloppyVPN
 {
@@ -213,6 +214,11 @@ namespace FloppyVPN
 			}
 		}
 
+		Process[] GetProcessesThatWeNeedToHaveKilled()
+		{
+			return Process.GetProcessesByName("floppydriver").Concat(Process.GetProcessesByName("FloppyVPN Client")).ToArray();
+		}
+
 		async void Install()
 		{
 			//delete previous package:
@@ -223,10 +229,7 @@ namespace FloppyVPN
 			//kill app processes:
 			try
 			{
-				foreach (Process process in Process.GetProcessesByName("FloppyVPN Client"))
-					process.Kill();
-
-				foreach (Process process in Process.GetProcessesByName("floppydriver"))
+				foreach (Process process in GetProcessesThatWeNeedToHaveKilled())
 					process.Kill();
 
 				Task.Delay(2000).GetAwaiter().GetResult();
@@ -286,6 +289,7 @@ namespace FloppyVPN
 				{
 					try { dir.Delete(true); } catch { }
 				}
+				try { Directory.Delete(PathsAndLinks.appDataDir, true); } catch { }
 			}
 			catch
 			{

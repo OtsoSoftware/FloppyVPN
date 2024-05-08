@@ -236,7 +236,6 @@ namespace FloppyVPN
 				if (Process.GetProcessesByName(Vpn.processName).Length <= 0)
 				{
 					this.Invoke((Action)delegate { Disconnect(); });
-					new SoundPlayer(Resources.notify).Play();
 					new MsgBox(Loc.driverDied, Loc.errorConnectingCaption, MessageBoxIcon.Error).ShowDialog();
 				}
 			}

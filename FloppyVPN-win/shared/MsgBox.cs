@@ -23,13 +23,22 @@ namespace FloppyVPN
 			SetWindowTitle(caption);
 
 
-			//set up icon:
+			//set up icon and play the corresponding sound:
 			if (msgicon == MessageBoxIcon.Error)
+			{
 				picMsgIcon.BackgroundImage = Resources.msg_warning_0;
+				new SoundPlayer(Resources.chord);
+			}
 			else if (msgicon == MessageBoxIcon.Question)
+			{
 				picMsgIcon.BackgroundImage = Resources.msg_question_0;
-			else //"Information"
+				new SoundPlayer(Resources.chimes);
+			}
+			else
+			{
 				picMsgIcon.BackgroundImage = Resources.msg_information_0;
+				new SoundPlayer(Resources.notify);
+			}
 
 
 			//set up buttons:
