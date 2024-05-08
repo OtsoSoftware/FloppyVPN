@@ -63,7 +63,7 @@ namespace FloppyVPN
 			builder.Host.ConfigureLogging(logging =>
 			{
 				logging.ClearProviders();
-				logging.AddConsole(); // Add back the console logger if needed
+				logging.AddConsole();
 
 				logging.AddFilter("Microsoft.AspNetCore", LogLevel.Warning);
 				logging.AddFilter("Microsoft.AspNetCore.Mvc.ViewFeatures", LogLevel.None);

@@ -52,6 +52,7 @@
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.buttUpdate = new System.Windows.Forms.ToolStripMenuItem();
 			this.buttWebsite = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttNotWorking = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupConnection = new System.Windows.Forms.GroupBox();
 			this.pictureCountry = new System.Windows.Forms.PictureBox();
 			this.boxCountry = new System.Windows.Forms.ComboBox();
@@ -280,7 +281,8 @@
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttUpdate,
-            this.buttWebsite});
+            this.buttWebsite,
+            this.buttNotWorking});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(50, 22);
 			this.helpToolStripMenuItem.Text = "Help";
@@ -298,6 +300,12 @@
 			this.buttWebsite.Size = new System.Drawing.Size(217, 26);
 			this.buttWebsite.Text = "Website...";
 			this.buttWebsite.Click += new System.EventHandler(this.buttWebsite_Click);
+			// 
+			// buttNotWorking
+			// 
+			this.buttNotWorking.Name = "buttNotWorking";
+			this.buttNotWorking.Size = new System.Drawing.Size(217, 26);
+			this.buttNotWorking.Text = "Not working?..";
 			// 
 			// groupConnection
 			// 
@@ -461,7 +469,7 @@
 			this.labelVersionCaption.Name = "labelVersionCaption";
 			this.labelVersionCaption.Size = new System.Drawing.Size(47, 18);
 			this.labelVersionCaption.Text = "v1.0.0";
-			this.labelVersionCaption.DoubleClick += new System.EventHandler(this.labelVersionCaption_DoubleClick);
+			this.labelVersionCaption.Click += new System.EventHandler(this.labelVersionCaption_Click);
 			// 
 			// toolStripStatusLabel2
 			// 
@@ -655,6 +663,7 @@
 		private System.Windows.Forms.ToolStripMenuItem stripIPprivate;
 		private System.Windows.Forms.ToolStripMenuItem stripIPpublic;
 		private System.Windows.Forms.ToolStripMenuItem buttTrayConnectDisconnect;
+		private System.Windows.Forms.ToolStripMenuItem buttNotWorking;
 	}
 }
 

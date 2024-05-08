@@ -228,12 +228,12 @@ namespace FloppyVPN
 		{
 			for (; ; )
 			{
+				await Task.Delay(2000);
+
 				if (!Vpn.connected)
 					break;
 
-				await Task.Delay(2000);
-
-				if (Process.GetProcessesByName(Vpn.processName).Length > 0)
+				if (Process.GetProcessesByName(Vpn.processName).Length <= 0)
 				{
 					this.Invoke((Action)delegate { Disconnect(); });
 					new SoundPlayer(Resources.notify).Play();
@@ -410,7 +410,7 @@ namespace FloppyVPN
 			}
 		}
 
-		void labelVersionCaption_DoubleClick(object sender, EventArgs e)
+		void labelVersionCaption_Click(object sender, EventArgs e)
 		{
 
 		}

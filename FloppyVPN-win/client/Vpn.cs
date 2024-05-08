@@ -38,14 +38,12 @@ namespace FloppyVPN
 				psi.UseShellExecute = false;
 				psi.CreateNoWindow = true;
 				int exitCode = 0;
-				string output = "";
 
 				using (Process process = new Process { StartInfo = psi })
 				{
 					process.Start();
 					process.WaitForExit();
 					exitCode = process.ExitCode;
-					output = process.StandardOutput.ReadToEnd();
 				}
 
 				Task.Delay(new Random().Next(2000, 2200)).GetAwaiter().GetResult();
@@ -53,7 +51,7 @@ namespace FloppyVPN
 				if (Process.GetProcessesByName(processName).Length > 0)
 					connected = true;
 				else
-					throw new Exception($"{Loc.driverDied}: {output} ({exitCode})");
+					throw new Exception($"{Loc.driverDied}: {exitCode}");
 			}
 			catch (Exception ex)
 			{
@@ -77,6 +75,9 @@ namespace FloppyVPN
 				{
 					process.Start();
 					process.WaitForExit();
+
+					Thread.Sleep(50);
+
 					//try
 					//{
 					//	foreach (Process _process in Process.GetProcessesByName(processName))
@@ -89,6 +90,10 @@ namespace FloppyVPN
 			}
 			catch
 			{
+			}
+			finally
+			{
+				File.Delete(pathToConf);
 			}
 
 			connected = false;
