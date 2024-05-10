@@ -33,4 +33,4 @@ Expanding a new VPN server on a new Linux box is easy and is being automated as 
 ## Deploying
 ### How to fully deploy the app.
 
-Figure it out yourself lol
+Figure it out yourself or visit a church. Jesus loves you all

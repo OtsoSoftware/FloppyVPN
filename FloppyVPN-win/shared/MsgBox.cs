@@ -68,7 +68,7 @@ namespace FloppyVPN
 			HideMaximizeBox();
 		}
 
-		private void MsgBox_FormClosing(object sender, FormClosingEventArgs e)
+		void MsgBox_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			e.Cancel = true;
 			if (userCanCloseMsgBox)
@@ -81,35 +81,35 @@ namespace FloppyVPN
 			}
 		}
 
-		private void buttYes_Click(object sender, EventArgs e)
+		void buttYes_Click(object sender, EventArgs e)
 		{
 			userCanCloseMsgBox = true;
 			this.DialogResult = DialogResult.Yes;
 			Close();
 		}
 
-		private void buttNo_Click(object sender, EventArgs e)
+		void buttNo_Click(object sender, EventArgs e)
 		{
 			userCanCloseMsgBox = true;
 			this.DialogResult = DialogResult.No;
 			Close();
 		}
 
-		private void buttOK_Click(object sender, EventArgs e)
+		void buttOK_Click(object sender, EventArgs e)
 		{
 			userCanCloseMsgBox = true;
 			this.DialogResult = DialogResult.OK;
 			Close();
 		}
 
-		private void buttRetry_Click(object sender, EventArgs e)
+		void buttRetry_Click(object sender, EventArgs e)
 		{
 			userCanCloseMsgBox = true;
 			this.DialogResult = DialogResult.Retry;
 			Close();
 		}
 
-		private void buttCancel_Click(object sender, EventArgs e)
+		void buttCancel_Click(object sender, EventArgs e)
 		{
 			userCanCloseMsgBox = true;
 			this.DialogResult = DialogResult.Cancel;

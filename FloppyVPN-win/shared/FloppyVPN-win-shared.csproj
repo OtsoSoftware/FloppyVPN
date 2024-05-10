@@ -71,7 +71,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="DisplayScaling.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="ShortcutMaker.cs" />
   </ItemGroup>
