@@ -25,17 +25,17 @@
 		/// Last hours during which misusage will be checked.
 		/// Recommended to set between 12 and 1. (Must be negative)
 		/// </summary>
-		readonly double LastHoursToCheckMisusageIn = -2;
+		readonly double LastHoursToCheckMisusageIn = -1.3;
 
 		/// <summary>
 		/// How many failed requests per check period are allowed until user gets a ban
 		/// </summary>
-		readonly ulong MaximumFailedRequestsAllowed = 30;
+		readonly ulong MaximumFailedRequestsAllowed = 3000;
 
 		/// <summary>
 		/// How many registrations per check period are allowed until user gets a softban
 		/// </summary>
-		readonly byte MaximumRegistrationsAllowedPerPeriod = 30;
+		readonly byte MaximumRegistrationsAllowedPerPeriod = 255;
 
 		/// <summary>
 		/// How many failed master key usages allowed until server gets a permanent ban

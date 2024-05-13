@@ -1,5 +1,5 @@
 ﻿@namespace FloppyVPN
-@using static FloppyVPN._Functions
+@using static FloppyVPN.Functions
 
 @{
 	ViewData["Title"] = "";
@@ -7,7 +7,7 @@
 }
 
 @{
-	bool cookieAcknowledged = (_Functions.ReadCookie(this, "cookieAcknowledged") ?? "").Contains("True");
+	bool cookieAcknowledged = (Functions.ReadCookie(this, "cookieAcknowledged") ?? "").Contains("True");
 	if (!cookieAcknowledged)
 	{
 		<div class="window" style="margin: 32px; width: 250px; float: right;" id="cookie-alert-window">

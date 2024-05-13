@@ -2,7 +2,7 @@
 
 namespace FloppyVPN
 {
-	public static class _Functions
+	public static class Functions
 	{
 		public static string GetCurrentLanguage(RazorPage page)
 		{

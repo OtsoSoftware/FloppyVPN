@@ -77,8 +77,8 @@ namespace FloppyVPN.Controllers
 		{
 			string enteredLogin = (HttpContext.Request.Form["user_login"].FirstOrDefault() ?? "").Replace("-", "");
 
-			string lang = _Functions.GetCurrentLanguage(HttpContext);
-			if (enteredLogin.Length != 8)
+			string lang = Functions.GetCurrentLanguage(HttpContext);
+			if (enteredLogin.Length != 10)
 			{
 				Thread.Sleep(new Random().Next(200, 900));
 				TempData["Message"] = Loc.Get("error-wrong-login", lang);

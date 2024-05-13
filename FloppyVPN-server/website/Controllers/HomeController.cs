@@ -19,7 +19,7 @@ namespace FloppyVPN.Controllers
 		[HttpPost]
 		public IActionResult AcknowledgeCookie()
 		{
-			_Functions.WriteCookie(HttpContext, "cookieAcknowledged", "True");
+			Functions.WriteCookie(HttpContext, "cookieAcknowledged", "True");
 			return RedirectToAction("Index", "Home");
 		}
 		
@@ -27,7 +27,7 @@ namespace FloppyVPN.Controllers
 		public IActionResult ChangeLanguage()
 		{
 			var selectedLang = HttpContext.Request.Form["language"];
-			_Functions.WriteCookie(HttpContext, "language", selectedLang);
+			Functions.WriteCookie(HttpContext, "language", selectedLang);
 
 			// Redirect to refresh page with the new language parameter
 			string refreshUrl = HttpContext.Request.Form["currentPath"] + "?lang=" + selectedLang;

@@ -20,7 +20,7 @@ If you want to compile it yourself or learn more about the project - continue re
 
 ## Project logic
 
-Wireguard protocol (AmneziaWG) and related software is taken as the protocol and drivers of FloppyVPN. It is simple, fast and safe. All the apps use it.
+Wireguard protocol (AmneziaWG modification, to be more precise) and related software is taken as the protocol and drivers of FloppyVPN. It is simple, fast and safe. All the apps use it.
 
 VPN servers use different ports and packet parameters so you can connect to them from as any network as possible.
 

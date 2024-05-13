@@ -33,7 +33,7 @@
 				DB.Execute(@"
 DELETE FROM accounts
 WHERE	(NOW() > paid_till AND when_registered != paid_till)
-OR		(when_registered = paid_till AND paid_till > NOW() + INTERVAL 1 DAY);"
+OR		(when_registered = paid_till AND paid_till > (NOW() + INTERVAL 1 DAY));"
 				);
 			}
 			catch (Exception ex)

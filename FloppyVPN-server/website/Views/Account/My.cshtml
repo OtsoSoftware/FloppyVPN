@@ -1,5 +1,5 @@
 ﻿@namespace FloppyVPN
-@using static FloppyVPN._Functions
+@using static FloppyVPN.Functions
 @model Models.AccountModel
 
 @{
@@ -16,9 +16,9 @@
 
 
 <h4>
-<span id="account-welcome-message">
-	@Loc.Get("account-welcome-message", lang)
-	</span> "@accountData["login"]"
+	<span id="account-welcome-message">
+		@Loc.Get("account-welcome-message", lang)
+	</span>
 </h4>
 
 <br>

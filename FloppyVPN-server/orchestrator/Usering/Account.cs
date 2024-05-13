@@ -37,7 +37,6 @@ namespace FloppyVPN
 				return;
 			}
 
-
 			RefreshData();
 		}
 
@@ -81,7 +80,12 @@ namespace FloppyVPN
 		/// <returns>A DateTime till which account is paid.</returns>
 		public DateTime AddTime(int months)
 		{
-			DateTime new_paid_till = paid_till.AddMonths(months);
+			DateTime new_paid_till;
+
+			if (paid_till < DateTime.Now)
+				new_paid_till = DateTime.Now.AddMonths(months);
+			else
+				new_paid_till = paid_till.AddMonths(months);
 
 			DB.Execute($"UPDATE `accounts` SET `paid_till` = @new_paid_till WHERE `login` = @login;", 
 				new Dictionary<string, object>()
@@ -128,7 +132,7 @@ namespace FloppyVPN
 
 			for (uint u = 0; u < uint.MaxValue; u++) //a safer alternative to forever loop
 			{
-				new_login = $"{Cryption.GenerateRandomString(4, dic)}-{Cryption.GenerateRandomString(4, dic)}";
+				new_login = $"{Cryption.GenerateRandomString(5, dic)}-{Cryption.GenerateRandomString(5, dic)}";
 				
 				DataTable loginExistances = DB.GetDataTable($"SELECT * FROM `accounts` WHERE " +
 					$"`login` = @new_login;",

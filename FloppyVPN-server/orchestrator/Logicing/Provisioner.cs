@@ -13,7 +13,17 @@
 		{
 			for (; ; )
 			{
-				DataTable vpnServers = DB.GetDataTable("SELECT * FROM `vpn_servers`;");
+				DataTable vpnServers;
+
+				try
+				{
+					vpnServers = DB.GetDataTable("SELECT * FROM `vpn_servers`;");
+				}
+				catch
+				{
+					Thread.Sleep(5000);
+					continue;
+				}
 
 				foreach (DataRow vpnServer in vpnServers.Rows)
 				{
@@ -49,15 +59,22 @@
 		/// </summary>
 		public static void FlushConfigsOfDeletedAccounts()
 		{
-			string[] configsWithNoOwner = DB.FirstColumnAsArray("SELECT `id` FROM `vpn_configs` " +
-				"WHERE `account` NOT IN (SELECT `id` FROM `accounts`);");
-
-			if (configsWithNoOwner.Length > 0)
+			try
 			{
-				foreach (string configWithNoOwner in configsWithNoOwner)
+				string[] configsWithNoOwner = DB.FirstColumnAsArray("SELECT `id` FROM `vpn_configs` " +
+					"WHERE `account` NOT IN (SELECT `id` FROM `accounts`);");
+
+				if (configsWithNoOwner.Length > 0)
 				{
-					DeleteConfig(ulong.Parse(configWithNoOwner));
+					foreach (string configWithNoOwner in configsWithNoOwner)
+					{
+						DeleteConfig(ulong.Parse(configWithNoOwner));
+					}
 				}
+			}
+			catch (Exception ex)
+			{
+				DB.Log("FlushConfigsOfDeletedAccounts()", ex.Message);
 			}
 		}
 

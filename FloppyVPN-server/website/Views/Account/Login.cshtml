@@ -1,11 +1,10 @@
 ﻿@namespace FloppyVPN
-@using static FloppyVPN._Functions
+@using static FloppyVPN.Functions
 
 @{
 	string lang = GetCurrentLanguage(this);
 	ViewData["Title"] = Loc.Get("title_login", lang);
 }
-
 
 
 <h3 id="login-page-heading">@Loc.Get("login-page-heading", lang)</h3>
