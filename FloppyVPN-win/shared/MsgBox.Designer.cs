@@ -51,11 +51,11 @@
 			this.windowPanel.Controls.Add(this.labelMessage);
 			this.windowPanel.Controls.Add(this.buttOK);
 			this.windowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.windowPanel.Location = new System.Drawing.Point(6, 31);
+			this.windowPanel.Location = new System.Drawing.Point(5, 31);
 			this.windowPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.windowPanel.Name = "windowPanel";
 			this.windowPanel.Padding = new System.Windows.Forms.Padding(4);
-			this.windowPanel.Size = new System.Drawing.Size(417, 167);
+			this.windowPanel.Size = new System.Drawing.Size(419, 167);
 			this.windowPanel.TabIndex = 1;
 			// 
 			// buttCancel
@@ -156,13 +156,13 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(429, 204);
 			this.Controls.Add(this.windowPanel);
-			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "MsgBox";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "MsgBox";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MsgBox_FormClosing);
+			this.Load += new System.EventHandler(this.MsgBox_Load);
 			this.Controls.SetChildIndex(this.windowPanel, 0);
 			this.windowPanel.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picMsgIcon)).EndInit();

@@ -155,6 +155,10 @@
     <None Include="Res\close-disabled.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Res\icon_disconnected.ico" />
+    <None Include="Res\icon_connected.ico" />
+    <None Include="Res\icon_disconnected.png" />
+    <None Include="Res\icon_connected.png" />
     <None Include="Res\window_box.png" />
     <None Include="Res\tip.png" />
     <None Include="Res\status.png" />

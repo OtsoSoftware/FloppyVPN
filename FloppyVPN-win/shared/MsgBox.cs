@@ -116,6 +116,21 @@ namespace FloppyVPN
 			Close();
 		}
 
+		void MsgBox_Load(object sender, EventArgs e)
+		{
+			//move window to the cursor position but not out of working area bounds:
 
+			Point cursorPos = Cursor.Position;
+
+			Screen screen = Screen.FromPoint(cursorPos);
+
+			int newX = cursorPos.X - (Width / 2);
+			int newY = cursorPos.Y - (Height / 2);
+
+			newX = Math.Max(screen.WorkingArea.Left, Math.Min(newX, screen.WorkingArea.Right - Width));
+			newY = Math.Max(screen.WorkingArea.Top, Math.Min(newY, screen.WorkingArea.Bottom - Height));
+
+			Location = new Point(newX, newY);
+		}
 	}
 }

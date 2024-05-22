@@ -200,6 +200,9 @@ namespace FloppyVPN
 				pictureConnectionStatus.BackgroundImage = Resources.connected;
 				pictureConnectionIllustration.Image = Resources.connection;
 				buttTrayConnectDisconnect.Text = Loc.disconnect;
+				buttTrayStatus.Text = Loc.statusConnected.ToUpper();
+				trayIcon.Text = "FloppyVPN: " + Loc.statusConnected.ToUpper();
+				trayIcon.Icon = Resources.icon_connected;
 
 				new Task(() => { DriverAliveStatusWatchdog(); }).Start();
 			}
@@ -221,6 +224,9 @@ namespace FloppyVPN
 			pictureConnectionStatus.BackgroundImage = Resources.disconnected;
 			pictureConnectionIllustration.Image = Resources.no_connection;
 			buttTrayConnectDisconnect.Text = Loc.connect;
+			buttTrayStatus.Text = Loc.statusNotConnected.ToUpper();
+			trayIcon.Text = "FloppyVPN: " + Loc.statusNotConnected.ToUpper();
+			trayIcon.Icon = Resources.icon_disconnected;
 		}
 
 		async void DriverAliveStatusWatchdog()
