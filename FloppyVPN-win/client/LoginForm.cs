@@ -84,5 +84,13 @@ namespace FloppyVPN
 			Loc.Alize();
 			ApplyLocalizedTexts();
 		}
+
+		void txtLogin_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				buttLogin.PerformClick();
+			}
+		}
 	}
 }

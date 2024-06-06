@@ -5,24 +5,21 @@
 _______________________________
 
 #0
-apt update && apt dist-upgrade -y
-reboot
+apt update
 apt install linux-headers-$(uname -r)
+apt autoremove -y
+
 
 #1
-apt autoremove -y
-apt-get update && apt-get full-upgrade -y
-
-#2
 apt install -y unzip
 apt install -y iptables
 apt install -y nftables
 apt install -y git
 
-#3 make sure at least one repo ("deb-src...") exists and is not commented
+#2 make sure at least one repo ("deb-src...") exists and is not commented
 vi /etc/apt/sources.list
 
-#4
+#3
 apt install -y software-properties-common python3-launchpadlib gnupg2 linux-headers-$(uname -r)
 apt install -y dkms
 
@@ -62,12 +59,7 @@ dpkg-reconfigure -plow unattended-upgrades
 ip li add dev awg0 type amneziawg
 
 # Setup forwarding
-sysctl -w net.ipv4.conf.all.forwarding=1
-
-### if ipv6 supported:
-sysctl -w net.ipv6.conf.all.forwarding=1
-
-sysctl -p
+bash -c 'echo -e "\nnet.ipv4.conf.all.forwarding=1\nnet.ipv6.conf.all.forwarding=1" >> /etc/sysctl.conf' && sysctl -p
 
 
 *now please put compiled vpn server build on the server!*

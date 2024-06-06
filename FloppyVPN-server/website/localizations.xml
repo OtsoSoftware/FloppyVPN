@@ -37,7 +37,7 @@
     </row>
     <row>
     <name>heading-text</name>
-    <en>FloppyVPN — Shielding Bytes, Lighting Freedom.\nSimple yet full-featured:</en>
+    <en>FloppyVPN — Protecting Connection, Lighting Freedom.\nSimple yet full-featured:</en>
     <ru>FloppyVPN — спасай приватность и забывай блокировки.\nХлама нет, функционал есть:</ru>
     <uk>FloppyVPN — рятуєм приватність, минаєм цензуру.\nОл-інклюзів:</uk>
     <ja>FloppyVPN — 匿名の接続と検閲の回避。\nシンプルでリッチ:</ja>
@@ -49,14 +49,21 @@
     <uk>Один акаунт — три платформи — багато країн = </uk>
     <ja>シングルアカウント&amp;3つのデバイス&amp;多くの国=</ja>
   </row>
-  <row>
-    <name>pricing-2</name>
-    <en>5$ / month</en>
-    <ru>420 рублей в месяц</ru>
-    <uk>170 гривень на місяць</uk>
-    <ja>$5/月</ja>
-  </row>
-  <row>
+	<row>
+		<name>pricing-2</name>
+		<en>$5 / month</en>
+		<ru>400 рублей в месяц</ru>
+		<uk>120 гривень на місяць</uk>
+		<ja>$5/月</ja>
+	</row>
+	<row>
+		<name>supported-currencies</name>
+		<en>Some of the supported payment methods:</en>
+		<ru>Одни из поддерживаемых способов оплаты:</ru>
+		<uk>Деякі з підтримуваних способів оплати:</uk>
+		<ja>サポートされている支払い方法のいくつか:</ja>
+	</row>
+	<row>
     <name>devices-caption</name>
     <en>You can use FloppyVPN on all devices simultaneously but not on multiple same devices.</en>
     <ru>Вы можете одновременно использовать FloppyVPN на всех устройствах, но не на нескольких устройствах одного типа.</ru>
@@ -127,13 +134,6 @@
     <ja>さらに多くのプラットフォームがすぐに来ています！</ja>
   </row>
   <row>
-    <name>features-heading</name>
-    <en>aaa</en>
-    <ru>aaa</ru>
-    <uk>aaa</uk>
-    <ja>aaa</ja>
-  </row>
-  <row>
     <name>feature1</name>
     <en>Stabilizes the connection</en>
     <ru>Стабилизирует подключение</ru>
@@ -142,7 +142,7 @@
   </row>
   <row>
     <name>feature2</name>
-    <en>Bypass censhorship</en>
+    <en>Bypasses censhorship</en>
     <ru>Обходит цензуру и блокировки</ru>
     <uk>Обходить цензуру і блокування</uk>
     <ja>検閲とブロックをバイパスします</ja>
@@ -184,7 +184,7 @@
   </row>
   <row>
     <name>feature8</name>
-    <en>Own protocol</en>
+    <en>Own ban-resistant protocol</en>
     <ru>Собственный протокол (не заблокирован!)</ru>
     <uk>Власний протокол</uk>
     <ja>独自のプロトコル</ja>
@@ -245,28 +245,21 @@
     <uk>Не вдалося знайти обліковий запис з таким логіном!\nМожливо, дані для входу неправильні або обліковий запис було видалено.</uk>
     <ja>そのようなログインでアカウントを見つけることができませんでした！\nログインデータが間違っているか、アカウントが削除されている可能性があります。</ja>
   </row>
-  <row>
-    <name>download-windows</name>
-    <en>Download for\nWindows</en>
-    <ru>Скачать для\nWindows</ru>
-    <uk>Завантажити на\nWindows</uk>
-    <ja>Windows\n用のダウンロード</ja>
-  </row>
-  <row>
-    <name>download-android</name>
-    <en>Download for\nAndroid</en>
-    <ru>Скачать на\nAndroid</ru>
-    <uk>Завантажити в\nAndroid</uk>
-    <ja>Android\nにダウンロード</ja>
-  </row>
-  <row>
-    <name>download-linux</name>
-    <en>Download for\nLinux</en>
-    <ru>Скачать для\nLinux</ru>
-    <uk>Завантажити на\nLinux</uk>
-    <ja>Linux\n用のダウンロード</ja>
-  </row>
-  <row>
+	<row>
+		<name>download-button</name>
+		<en>Download</en>
+		<ru>Скачать</ru>
+		<uk>Завантажити</uk>
+		<ja>用のダウンロード</ja>
+	</row>
+	<row>
+		<name>screenshot-link</name>
+		<en>screenshot</en>
+		<ru>скриншот</ru>
+		<uk>скріншот</uk>
+		<ja>スクリーンショット</ja>
+	</row>
+	<row>
     <name>register-caption</name>
     <en>No personal data is required — register in seconds:</en>
     <ru>Не требуются никакие личные данные — зарегистрируйтесь за секунды:</ru>
@@ -454,48 +447,6 @@
     <ru>Получить помощь</ru>
     <uk>Отримати допомогу</uk>
     <ja>助けを得る</ja>
-  </row>
-  <row>
-    <name>whom-for</name>
-    <en>Whom is this for? If...</en>
-    <ru>Для кого это? Если ты...</ru>
-    <uk>Для кого це? Якщо ти...</uk>
-    <ja>それは誰のためですか？ してください...</ja>
-  </row>
-  <row>
-    <name>whomfor1</name>
-    <en>You need maximum privacy</en>
-    <ru>Хочешь максимум приватности</ru>
-    <uk>Хочеш максимум приватності</uk>
-    <ja>あなたは最大のプライバシーをしたいですか</ja>
-  </row>
-  <row>
-    <name>whomfor2</name>
-    <en>You enjoy simplicity</en>
-    <ru>Любишь простоту</ru>
-    <uk>Полюбляєш простоту</uk>
-    <ja>あなたはシンプルさが好きですか</ja>
-  </row>
-  <row>
-    <name>whomfor3</name>
-    <en>You hate online censorship</en>
-    <ru>Ненавидишь цензуру</ru>
-    <uk>Ненавидиш цензуру</uk>
-    <ja>検閲を嫌う</ja>
-  </row>
-  <row>
-    <name>for-whom</name>
-    <en>...You must give FloppyVPN a try!</en>
-    <ru>...то дай FloppyVPN шанс!</ru>
-    <uk>...то дай FloppyVPN шанс!</uk>
-    <ja>...次に、FloppyVPNにチャンスを与えてください！</ja>
-  </row>
-  <row>
-    <name>explaining-caption</name>
-    <en>Core aspects are privacy and reliability in which FloppyVPN is unsurpassed.</en>
-    <ru>В основе - приватность и надёжность, в которых FloppyVPN непревзойдён.</ru>
-    <uk>В основі - приватність і надійність, у цьому FloppyVPN неперевершений.</uk>
-    <ja>それはプライバシーと信頼性に基づいています。 この点で、FloppyVPNは卓越しています。</ja>
   </row>
   <row>
     <name>title_login</name>

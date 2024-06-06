@@ -14,7 +14,7 @@ namespace FloppyVPN
 
 		public static readonly string iniFilePath = Path.Combine(appDataDir, "config.ini");
 
-		public static readonly string orchestratorURL = "https://orchestrator.floppy.jp.net";
-		public static readonly string websiteURL = "https://floppy.jp.net";
+		public static readonly string orchestratorURL = "https://orchestrator.floppy-vpn.net";
+		public static readonly string websiteURL = "https://floppy-vpn.net";
 	}
 }

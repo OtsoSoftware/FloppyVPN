@@ -27,6 +27,7 @@ namespace FloppyVPN
 
 			InitializeComponent();
 			ApplyLocalizedTexts();
+			trayIcon.Icon = Resources.icon_disconnected;
 
 			LogIn();
 

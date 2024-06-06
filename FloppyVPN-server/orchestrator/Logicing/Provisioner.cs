@@ -41,12 +41,18 @@
 					
 					if (isSuccessful && vpnServerReply.Contains(" OK "))
 					{
-						DB.Execute("UPDATE `vpn_servers` SET `last_alive` = @now WHERE `id` = @id;",
-							new Dictionary<string, object>()
-							{
-								{ "@now", DateTime.Now },
-								{ "@id", (ulong)vpnServer["id"] }
-							});
+						try
+						{
+							DB.Execute("UPDATE `vpn_servers` SET `last_alive` = @now WHERE `id` = @id;",
+								new Dictionary<string, object>()
+								{
+									{ "@now", DateTime.Now },
+									{ "@id", (ulong)vpnServer["id"] }
+								});
+						}
+						catch
+						{
+						}
 					}
 				}
 
@@ -61,12 +67,12 @@
 		{
 			try
 			{
-				string[] configsWithNoOwner = DB.FirstColumnAsArray("SELECT `id` FROM `vpn_configs` " +
+				string[] configIDsWithNoOwner = DB.FirstColumnAsArray("SELECT `id` FROM `vpn_configs` " +
 					"WHERE `account` NOT IN (SELECT `id` FROM `accounts`);");
 
-				if (configsWithNoOwner.Length > 0)
+				if (configIDsWithNoOwner.Length > 0)
 				{
-					foreach (string configWithNoOwner in configsWithNoOwner)
+					foreach (string configWithNoOwner in configIDsWithNoOwner)
 					{
 						DeleteConfig(ulong.Parse(configWithNoOwner));
 					}
